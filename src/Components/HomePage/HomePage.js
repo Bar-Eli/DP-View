@@ -1,6 +1,5 @@
 import React from "react";
 import "./HomePage.css";
-import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
 class HomePage extends React.Component {
@@ -11,16 +10,10 @@ class HomePage extends React.Component {
     };
   }
 
-  showAlert = () => {
-    alert("Trying to show the alert on screen");
-  };
-
   render() {
     return (
       <div>
-        <Button variant="contained" color="primary" onClick={this.showAlert}>
-          Primary
-        </Button>
+        <h1>DP-View</h1>
       </div>
     );
   }

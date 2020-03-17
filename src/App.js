@@ -1,13 +1,10 @@
-import React from "react";
-import "./App.css";
-import HomePage from "./Components/HomePage/HomePage";
+import React, { Component } from "react";
+import AppRouter from "./AppRouter";
 
-function App() {
-  return (
-    <div className="App">
-      <HomePage />
-    </div>
-  );
+class App extends Component {
+  render() {
+    return <AppRouter />;
+  }
 }
 
 export default App;

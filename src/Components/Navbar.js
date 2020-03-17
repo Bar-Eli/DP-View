@@ -19,7 +19,7 @@ export class Navbar extends Component {
     #text {
       font-weight: bold;
       font-size: 350%;
-      margin-right: 50px;
+      margin-right: 75px;
     }
     .btn {
       color: white;

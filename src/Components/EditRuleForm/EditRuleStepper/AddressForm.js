@@ -6,11 +6,10 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+// import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import MaterialTable from "material-table";
 
 const useStyles = theme => ({
   root: {
@@ -28,12 +27,6 @@ const useStyles = theme => ({
     display: "block"
   }
 });
-
-const collums = [
-  { title: "Network", field: "Network" },
-  { title: "Ip/Url", field: "Url" },
-  { title: "Ip/Url", field: "Url" }
-];
 
 class AddressForm extends Component {
   constructor(props) {
@@ -104,9 +97,6 @@ class AddressForm extends Component {
             mq
           </Button>
           <br />
-          {/* <div style={{ maxWidth: "100%" }}>
-            <MaterialTable></MaterialTable>
-          </div> */}
           <FormControl>
             <InputLabel id="demo-simple-select-label">Network</InputLabel>
             <Select

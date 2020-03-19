@@ -35,101 +35,29 @@ function getSteps() {
   return ["Route details", "Source", "Destination", "Filter"];
 }
 
-class RouteStepper extends Component {
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <DetailsForm />;
+    case 1:
+      return <AddressForm />;
+    case 2:
+      return <AddressForm />;
+    case 3:
+      return <FilterForm />;
+    default:
+      return "Unknown step";
+  }
+}
+
+class EditRuleStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 0,
+      step: 0
       // step: 3 // FOR DEBUG
-      details: {
-        projectNameValue: "",
-        projectMadorValue: "",
-        projectTeamValue: "",
-        testOrProd: ""
-      },
-      srcAddr: {
-        network: "",
-        protocol: "",
-        //Url or queue manager
-        primaryAddress: "",
-        //Port or queue name
-        secondaryAddress: "",
-        //Should be empty if the protocol is mq
-        method: ""
-      },
-      destAddr: {
-        network: "",
-        protocol: "",
-        //Url or queue manager
-        primaryAddress: "",
-        //Port or queue name
-        secondaryAddress: "",
-        //Should be empty if the protocol is mq
-        method: ""
-      },
-      filter: {
-        filterType: "",
-        //should be empty if its not dexter filter
-        dexterFilter: "",
-        //should be empty if its not schema filter
-        schemaPath: ""
-      }
     };
   }
-
-  updateParamState = (value, paramName, form) => {
-    let object = this.state[form];
-    object[paramName] = value;
-    if (form === "details") {
-      this.setState({ details: object });
-    } else if (form === "srcAddr") {
-      this.setState({ srcAddr: object });
-    } else if (form === "destAddr") {
-      this.setState({ destAddr: object });
-    } else if (form === "filter") {
-      this.setState({ filter: object });
-    } else {
-      alert("Something went wrong, no such form");
-    }
-  };
-
-  getStepContent = step => {
-    switch (step) {
-      case 0:
-        return (
-          <DetailsForm
-            details={this.state.details}
-            updateParams={this.updateParamState}
-          />
-        );
-      case 1:
-        return (
-          <AddressForm
-            params={this.state.srcAddr}
-            whichForm="srcAddr"
-            updateParams={this.updateParamState}
-          />
-        );
-      case 2:
-        return (
-          <AddressForm
-            params={this.state.destAddr}
-            whichForm="destAddr"
-            updateParams={this.updateParamState}
-          />
-        );
-      case 3:
-        return (
-          <FilterForm
-            details={this.state.filter}
-            updateParams={this.updateParamState}
-          />
-        );
-      default:
-        return "Unknown step";
-    }
-  };
-
   setActiveStep = newStep => {
     // React.useState(0)
     this.setState({ step: newStep });
@@ -159,7 +87,7 @@ class RouteStepper extends Component {
                 <a className={classes.stepLabel}>{label}</a>
               </StepLabel>
               <StepContent>
-                <Typography>{this.getStepContent(index)}</Typography>
+                <Typography>{getStepContent(index)}</Typography>
                 <div className={classes.actionsContainer}>
                   <div>
                     <Button
@@ -200,4 +128,4 @@ class RouteStepper extends Component {
     );
   }
 }
-export default withStyles(useStyles, { withTheme: true })(RouteStepper);
+export default withStyles(useStyles, { withTheme: true })(EditRuleStepper);

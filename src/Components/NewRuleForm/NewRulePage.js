@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import RouteStepper from "./RouteStepper/RouteStepper";
+import NewRuleStepper from "./NewRuleStepper/NewRuleStepper";
 import Navbar from "../Navbar";
 
 const useStyles = theme => ({
@@ -27,7 +27,7 @@ const useStyles = theme => ({
   }
 });
 
-class NewRoutePage extends Component {
+class NewRulePage extends Component {
   refreshPage = () => {
     window.location.reload(false);
   };
@@ -44,11 +44,11 @@ class NewRoutePage extends Component {
           onClick={this.refreshPage}
         >
           <Typography variant="h4" component="h2">
-            New MPGW
+            New Rule
           </Typography>
         </Button>
 
-        <RouteStepper />
+        <NewRuleStepper />
 
         <br />
         {/*<Button variant="contained">Default</Button>*/}
@@ -60,4 +60,4 @@ class NewRoutePage extends Component {
   }
 }
 
-export default withStyles(useStyles, { withTheme: true })(NewRoutePage);
+export default withStyles(useStyles, { withTheme: true })(NewRulePage);

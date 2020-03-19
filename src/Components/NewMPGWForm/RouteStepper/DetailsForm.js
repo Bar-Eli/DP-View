@@ -27,10 +27,12 @@ class DetailsForm extends Component {
 
   testBtnClick = () => {
     this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
+    this.props.updateParams("test", "testOrProd", "details");
   };
 
   prodBtnClick = () => {
     this.setState({ prodBtnColor: "primary", testBtnColor: "default" });
+    this.props.updateParams("prod", "testOrProd", "details");
   };
 
   render() {
@@ -38,11 +40,41 @@ class DetailsForm extends Component {
     return (
       <div>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="project-name" label="Project Name" />
-          <TextField id="project-mador" label="Mador" />
+          <TextField
+            id="project-name"
+            label="Project Name"
+            value={this.props.details.projectNameValue}
+            onChange={e =>
+              this.props.updateParams(
+                e.target.value,
+                "projectNameValue",
+                "details"
+              )
+            }
+          />
+          <TextField
+            id="project-mador"
+            label="Mador"
+            value={this.props.details.projectMadorValue}
+            onChange={e =>
+              this.props.updateParams(
+                e.target.value,
+                "projectMadorValue",
+                "details"
+              )
+            }
+          />
           <TextField
             id="project-team"
             label="Team"
+            value={this.props.details.projectTeamValue}
+            onChange={e =>
+              this.props.updateParams(
+                e.target.value,
+                "projectTeamValue",
+                "details"
+              )
+            }
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

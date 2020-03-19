@@ -1,17 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-// import HomePage from "./Components/HomePage";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
-import AddRule from "./Components/AddRule";
-import EditRule from "./Components/EditRule";
+import NewRulePage from "./Components/NewRuleForm/NewRulePage";
+import EditRuleStepper from "./Components/EditRuleForm/NewRulePage";
 
 function AppRouter() {
   return (
     <Router>
       <div>
         <Route path="/" exact component={NewRoutePage} />
-        <Route path="/addRule" component={AddRule} />
-        <Route path="/editRule" component={EditRule} />
+        <Route path="/addRule" component={NewRulePage} />
+        <Route path="/editRule" component={EditRuleStepper} />
       </div>
     </Router>
   );

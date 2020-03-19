@@ -41,6 +41,17 @@ class FilterFormForm extends Component {
     };
   }
 
+  greenClick = () => {
+    this.setState({
+      greenBtnColor: "primary",
+      schemaBtnColor: "default",
+      dpasBtnColor: "default",
+      greenBtnBackground: "green",
+      showDpas: "none",
+      showUpload: "none"
+    });
+  };
+
   schemaBtnClick = () => {
     this.setState({
       greenBtnColor: "default",
@@ -78,7 +89,7 @@ class FilterFormForm extends Component {
             variant="contained"
             color={this.state.greenBtnColor}
             style={{ background: this.state.greenBtnBackground }}
-            onClick={this.props.updateParams("green", "filterType", "filter")}
+            onClick={this.greenClick}
           >
             Green Route
           </Button>

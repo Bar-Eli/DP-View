@@ -1,0 +1,63 @@
+{
+  "name": "Test_MPGW",
+  "rules": [
+    {
+      "name": "Test_MPGW_test_rule",
+      "direction": "request-rule",
+      "actions": [
+        {
+          "Type": "gatewayscript",
+          "Input": "INPUT",
+          "Output": "dpvar1",
+          "GatewayScriptLocation": "store:///identity.js"
+        },
+        {
+          "Type": "validate",
+          "Input": "dpvar1",
+          "Output": "NULL",
+          "SchemaURL": "store:///AAAInfo.xsd"
+        },
+        {
+          "Type": "xform",
+          "Input": "NULL",
+          "Output": "NULL",
+          "Transform": "store:///soap-mediation.xsl",
+          "StylesheetParameters": [
+            {
+              "ParameterName": "Destination",
+              "ParameterValue": "http://google.com"
+            }
+          ]
+        },
+        {
+          "Type": "xform",
+          "Input": "NULL",
+          "Output": "NULL",
+          "Transform": "store:///soap-mediation.xsl"
+        },
+        {
+          "Type": "results",
+          "Input": "INPUT",
+          "Output": "OUTPUT"
+        }
+      ],
+      "match": {
+        "MatchRules": {
+          "Type": "fullyqualifiedurl",
+          "HttpTag": "",
+          "HttpValue": "",
+          "Url": "http://0.0.0.0:7012*",
+          "ErrorCode": "",
+          "XPATHExpression": "",
+          "Method": "default",
+          "CustomMethod": ""
+        },
+        "MatchWithPCRE": "off",
+        "CombineWithOr": "off"
+      }
+    }
+  ],
+  "handlers": [
+    "test_http_fsh"
+  ]
+}

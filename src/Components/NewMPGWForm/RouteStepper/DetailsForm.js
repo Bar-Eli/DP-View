@@ -27,12 +27,12 @@ class DetailsForm extends Component {
 
   testBtnClick = () => {
     this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
-    this.props.updateDetailsBtn("test", "details", "testOrProd");
+    this.props.updateParams("test", "testOrProd", "details");
   };
 
   prodBtnClick = () => {
     this.setState({ prodBtnColor: "primary", testBtnColor: "default" });
-    this.props.updateDetailsBtn("prod", "details", "testOrProd");
+    this.props.updateParams("prod", "testOrProd", "details");
   };
 
   render() {
@@ -45,7 +45,11 @@ class DetailsForm extends Component {
             label="Project Name"
             value={this.props.details.projectNameValue}
             onChange={e =>
-              this.props.updateDetailsState(e, "projectNameValue", "details")
+              this.props.updateParams(
+                e.target.value,
+                "projectNameValue",
+                "details"
+              )
             }
           />
           <TextField
@@ -53,7 +57,11 @@ class DetailsForm extends Component {
             label="Mador"
             value={this.props.details.projectMadorValue}
             onChange={e =>
-              this.props.updateDetailsState(e, "projectMadorValue", "details")
+              this.props.updateParams(
+                e.target.value,
+                "projectMadorValue",
+                "details"
+              )
             }
           />
           <TextField
@@ -61,7 +69,11 @@ class DetailsForm extends Component {
             label="Team"
             value={this.props.details.projectTeamValue}
             onChange={e =>
-              this.props.updateDetailsState(e, "projectTeamValue", "details")
+              this.props.updateParams(
+                e.target.value,
+                "projectTeamValue",
+                "details"
+              )
             }
             InputProps={{
               startAdornment: (

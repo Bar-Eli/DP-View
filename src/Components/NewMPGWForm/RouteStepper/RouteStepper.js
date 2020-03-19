@@ -67,29 +67,19 @@ class RouteStepper extends Component {
         //Should be empty if the protocol is mq
         method: ""
       },
-      filter: {}
+      filter: {
+        filterType: "",
+        //should be empty if its not dexter filter
+        dexterFilter: "",
+        //should be empty if its not schema filter
+        schemaPath: ""
+      }
     };
   }
 
-  updateInputState = (e, paramName, form) => {
+  updateParamState = (value, paramName, form) => {
     let object = this.state[form];
-    object[paramName] = e.target.value;
-    if (form === "details") {
-      this.setState({ details: object });
-    } else if (form === "srcAddr") {
-      this.setState({ srcAddr: object });
-    } else if (form === "destAddr") {
-      this.setState({ destAddr: object });
-    } else if (form === "filter") {
-      this.setState({ filter: object });
-    } else {
-      alert("Something went wrong, no such form");
-    }
-  };
-
-  updateBtnState = (value, form, formParam) => {
-    let object = this.state[form];
-    object[formParam] = value;
+    object[paramName] = value;
     if (form === "details") {
       this.setState({ details: object });
     } else if (form === "srcAddr") {
@@ -109,16 +99,32 @@ class RouteStepper extends Component {
         return (
           <DetailsForm
             details={this.state.details}
-            updateDetailsState={this.updateInputState}
-            updateDetailsBtn={this.updateBtnState}
+            updateParams={this.updateParamState}
           />
         );
       case 1:
-        return <AddressForm params={this.state.srcAddr} />;
+        return (
+          <AddressForm
+            params={this.state.srcAddr}
+            whichForm="srcAddr"
+            updateParams={this.updateParamState}
+          />
+        );
       case 2:
-        return <AddressForm params={this.state.destAddr} />;
+        return (
+          <AddressForm
+            params={this.state.destAddr}
+            whichForm="destAddr"
+            updateParams={this.updateParamState}
+          />
+        );
       case 3:
-        return <FilterForm />;
+        return (
+          <FilterForm
+            details={this.state.filter}
+            updateParams={this.updateParamState}
+          />
+        );
       default:
         return "Unknown step";
     }

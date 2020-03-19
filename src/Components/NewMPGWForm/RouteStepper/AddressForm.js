@@ -40,7 +40,7 @@ class AddressForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      httpBtnColor: "primary",
+      httpBtnColor: "default",
       mqBtnColor: "default",
       network: undefined,
       protocol: "http",
@@ -59,6 +59,7 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port"
     });
+    this.props.updateParams("http", "protocol", this.props.whichForm);
   };
 
   mqBtnClick = () => {
@@ -69,11 +70,7 @@ class AddressForm extends Component {
       primaryAddress: "Queue manager",
       secondaryAddress: "Queue name"
     });
-  };
-
-  handleChangeNetwork = event => {
-    // setAge(event.target.value);
-    this.setState({ network: event.target.value });
+    this.props.updateParams("mq", "protocol", this.props.whichForm);
   };
 
   handleChangeHttpMethod = event => {
@@ -113,7 +110,13 @@ class AddressForm extends Component {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={this.state.age}
-              onChange={this.handleChangeNetwork}
+              onChange={e =>
+                this.props.updateParams(
+                  e.target.value,
+                  "network",
+                  this.props.whichForm
+                )
+              }
             >
               <MenuItem value={"Salim"}>Salim</MenuItem>
               <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
@@ -121,10 +124,29 @@ class AddressForm extends Component {
             </Select>
           </FormControl>
 
-          <TextField id="primary-address" label={this.state.primaryAddress} />
+          <TextField
+            id="primary-address"
+            label={this.state.primaryAddress}
+            onChange={e => {
+              this.props.updateParams(
+                e.target.value,
+                "primaryAddress",
+                this.props.whichForm
+              );
+            }}
+            value={this.props.params.primaryAddress}
+          />
           <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
+            onChange={e => {
+              this.props.updateParams(
+                e.target.value,
+                "secondaryAddress",
+                this.props.whichForm
+              );
+            }}
+            value={this.props.params.secondaryAddress}
           />
           <br />
           <br />
@@ -136,8 +158,14 @@ class AddressForm extends Component {
             <RadioGroup
               aria-label="httpMethod"
               name="httpMethod"
-              value={this.state.httpMethod}
-              onChange={this.handleChangeHttpMethod}
+              onChange={e => {
+                this.props.updateParams(
+                  e.target.value,
+                  "method",
+                  this.props.whichForm
+                );
+              }}
+              value={this.props.params.method}
             >
               <FormControlLabel value="GET" control={<Radio />} label="GET" />
               <FormControlLabel value="POST" control={<Radio />} label="POST" />

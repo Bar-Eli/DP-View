@@ -29,10 +29,12 @@ class DetailsForm extends Component {
 
   testBtnClick = () => {
     this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
+    this.props.updateParams("test", "testOrProd", "details");
   };
 
   prodBtnClick = () => {
     this.setState({ prodBtnColor: "primary", testBtnColor: "default" });
+    this.props.updateParams("prod", "testOrProd", "details");
   };
 
   render() {
@@ -50,6 +52,9 @@ class DetailsForm extends Component {
             renderInput={params => (
               <TextField {...params} label="Mpgw Name" variant="outlined" />
             )}
+            onChange={(e, value) => {
+              this.props.updateParams(value, "mpgwName", "details");
+            }}
           />
           <br />
           <Button

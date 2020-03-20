@@ -78,7 +78,9 @@ class FilterFormForm extends Component {
             variant="contained"
             color={this.state.greenBtnColor}
             style={{ background: this.state.greenBtnBackground }}
-            onClick={this.props.updateParams("green", "filterType", "filter")}
+            onClick={e =>
+              this.props.updateParams("green", "filterType", "filter")
+            }
           >
             Green Route
           </Button>

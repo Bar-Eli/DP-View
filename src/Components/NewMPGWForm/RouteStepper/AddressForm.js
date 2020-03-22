@@ -10,7 +10,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import MaterialTable from "material-table";
+import DynamicTable from "../../DynamicTable";
 
 const useStyles = theme => ({
   root: {
@@ -29,12 +29,6 @@ const useStyles = theme => ({
   }
 });
 
-const collums = [
-  { title: "Network", field: "Network" },
-  { title: "Ip/Url", field: "Url" },
-  { title: "Ip/Url", field: "Url" }
-];
-
 class AddressForm extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +41,9 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port",
       httpMethod: undefined,
-      showMethods: "block"
+      showMethods: "block",
+      tableData: [],
+      showTableMQ: "false"
     };
   }
 
@@ -78,6 +74,12 @@ class AddressForm extends Component {
     this.setState({ httpMethod: event.target.value });
   };
 
+  handleRowAdd = newData => {
+    const data = this.state.tableData;
+    data.push(newData);
+    this.setState({ tableData: data });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -101,10 +103,13 @@ class AddressForm extends Component {
             mq
           </Button>
           <br />
-          {/* <div style={{ maxWidth: "100%" }}>
-            <MaterialTable></MaterialTable>
-          </div> */}
-          <FormControl>
+          <DynamicTable
+            data={this.state.tableData}
+            header="Add New Rules"
+            addRow={this.handleRowAdd}
+            showMq={this.state.showTableMQ}
+          />
+          {/* <FormControl>
             <InputLabel id="demo-simple-select-label">Network</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -122,9 +127,9 @@ class AddressForm extends Component {
               <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
               <MenuItem value={"Zeus"}>Zeus</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
 
-          <TextField
+          {/* <TextField
             id="primary-address"
             label={this.state.primaryAddress}
             onChange={e => {
@@ -135,8 +140,8 @@ class AddressForm extends Component {
               );
             }}
             value={this.props.params.primaryAddress}
-          />
-          <TextField
+          /> */}
+          {/* <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
             onChange={e => {
@@ -147,15 +152,15 @@ class AddressForm extends Component {
               );
             }}
             value={this.props.params.secondaryAddress}
-          />
-          <br />
-          <br />
+          /> */}
+          {/* <br />
+          <br /> */}
           <div
             className={classes.centerMargin}
             style={{ display: this.state.showMethods }}
           >
-            <h5 className={classes.centerMargin}>Method</h5>
-            <RadioGroup
+            {/* <h5 className={classes.centerMargin}>Method</h5> */}
+            {/* <RadioGroup
               aria-label="httpMethod"
               name="httpMethod"
               onChange={e => {
@@ -170,7 +175,7 @@ class AddressForm extends Component {
               <FormControlLabel value="GET" control={<Radio />} label="GET" />
               <FormControlLabel value="POST" control={<Radio />} label="POST" />
               <FormControlLabel value="PUT" control={<Radio />} label="PUT" />
-            </RadioGroup>
+            </RadioGroup> */}
           </div>
         </form>
         <br />

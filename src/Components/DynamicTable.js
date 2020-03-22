@@ -28,8 +28,7 @@ export class DynamicTable extends Component {
         },
         { title: "Queue Manager", field: "qm" },
         { title: "Queue Name", field: "queue" }
-      ],
-      data: []
+      ]
     };
   }
 
@@ -37,23 +36,25 @@ export class DynamicTable extends Component {
     return (
       <div>
         <MaterialTable
-          title="Rules"
+          title={this.props.header}
           columns={
-            this.state.showMq === "false"
+            this.props.showMq === "false"
               ? this.state.httpColumns
               : this.state.mqColumns
           }
-          data={this.state.data}
+          data={this.props.data}
+          style={{ width: 1200 }}
           editable={{
             onRowAdd: newData =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  this.setState(prevState => {
-                    const data = [...prevState.data];
-                    data.push(newData);
-                    return { ...prevState, data };
-                  });
+                  // this.setState(prevState => {
+                  //   const data = [...prevState.data];
+                  //   data.push(newData);
+                  //   return { ...prevState, data };
+                  // });
+                  this.props.addRow(newData);
                 }, 600);
               }),
             onRowUpdate: (newData, oldData) =>

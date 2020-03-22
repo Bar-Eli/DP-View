@@ -31,7 +31,7 @@ class FilterFormForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      greenBtnBackground: "#e0e0e0",
+      greenBtnBackground: "default",
       greenBtnColor: "default",
       schemaBtnColor: "default",
       dpasBtnColor: "default",
@@ -50,6 +50,7 @@ class FilterFormForm extends Component {
       showDpas: "none",
       showUpload: "inline-flex"
     });
+    this.props.updateParams("green", "filterType", "filter");
   };
 
   dpasBtnClick = () => {
@@ -61,6 +62,17 @@ class FilterFormForm extends Component {
       showDpas: "inline-flex",
       showUpload: "none"
     });
+  };
+
+  greenBtnClick = () => {
+    this.setState({
+      greenBtnColor: "primary",
+      schemaBtnColor: "default",
+      dpasBtnColor: "default",
+      showDpas: "none",
+      showUpload: "none"
+    });
+    this.props.updateParams("green", "filterType", "filter");
   };
 
   handleChangeDpas = event => {
@@ -78,9 +90,7 @@ class FilterFormForm extends Component {
             variant="contained"
             color={this.state.greenBtnColor}
             style={{ background: this.state.greenBtnBackground }}
-            onClick={e =>
-              this.props.updateParams("green", "filterType", "filter")
-            }
+            onClick={this.greenBtnClick}
           >
             Green Route
           </Button>

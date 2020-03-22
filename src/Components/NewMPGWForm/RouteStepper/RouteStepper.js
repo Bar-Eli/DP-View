@@ -143,6 +143,19 @@ class RouteStepper extends Component {
     this.setActiveStep(this.state.step - 1);
   };
 
+  handleFinish = () => {
+    const newMpgwParams = `[details: ${JSON.stringify(
+      this.state.details
+    )}, srcAddr: ${JSON.stringify(
+      this.state.srcAddr
+    )}, destAddr: ${JSON.stringify(
+      this.state.destAddr
+    )}, filter: ${JSON.stringify(this.state.filter)}]`;
+
+    // This is the json with the params that should be sent to the backend
+    console.log(newMpgwParams);
+  };
+
   handleReset = () => {
     this.setActiveStep(0);
   };
@@ -172,7 +185,11 @@ class RouteStepper extends Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={this.handleNext}
+                      onClick={
+                        activeStep === steps.length - 1
+                          ? this.handleFinish
+                          : this.handleNext
+                      }
                       className={classes.button}
                     >
                       {activeStep === steps.length - 1 ? "Finish" : "Next"}

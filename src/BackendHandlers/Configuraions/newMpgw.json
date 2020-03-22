@@ -58,7 +58,7 @@
     }
   ],
   "handlers": [
-    "test_http_fsh"
+    ""
   ]
 }
 

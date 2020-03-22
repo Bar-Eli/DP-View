@@ -39,12 +39,12 @@ export default class BackendRequests {
             url = this.BACKEND_URL + "/api/mq_handler" + this.DP_URL_PARAMS;
         }
 
+        // url = "http://localhost:4000/"; // DEBUG
         const data = JSON.stringify(payload);
         const options = {
             method: 'POST',
             body: data,
         };
-
         const response = await fetch(url, options);
         const responseData = await response.json();
         console.log(responseData);

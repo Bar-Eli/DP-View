@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newHttpFsh.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newMqFsh.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newHttpFsh.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newHttpFsh.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newMpgw.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/Configuraions/newMpgw.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584896545453</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Complete creation of MPGW">
+      <created>1584907067569</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584907067569</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +135,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic MPGW Request" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic MPGW Request" />
+    <MESSAGE value="Complete creation of MPGW" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete creation of MPGW" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js</url>
+          <line>89</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

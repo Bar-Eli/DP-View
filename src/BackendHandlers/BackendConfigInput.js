@@ -29,8 +29,8 @@ export default class BackendConfigInput {
         const httpMethod = input["srcAddr"]["method"];
 
         config["name"] = mpgwName + "_FSH"; // Set FSH name
-        config["localAddress"] = localAddress;
-        config["localPort"] = localPort;
+        config["LocalAddress"] = localAddress;
+        config["LocalPort"] = localPort;
         config["AllowedFeatures"][httpMethod] = "on";
 
         return config;
@@ -83,6 +83,8 @@ export default class BackendConfigInput {
                 "dpmq://" + dstPAddr + "/?RequestQueue=" + dstSAddr;
         }
 
+        // Add FSH to MPGW
+        config["handlers"][0] = fshName;
 
         // console.log("Check config");
         console.log(config);

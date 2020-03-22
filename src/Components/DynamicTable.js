@@ -4,27 +4,32 @@ import MaterialTable from "material-table";
 export class DynamicTable extends Component {
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = {
-      columns: [
-        { title: "Name", field: "name" },
-        { title: "Surname", field: "surname" },
-        { title: "Birth Year", field: "birthYear", type: "numeric" },
+      showMq: "false",
+      httpColumns: [
         {
-          title: "Birth Place",
-          field: "birthCity",
-          lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
+          title: "Network",
+          field: "network",
+          lookup: { 1: "Tzadok", 2: "Zeus", 3: "Salim" }
+        },
+        { title: "IP/URL", field: "url" },
+        { title: "Port", field: "port", type: "numeric" },
+        {
+          title: "Method",
+          field: "method",
+          lookup: { 1: "PUT", 2: "POST", 3: "GET" }
         }
       ],
-      data: [
-        { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 },
+      mqColumns: [
         {
-          name: "Zerya Betül",
-          surname: "Baran",
-          birthYear: 2017,
-          birthCity: 34
-        }
-      ]
+          title: "Network",
+          field: "network",
+          lookup: { 1: "Tzadok", 2: "Zeus", 3: "Salim" }
+        },
+        { title: "Queue Manager", field: "qm" },
+        { title: "Queue Name", field: "queue" }
+      ],
+      data: []
     };
   }
 
@@ -32,9 +37,13 @@ export class DynamicTable extends Component {
     return (
       <div>
         <MaterialTable
-          title="Editable Example"
-          columns={this.props.columns}
-          data={this.props.data}
+          title="Rules"
+          columns={
+            this.state.showMq === "false"
+              ? this.state.httpColumns
+              : this.state.mqColumns
+          }
+          data={this.state.data}
           editable={{
             onRowAdd: newData =>
               new Promise(resolve => {

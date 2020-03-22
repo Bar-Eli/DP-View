@@ -1,0 +1,17 @@
+{
+  "AsyncPut": "off",
+  "BatchSize": 0,
+  "CodePage": 0,
+  "ConcurrentConnections": 1,
+  "GetMessageOptions": 1,
+  "GetQueue": "test",
+  "ParseProperties": "on",
+  "PollingInterval": 30,
+  "QueueManager": {
+    "value": "Test_QMGR1"
+  },
+  "RetrieveBackoutSettings": "off",
+  "UseQMNameInURL": "off",
+  "mAdminState": "enabled",
+  "name": "Test_MPGW_FS"
+}

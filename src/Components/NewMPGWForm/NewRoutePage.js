@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import {display} from '@material-ui/system';
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
@@ -15,28 +16,52 @@ const useStyles = theme => ({
     },
     stylish: {
         background: "linear-gradient(45deg, #29323c 30%, #485563 90%)",
-        // background: 'linear-gradient(45deg, #434343   30%, #000000 90%)',
-        // background: 'linear-gradient(45deg, #6e1a5d 30%, #21CBF3 90%)',
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        // background: 'linear-gradient(45deg, #2196F3  30%, #21CBF3  90%)',
         border: 0,
         borderRadius: 3,
         boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
         color: "white",
-        // height: 48,
         padding: "0 30px",
         textTransform: "none"
+    },
+    createBtn: {
+        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 40px',
+        marginLeft: '60px'
     }
 });
 
 class NewRoutePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showCreate: 'block',
+            inputParams: {}
+        };
+        this.inputParams = {};
+    }
+
+
     refreshPage = () => {
         window.location.reload(false);
     };
 
     createMPGW = () => {
-        console.log("click function1");
-        BackendRequests.createNewMpgw();
+        BackendRequests.createNewMpgw(this.inputParams);
+    };
+
+    setInput = (inputJson) => {
+        this.setState({showCreate: 'block'});
+        this.inputParams = inputJson;
+    };
+
+    hideCreate = () => {
+        this.setState({showCreate: 'none'})
     };
 
 
@@ -56,13 +81,13 @@ class NewRoutePage extends Component {
                     </Typography>
                 </Button>
 
-                <RouteStepper/>
+                <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate}/>
 
                 <br/>
                 {/*<Button variant="contained">Default</Button>*/}
                 {/*<Button variant="contained" color="primary">Primary</Button>*/}
                 {/*<Button variant="contained" color="secondary">Secondary</Button>*/}
-                <Button className={classes.stylish} variant="contained" color="secondary"
+                <Button className={classes.createBtn} variant="contained" color="secondary" style={{display: this.state.showCreate}}
                         onClick={this.createMPGW}>Create</Button>
             </div>
         );

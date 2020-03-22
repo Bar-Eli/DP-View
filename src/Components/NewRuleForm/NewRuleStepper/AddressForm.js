@@ -10,7 +10,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import MaterialTable from "material-table";
+import DynamicTable from "../../DynamicTable";
 
 const useStyles = theme => ({
   root: {
@@ -47,7 +47,10 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port",
       httpMethod: undefined,
-      showMethods: "block"
+      showMethods: "block",
+      srcTableData: [],
+      destTableData: [],
+      showTableMQ: "false"
     };
   }
 
@@ -101,10 +104,7 @@ class AddressForm extends Component {
             mq
           </Button>
           <br />
-          {/* <div style={{ maxWidth: "100%" }}>
-            <MaterialTable></MaterialTable>
-          </div> */}
-          <FormControl>
+          {/* <FormControl>
             <InputLabel id="demo-simple-select-label">Network</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -149,13 +149,34 @@ class AddressForm extends Component {
             value={this.props.params.secondaryAddress}
           />
           <br />
-          <br />
+          <br /> */}
+          <DynamicTable
+            data={
+              this.props.whichForm === "srcAddr"
+                ? this.state.srcTableData
+                : this.state.destTableData
+            }
+            header="Add New Rules"
+            addRow={this.handleRowAdd}
+            updateRow={this.handleRowUpdate}
+            deleteRow={this.handleRowDelete}
+            showMq={this.state.showTableMQ}
+            isSrc={this.props.whichForm === "srcAddr" ? "true" : "false"}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleSubmitRulesBtn}
+          >
+            Submit Rules
+          </Button>
+
           <div
             className={classes.centerMargin}
             style={{ display: this.state.showMethods }}
           >
-            <h5 className={classes.centerMargin}>Method</h5>
-            <RadioGroup
+            {/* <h5 className={classes.centerMargin}>Method</h5>
+             <RadioGroup
               aria-label="httpMethod"
               name="httpMethod"
               onChange={e => {
@@ -170,7 +191,7 @@ class AddressForm extends Component {
               <FormControlLabel value="GET" control={<Radio />} label="GET" />
               <FormControlLabel value="POST" control={<Radio />} label="POST" />
               <FormControlLabel value="PUT" control={<Radio />} label="PUT" />
-            </RadioGroup>
+            </RadioGroup> */}
           </div>
         </form>
         <br />

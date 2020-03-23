@@ -37,7 +37,8 @@ class FilterFormForm extends Component {
       dpasBtnColor: "default",
       dpasService: undefined,
       showDpas: "none",
-      showUpload: "none"
+      showUpload: "none",
+      displayChangeButtons: "none"
     };
   }
 
@@ -85,10 +86,27 @@ class FilterFormForm extends Component {
         <form className={classes.root} noValidate autoComplete="off">
           <br />
 
+          <h2 style={{ marginLeft: "35px" }}>
+            <b> Current Filter</b>
+          </h2>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={e =>
+              this.setState({ displayChangeButtons: "inline-flex" })
+            }
+          >
+            Change Filter
+          </Button>
+          <br></br>
           <Button
             variant="contained"
             color={this.state.greenBtnColor}
-            style={{ background: this.state.greenBtnBackground }}
+            style={{
+              background: this.state.greenBtnBackground,
+              display: `${this.state.displayChangeButtons}`
+            }}
             onClick={this.greenClick}
           >
             Green Route
@@ -97,6 +115,7 @@ class FilterFormForm extends Component {
             variant="contained"
             color={this.state.schemaBtnColor}
             onClick={this.schemaBtnClick}
+            style={{ display: `${this.state.displayChangeButtons}` }}
           >
             Schema
           </Button>
@@ -104,6 +123,7 @@ class FilterFormForm extends Component {
             variant="contained"
             color={this.state.dpasBtnColor}
             onClick={this.dpasBtnClick}
+            style={{ display: `${this.state.displayChangeButtons}` }}
           >
             DPAS
           </Button>

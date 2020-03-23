@@ -18,7 +18,7 @@ export class Navbar extends Component {
   NavbarStyle = styled.div`
     #text {
       font-weight: bold;
-      font-size: 350%;
+      font-size: 300%;
       margin-right: 75px;
     }
     .btn {
@@ -47,7 +47,7 @@ export class Navbar extends Component {
         <AppBar position="static">
           <Toolbar variant="dense">
             <Typography color="inherit" id="text">
-              DP-View
+              DP View
             </Typography>
             <Link
               component="button"

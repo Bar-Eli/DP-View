@@ -1,8 +1,8 @@
 {
-  "name": "Test_MPGW",
+  "name": "",
   "rules": [
     {
-      "name": "Test_MPGW_test_rule",
+      "name": "",
       "direction": "request-rule",
       "actions": [
         {
@@ -25,7 +25,7 @@
           "StylesheetParameters": [
             {
               "ParameterName": "Destination",
-              "ParameterValue": "http://google.com"
+              "ParameterValue": ""
             }
           ]
         },
@@ -46,7 +46,7 @@
           "Type": "fullyqualifiedurl",
           "HttpTag": "",
           "HttpValue": "",
-          "Url": "http://0.0.0.0:7012*",
+          "Url": "",
           "ErrorCode": "",
           "XPATHExpression": "",
           "Method": "default",
@@ -58,6 +58,6 @@
     }
   ],
   "handlers": [
-    "test_http_fsh"
+    ""
   ]
 }

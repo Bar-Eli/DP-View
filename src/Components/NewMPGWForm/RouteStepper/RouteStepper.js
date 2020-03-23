@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
 import AddressForm from "./AddressForm";
-import { render } from "react-dom";
 import FilterForm from "./FilterForm";
 
 const useStyles = theme => ({
@@ -149,21 +148,24 @@ class RouteStepper extends Component {
   };
 
   handleFinish = () => {
-    const newMpgwParams = `[details: ${JSON.stringify(
-      this.state.details
-    )}, srcAddr: ${JSON.stringify(
-      this.state.srcAddr
-    )}, destAddr: ${JSON.stringify(
-      this.state.destAddr
-    )}, filter: ${JSON.stringify(this.state.filter)}]`;
+    this.setActiveStep(this.state.step + 1);
 
+    const newMpgwParams = {
+      "details": this.state.details,
+      "srcAddr": this.state.srcAddr,
+      "destAddr": this.state.destAddr,
+      "filter": this.state.filter
+    };
     // This is the json with the params that should be sent to the backend
     console.log(newMpgwParams);
+    this.props.setInput(newMpgwParams);
   };
 
   handleReset = () => {
+    this.props.hideCreate();
     this.setActiveStep(0);
   };
+
   render() {
     const { classes } = this.props;
     const activeStep = this.state.step;

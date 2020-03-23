@@ -69,6 +69,7 @@ class FilterFormForm extends Component {
       greenBtnColor: "primary",
       schemaBtnColor: "default",
       dpasBtnColor: "default",
+      greenBtnBackground: "green",
       showDpas: "none",
       showUpload: "none"
     });

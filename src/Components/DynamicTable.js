@@ -28,7 +28,8 @@ export class DynamicTable extends Component {
         },
         { title: "Queue Manager", field: "qm" },
         { title: "Queue Name", field: "queue" }
-      ]
+      ],
+      isSrc: this.props.isSrc
     };
   }
 
@@ -49,36 +50,24 @@ export class DynamicTable extends Component {
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  // this.setState(prevState => {
-                  //   const data = [...prevState.data];
-                  //   data.push(newData);
-                  //   return { ...prevState, data };
-                  // });
-                  this.props.addRow(newData);
+                  const isSrc = this.state.isSrc;
+                  this.props.addRow(newData, isSrc);
                 }, 600);
               }),
             onRowUpdate: (newData, oldData) =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  if (oldData) {
-                    this.setState(prevState => {
-                      const data = [...prevState.data];
-                      data[data.indexOf(oldData)] = newData;
-                      return { ...prevState, data };
-                    });
-                  }
+                  const isSrc = this.state.isSrc;
+                  this.props.updateRow(newData, oldData, isSrc);
                 }, 600);
               }),
             onRowDelete: oldData =>
               new Promise(resolve => {
                 setTimeout(() => {
                   resolve();
-                  this.setState(prevState => {
-                    const data = [...prevState.data];
-                    data.splice(data.indexOf(oldData), 1);
-                    return { ...prevState, data };
-                  });
+                  const isSrc = this.state.isSrc;
+                  this.props.deleteRow(oldData, isSrc);
                 }, 600);
               })
           }}

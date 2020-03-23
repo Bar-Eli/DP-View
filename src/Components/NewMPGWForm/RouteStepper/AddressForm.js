@@ -42,7 +42,8 @@ class AddressForm extends Component {
       secondaryAddress: "Port",
       httpMethod: undefined,
       showMethods: "block",
-      tableData: [],
+      srcTableData: [],
+      destTableData: [],
       showTableMQ: "false"
     };
   }
@@ -53,7 +54,8 @@ class AddressForm extends Component {
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port"
+      secondaryAddress: "Port",
+      showTableMQ: "false"
     });
     this.props.updateParams("http", "protocol", this.props.whichForm);
   };
@@ -64,7 +66,8 @@ class AddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name"
+      secondaryAddress: "Queue name",
+      showTableMQ: "true"
     });
     this.props.updateParams("mq", "protocol", this.props.whichForm);
   };
@@ -74,10 +77,60 @@ class AddressForm extends Component {
     this.setState({ httpMethod: event.target.value });
   };
 
-  handleRowAdd = newData => {
-    const data = this.state.tableData;
-    data.push(newData);
-    this.setState({ tableData: data });
+  handleRowAdd = (newData, isSrc) => {
+    if (isSrc === "true") {
+      this.setState(prevState => {
+        const srcTableData = [...prevState.srcTableData];
+        srcTableData.push(newData);
+        return { ...prevState, srcTableData };
+      });
+    } else if (isSrc === "false") {
+      this.setState(prevState => {
+        const destTableData = [...prevState.destTableData];
+        destTableData.push(newData);
+        return { ...prevState, destTableData };
+      });
+    }
+  };
+
+  handleRowUpdate = (newData, oldData, isSrc) => {
+    if (oldData) {
+      if (isSrc === "true") {
+        this.setState(prevState => {
+          const srcTableData = [...prevState.srcTableData];
+          srcTableData[srcTableData.indexOf(oldData)] = newData;
+          return { ...prevState, srcTableData };
+        });
+      } else if (isSrc === "true") {
+        this.setState(prevState => {
+          const destTableData = [...prevState.destTableData];
+          destTableData[destTableData.indexOf(oldData)] = newData;
+          return { ...prevState, destTableData };
+        });
+      }
+    }
+  };
+
+  handleRowDelete = (oldData, isSrc) => {
+    if (isSrc === "true") {
+      this.setState(prevState => {
+        const srcTableData = [...prevState.srcTableData];
+        srcTableData.splice(srcTableData.indexOf(oldData), 1);
+        return { ...prevState, srcTableData };
+      });
+    } else if (isSrc === "false") {
+      this.setState(prevState => {
+        const destTableData = [...prevState.destTableData];
+        destTableData.splice(destTableData.indexOf(oldData), 1);
+        return { ...prevState, destTableData };
+      });
+    }
+  };
+
+  handleSubmitRulesBtn = () => {
+    this.props.whichForm === "srcAddr"
+      ? this.props.updateTableParams(this.state.srcTableData, "true")
+      : this.props.updateTableParams(this.state.destTableData, "false");
   };
 
   render() {
@@ -104,11 +157,26 @@ class AddressForm extends Component {
           </Button>
           <br />
           <DynamicTable
-            data={this.state.tableData}
+            data={
+              this.props.whichForm === "srcAddr"
+                ? this.state.srcTableData
+                : this.state.destTableData
+            }
             header="Add New Rules"
             addRow={this.handleRowAdd}
+            updateRow={this.handleRowUpdate}
+            deleteRow={this.handleRowDelete}
             showMq={this.state.showTableMQ}
+            isSrc={this.props.whichForm === "srcAddr" ? "true" : "false"}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleSubmitRulesBtn}
+            style={{ backgroundColor: "#32CD32" }}
+          >
+            Submit Rules
+          </Button>
           {/* <FormControl>
             <InputLabel id="demo-simple-select-label">Network</InputLabel>
             <Select

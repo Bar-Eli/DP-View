@@ -84,7 +84,8 @@ export default class BackendConfigInput {
         }
 
         // Add FSH to MPGW
-        config["handlers"][0] = fshName;
+        // config["handlers"][0] = fshName;
+        config["handlers"] = [fshName];
 
         // console.log("Check config");
         console.log(config);

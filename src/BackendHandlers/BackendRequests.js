@@ -55,7 +55,8 @@ export default class BackendRequests {
 
         this.createNewFsh(input);
 
-        const port = await this.getFreePort();
+        // const port = await this.getFreePort();
+        const port = 23;
         // const url = 'http://localhost:4000/'; // DEBUG
         const url = this.BACKEND_URL + "/api/mpgw" + this.DP_URL_PARAMS;
 

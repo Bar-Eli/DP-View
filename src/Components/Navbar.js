@@ -57,21 +57,21 @@ export class Navbar extends Component {
             >
               Add New MPGW
             </Link>
-            <Link
+            {/* <Link
               component="button"
               variant="body2"
               onClick={() => this.handleRedirect(2)}
               className="btn"
             >
               Add New Rule
-            </Link>
+            </Link> */}
             <Link
               component="button"
               variant="body2"
               onClick={() => this.handleRedirect(3)}
               className="btn"
             >
-              Edit Existing Rule
+              Edit Rules
             </Link>
           </Toolbar>
         </AppBar>

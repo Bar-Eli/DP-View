@@ -107,6 +107,7 @@ class RouteStepper extends Component {
             whichForm="srcAddr"
             updateParams={this.updateParamState}
             updateTableParams={this.updateTableParams}
+            tableHeader="Current Rules"
           />
         );
       case 2:
@@ -116,6 +117,7 @@ class RouteStepper extends Component {
             whichForm="destAddr"
             updateParams={this.updateParamState}
             updateTableParams={this.updateTableParams}
+            tableHeader="Current Rules"
           />
         );
       case 3:

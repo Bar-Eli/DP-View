@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
-import AddressForm from "./AddressForm";
+import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import { render } from "react-dom";
 import FilterForm from "./FilterForm";
 
@@ -35,29 +35,106 @@ function getSteps() {
   return ["Route details", "Source", "Destination", "Filter"];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <DetailsForm />;
-    case 1:
-      return <AddressForm />;
-    case 2:
-      return <AddressForm />;
-    case 3:
-      return <FilterForm />;
-    default:
-      return "Unknown step";
-  }
-}
-
-class EditRuleStepper extends Component {
+class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 0
+      step: 0,
       // step: 3 // FOR DEBUG
+      details: {
+        projectNameValue: "",
+        projectMadorValue: "",
+        projectTeamValue: "",
+        testOrProd: ""
+      },
+      srcAddr: {
+        srcTableData: [],
+        //Should be empty if the protocol is mq
+        method: ""
+      },
+      destAddr: {
+        destTableData: [],
+        //Should be empty if the protocol is mq
+        method: ""
+      },
+      filter: {
+        filterType: "",
+        //should be empty if its not dexter filter
+        dexterFilter: "",
+        //should be empty if its not schema filter
+        schemaPath: ""
+      }
     };
   }
+
+  updateParamState = (value, paramName, form) => {
+    let object = this.state[form];
+    object[paramName] = value;
+    if (form === "details") {
+      this.setState({ details: object });
+    } else if (form === "srcAddr") {
+      this.setState({ srcAddr: object });
+    } else if (form === "destAddr") {
+      this.setState({ destAddr: object });
+    } else if (form === "filter") {
+      this.setState({ filter: object });
+    } else {
+      alert("Something went wrong, no such form");
+    }
+  };
+
+  updateTableParams = (newData, isSrc) => {
+    if (isSrc === "true") {
+      const srcAddrObject = this.state.srcAddr;
+      srcAddrObject.srcTableData.push(newData);
+      this.setState({ srcAddr: srcAddrObject });
+    } else if (isSrc === "false") {
+      const destAddrObject = this.state.destAddr;
+      destAddrObject.destTableData.push(newData);
+      this.setState({ destAddr: destAddrObject });
+    }
+    alert("You have submitted the rules!");
+  };
+
+  getStepContent = step => {
+    switch (step) {
+      case 0:
+        return (
+          <DetailsForm
+            details={this.state.details}
+            updateParams={this.updateParamState}
+          />
+        );
+      case 1:
+        return (
+          <AddressForm
+            params={this.state.srcAddr}
+            whichForm="srcAddr"
+            updateParams={this.updateParamState}
+            updateTableParams={this.updateTableParams}
+          />
+        );
+      case 2:
+        return (
+          <AddressForm
+            params={this.state.destAddr}
+            whichForm="destAddr"
+            updateParams={this.updateParamState}
+            updateTableParams={this.updateTableParams}
+          />
+        );
+      case 3:
+        return (
+          <FilterForm
+            details={this.state.filter}
+            updateParams={this.updateParamState}
+          />
+        );
+      default:
+        return "Unknown step";
+    }
+  };
+
   setActiveStep = newStep => {
     // React.useState(0)
     this.setState({ step: newStep });
@@ -69,6 +146,19 @@ class EditRuleStepper extends Component {
 
   handleBack = () => {
     this.setActiveStep(this.state.step - 1);
+  };
+
+  handleFinish = () => {
+    const newMpgwParams = `[details: ${JSON.stringify(
+      this.state.details
+    )}, srcAddr: ${JSON.stringify(
+      this.state.srcAddr
+    )}, destAddr: ${JSON.stringify(
+      this.state.destAddr
+    )}, filter: ${JSON.stringify(this.state.filter)}]`;
+
+    // This is the json with the params that should be sent to the backend
+    console.log(newMpgwParams);
   };
 
   handleReset = () => {
@@ -87,7 +177,7 @@ class EditRuleStepper extends Component {
                 <a className={classes.stepLabel}>{label}</a>
               </StepLabel>
               <StepContent>
-                <Typography>{getStepContent(index)}</Typography>
+                <Typography>{this.getStepContent(index)}</Typography>
                 <div className={classes.actionsContainer}>
                   <div>
                     <Button
@@ -100,7 +190,11 @@ class EditRuleStepper extends Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={this.handleNext}
+                      onClick={
+                        activeStep === steps.length - 1
+                          ? this.handleFinish
+                          : this.handleNext
+                      }
                       className={classes.button}
                     >
                       {activeStep === steps.length - 1 ? "Finish" : "Next"}
@@ -128,4 +222,4 @@ class EditRuleStepper extends Component {
     );
   }
 }
-export default withStyles(useStyles, { withTheme: true })(EditRuleStepper);
+export default withStyles(useStyles, { withTheme: true })(RouteStepper);

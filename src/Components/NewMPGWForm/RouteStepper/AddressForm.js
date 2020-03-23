@@ -162,7 +162,7 @@ class AddressForm extends Component {
                 ? this.state.srcTableData
                 : this.state.destTableData
             }
-            header="Add New Rules"
+            header={this.props.tableHeader}
             addRow={this.handleRowAdd}
             updateRow={this.handleRowUpdate}
             deleteRow={this.handleRowDelete}

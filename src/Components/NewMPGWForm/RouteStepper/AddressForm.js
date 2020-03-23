@@ -173,6 +173,7 @@ class AddressForm extends Component {
             variant="contained"
             color="primary"
             onClick={this.handleSubmitRulesBtn}
+            style={{ backgroundColor: "#32CD32" }}
           >
             Submit Rules
           </Button>

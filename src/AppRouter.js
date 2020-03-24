@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 import NewRulePage from "./Components/NewRuleForm/NewRulePage";
 import EditRuleStepper from "./Components/EditRuleForm/EditRules";
-import DynamicTable from "./Components/DynamicTable";
+// import HorizontalNonLinearAlternativeLabelStepper from "./Components/HorizontalStepper";
 
 function AppRouter() {
   return (
@@ -12,7 +12,10 @@ function AppRouter() {
         <Route path="/" exact component={NewRoutePage} />
         {/* <Route path="/addRule" component={NewRulePage} /> */}
         <Route path="/editRule" component={EditRuleStepper} />
-        <Route path="/table" component={DynamicTable} />
+        {/* <Route
+          path="/stepper"
+          component={HorizontalNonLinearAlternativeLabelStepper}
+        /> */}
       </div>
     </Router>
   );

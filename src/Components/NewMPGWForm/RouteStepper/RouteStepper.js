@@ -8,8 +8,10 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
-import AddressForm from "./AddressForm";
-import FilterForm from "./FilterForm";
+import HorizontalStepper from "./HorizontalStepper";
+import Overview from "./Overview";
+// import AddressForm from "./AddressForm";
+// import FilterForm from "./FilterForm";
 
 const useStyles = theme => ({
   root: {
@@ -31,7 +33,7 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Route details", "Source", "Destination", "Filter"];
+  return ["Route details", "Rules", "Overview"];
 }
 
 class RouteStepper extends Component {
@@ -106,31 +108,36 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
-          <AddressForm
-            params={this.state.srcAddr}
-            whichForm="srcAddr"
-            updateParams={this.updateParamState}
-            updateTableParams={this.updateTableParams}
-            tableHeader="Add New Rules"
+          // <AddressForm
+          //   params={this.state.srcAddr}
+          //   whichForm="srcAddr"
+          //   updateParams={this.updateParamState}
+          //   updateTableParams={this.updateTableParams}
+          //   tableHeader="Add New Rules"
+          // />
+          <HorizontalStepper
+            setInput={this.setInput}
+            hideCreate={this.hideCreate}
           />
         );
       case 2:
         return (
-          <AddressForm
-            params={this.state.destAddr}
-            whichForm="destAddr"
-            updateParams={this.updateParamState}
-            updateTableParams={this.updateTableParams}
-            tableHeader="Add New Rules"
-          />
+          // <AddressForm
+          //   params={this.state.destAddr}
+          //   whichForm="destAddr"
+          //   updateParams={this.updateParamState}
+          //   updateTableParams={this.updateTableParams}
+          //   tableHeader="Add New Rules"
+          // />
+          <Overview></Overview>
         );
-      case 3:
-        return (
-          <FilterForm
-            details={this.state.filter}
-            updateParams={this.updateParamState}
-          />
-        );
+      // case 3:
+      //   return (
+      //     <FilterForm
+      //       details={this.state.filter}
+      //       updateParams={this.updateParamState}
+      //     />
+      //   );
       default:
         return "Unknown step";
     }
@@ -153,10 +160,10 @@ class RouteStepper extends Component {
     this.setActiveStep(this.state.step + 1);
 
     const newMpgwParams = {
-      "details": this.state.details,
-      "srcAddr": this.state.srcAddr,
-      "destAddr": this.state.destAddr,
-      "filter": this.state.filter
+      details: this.state.details,
+      srcAddr: this.state.srcAddr,
+      destAddr: this.state.destAddr,
+      filter: this.state.filter
     };
     // This is the json with the params that should be sent to the backend
     console.log(newMpgwParams);

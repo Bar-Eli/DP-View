@@ -40,13 +40,14 @@ class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      stepIsValid: false,
       step: 0,
       // step: 3 // FOR DEBUG
       details: {
-        projectNameValue: "",
-        projectMadorValue: "",
-        projectTeamValue: "",
-        testOrProd: ""
+        projectNameValue: null,
+        projectMadorValue: null,
+        projectTeamValue: null,
+        testOrProd: "test"
       },
       srcAddr: {
         srcTableData: [],
@@ -104,6 +105,7 @@ class RouteStepper extends Component {
           <DetailsForm
             details={this.state.details}
             updateParams={this.updateParamState}
+            validationHandler={this.handleStepValidation}
           />
         );
       case 1:
@@ -113,6 +115,7 @@ class RouteStepper extends Component {
           //   whichForm="srcAddr"
           //   updateParams={this.updateParamState}
           //   updateTableParams={this.updateTableParams}
+          //   validationHandler={this.handleStepValidation} 
           //   tableHeader="Add New Rules"
           // />
           //<HorizontalStepper
@@ -129,6 +132,7 @@ class RouteStepper extends Component {
           //   whichForm="destAddr"
           //   updateParams={this.updateParamState}
           //   updateTableParams={this.updateTableParams}
+          //   validationHandler={this.handleStepValidation}
           //   tableHeader="Add New Rules"
           // />
           //<Overview></Overview>
@@ -139,6 +143,7 @@ class RouteStepper extends Component {
       //     <FilterForm
       //       details={this.state.filter}
       //       updateParams={this.updateParamState}
+      //       validationHandler={this.handleStepValidation}
       //     />
             <a>aaa</a>
         );
@@ -149,18 +154,47 @@ class RouteStepper extends Component {
 
   setActiveStep = newStep => {
     // React.useState(0)
-    this.setState({ step: newStep });
+    this.setState({ 
+      step: newStep,
+      stepIsValid: false
+    });
   };
 
+  handleStepValidation = (flag) => {
+    // Set current step status, valid or not
+    this.setState({ stepIsValid: flag });
+  };
+
+  initDetailsForm = () => {
+    // initialize form details state beacause a press on the next button occurred
+    this.setState({
+      details: {
+        projectNameValue: this.state.details.projectNameValue === null ? "" : this.state.details.projectNameValue,
+        projectMadorValue: this.state.details.projectMadorValue === null ? "" : this.state.details.projectMadorValue,
+        projectTeamValue: this.state.details.projectTeamValue === null ? "" : this.state.details.projectTeamValue,
+        testOrProd: "test"
+      }
+    })
+  }
+
   handleNext = () => {
-    this.setActiveStep(this.state.step + 1);
+    // Handle a press on the next button
+    const valid = this.state.stepIsValid;
+    if(valid){
+      this.setActiveStep(this.state.step + 1);  
+    }
+    else{
+      this.initDetailsForm();
+    }
   };
 
   handleBack = () => {
+    // Handle a press on the back button
     this.setActiveStep(this.state.step - 1);
   };
 
   handleFinish = () => {
+    // Handle a press on the finish button
     this.setActiveStep(this.state.step + 1);
 
     const newMpgwParams = {
@@ -182,6 +216,7 @@ class RouteStepper extends Component {
   render() {
     const { classes } = this.props;
     const activeStep = this.state.step;
+    const allValid = this.state.stepIsValid;
     const steps = getSteps();
     return (
       <div className={classes.root}>
@@ -220,7 +255,7 @@ class RouteStepper extends Component {
             </Step>
           ))}
         </Stepper>
-        {activeStep === steps.length && (
+        {activeStep === steps.length && allValid &&(
           <Paper square elevation={0} className={classes.resetContainer}>
             <Typography>All steps completed - you&apos;re finished</Typography>
             <Button

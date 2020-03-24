@@ -33,7 +33,7 @@ class AddressForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      httpBtnColor: "primary",
+      httpBtnColor: "default",
       mqBtnColor: "default",
       network: undefined,
       protocol: "http",
@@ -52,6 +52,7 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port"
     });
+    this.props.setParams("http", "protocol", "srcAddr");
   };
 
   mqBtnClick = () => {

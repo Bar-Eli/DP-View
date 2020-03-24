@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,7 +32,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/BackendHandlers/Configuraions" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -43,11 +42,9 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Alon\WebstormProjects\untitled\src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Alon\WebstormProjects\untitled\static\images" />
+      <recent name="C:\Users\Alon\WebstormProjects\untitled\src\BackendHandlers\Configuraions" />
+      <recent name="C:\Users\Alon\WebstormProjects\untitled\src\BackendHandlers" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -62,11 +59,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Debug Application">
+  <component name="RunManager" selected="Node.js.BackendConfigInput.js">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
-    <configuration name="RouteStepper.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" working-dir="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper">
+    <configuration name="BackendConfigInput.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" working-dir="$PROJECT_DIR$/src/BackendHandlers">
       <method v="2" />
     </configuration>
     <configuration name="npm start" type="js.build_tools.npm">
@@ -81,7 +78,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.RouteStepper.js" />
+        <item itemvalue="Node.js.BackendConfigInput.js" />
       </list>
     </recent_temporary>
   </component>
@@ -98,28 +95,21 @@
       <workItem from="1584357067785" duration="13763000" />
       <workItem from="1584616250224" duration="11024000" />
     </task>
-    <task id="LOCAL-00001" summary="Basic MPGW Request">
-      <created>1584896545453</created>
+    <task id="LOCAL-00001" summary="Backend connection + Table">
+      <created>1584974922221</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1584896545453</updated>
+      <updated>1584974922221</updated>
     </task>
-    <task id="LOCAL-00002" summary="Complete creation of MPGW">
-      <created>1584907067569</created>
+    <task id="LOCAL-00002" summary="Backend connection improvement + Override">
+      <created>1585048665132</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1584907067569</updated>
+      <updated>1585048665133</updated>
     </task>
-    <task id="LOCAL-00003" summary="Minor FSH Fix">
-      <created>1584910023813</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1584910023813</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,17 +121,42 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Basic MPGW Request" />
-    <MESSAGE value="Complete creation of MPGW" />
-    <MESSAGE value="Minor FSH Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor FSH Fix" />
+    <MESSAGE value="Backend connection + Table" />
+    <MESSAGE value="Backend connection improvement + Override" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend connection improvement + Override" />
   </component>
 </project>

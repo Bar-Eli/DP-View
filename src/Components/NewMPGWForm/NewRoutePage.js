@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import {display} from '@material-ui/system';
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
@@ -18,8 +17,9 @@ const useStyles = theme => ({
         background: "linear-gradient(45deg, #29323c 30%, #485563 90%)",
         border: 0,
         borderRadius: 3,
-        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+        boxShadow: "0 3px 5px 2px #29323c",
         color: "white",
+        // height: 48,
         padding: "0 30px",
         textTransform: "none"
     },
@@ -27,7 +27,7 @@ const useStyles = theme => ({
         background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
         border: 0,
         borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
         color: 'white',
         height: 48,
         padding: '0 40px',
@@ -46,7 +46,6 @@ class NewRoutePage extends Component {
         this.inputParams = {};
     }
 
-
     refreshPage = () => {
         window.location.reload(false);
     };
@@ -63,7 +62,6 @@ class NewRoutePage extends Component {
     hideCreate = () => {
         this.setState({showCreate: 'none'})
     };
-
 
     render() {
         const {classes} = this.props; // how to assign UseStyleS
@@ -84,10 +82,8 @@ class NewRoutePage extends Component {
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate}/>
 
                 <br/>
-                {/*<Button variant="contained">Default</Button>*/}
-                {/*<Button variant="contained" color="primary">Primary</Button>*/}
-                {/*<Button variant="contained" color="secondary">Secondary</Button>*/}
-                <Button className={classes.createBtn} variant="contained" color="secondary" style={{display: this.state.showCreate}}
+                <Button className={classes.createBtn} variant="contained" color="secondary"
+                        style={{display: this.state.showCreate}}
                         onClick={this.createMPGW}>Create</Button>
             </div>
         );

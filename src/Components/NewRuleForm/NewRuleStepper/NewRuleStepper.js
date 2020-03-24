@@ -8,9 +8,9 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
-import AddressForm from "./AddressForm";
+import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import { render } from "react-dom";
-import FilterForm from "./FilterForm";
+import FilterForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 
 const useStyles = theme => ({
   root: {
@@ -42,22 +42,12 @@ class RouteStepper extends Component {
       step: 0,
       details: { testOrProd: "", mpgwName: "" },
       srcAddr: {
-        network: "",
-        protocol: "",
-        //Url or queue manager
-        primaryAddress: "",
-        //Port or queue name
-        secondaryAddress: "",
+        srcTableData: [],
         //Should be empty if the protocol is mq
         method: ""
       },
       destAddr: {
-        network: "",
-        protocol: "",
-        //Url or queue manager
-        primaryAddress: "",
-        //Port or queue name
-        secondaryAddress: "",
+        destTableData: [],
         //Should be empty if the protocol is mq
         method: ""
       },
@@ -88,6 +78,19 @@ class RouteStepper extends Component {
     }
   };
 
+  updateTableParams = (newData, isSrc) => {
+    if (isSrc === "true") {
+      const srcAddrObject = this.state.srcAddr;
+      srcAddrObject.srcTableData.push(newData);
+      this.setState({ srcAddr: srcAddrObject });
+    } else if (isSrc === "false") {
+      const destAddrObject = this.state.destAddr;
+      destAddrObject.destTableData.push(newData);
+      this.setState({ destAddr: destAddrObject });
+    }
+    alert("You have submitted the rules!");
+  };
+
   getStepContent = step => {
     switch (step) {
       case 0:
@@ -103,6 +106,8 @@ class RouteStepper extends Component {
             params={this.state.srcAddr}
             whichForm="srcAddr"
             updateParams={this.updateParamState}
+            updateTableParams={this.updateTableParams}
+            tableHeader="Current Rules"
           />
         );
       case 2:
@@ -111,6 +116,8 @@ class RouteStepper extends Component {
             params={this.state.destAddr}
             whichForm="destAddr"
             updateParams={this.updateParamState}
+            updateTableParams={this.updateTableParams}
+            tableHeader="Current Rules"
           />
         );
       case 3:

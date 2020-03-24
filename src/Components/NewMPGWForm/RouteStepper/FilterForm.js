@@ -64,17 +64,17 @@ class FilterFormForm extends Component {
     });
   };
 
-  greenBtnClick = () => {
-    this.setState({
-      greenBtnColor: "primary",
-      schemaBtnColor: "default",
-      dpasBtnColor: "default",
-      greenBtnBackground: "green",
-      showDpas: "none",
-      showUpload: "none"
-    });
-    this.props.updateParams("green", "filterType", "filter");
-  };
+  // greenBtnClick = () => {
+  //   this.setState({
+  //     greenBtnColor: "primary",
+  //     schemaBtnColor: "default",
+  //     dpasBtnColor: "default",
+  //     greenBtnBackground: "green",
+  //     showDpas: "none",
+  //     showUpload: "none"
+  //   });
+  //   this.props.updateParams("green", "filterType", "filter");
+  // };
 
   handleChangeDpas = event => {
     this.props.updateParams("dexter", "filterType", "filter");
@@ -88,14 +88,14 @@ class FilterFormForm extends Component {
         <form className={classes.root} noValidate autoComplete="off">
           <br />
 
-          <Button
+          {/* <Button
             variant="contained"
             color={this.state.greenBtnColor}
             style={{ background: this.state.greenBtnBackground }}
             onClick={this.greenBtnClick}
           >
             Green Route
-          </Button>
+          </Button> */}
           <Button
             variant="contained"
             color={this.state.schemaBtnColor}

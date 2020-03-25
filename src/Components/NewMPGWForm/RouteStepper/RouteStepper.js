@@ -40,7 +40,8 @@ class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stepIsValid: false,
+      // stepIsValid: false,
+      stepIsValid: true, // DEBUG
       step: 0,
       // step: 3 // FOR DEBUG
       details: {
@@ -156,7 +157,8 @@ class RouteStepper extends Component {
     // React.useState(0)
     this.setState({ 
       step: newStep,
-      stepIsValid: false
+      // stepIsValid: false
+      stepIsValid: true // DEBUG
     });
   };
 
@@ -175,11 +177,12 @@ class RouteStepper extends Component {
         testOrProd: "test"
       }
     })
-  }
+  };
 
   handleNext = () => {
     // Handle a press on the next button
-    const valid = this.state.stepIsValid;
+    // const valid = this.state.stepIsValid;
+    const valid = true; // DEBUG
     if(valid){
       this.setActiveStep(this.state.step + 1);  
     }

@@ -58,14 +58,16 @@ export class RuleTable extends Component {
 
 
   RenderFilterChip = (rowData) => {
-    return (
-      <Tooltip title={(rowData.filter.schemaPath != "" ? rowData.filter.schemaPath : rowData.filter.filterType)} aria-label="to">
-        <Chip
-          color="secondary"
-          label={rowData.filter.dpasFilter.charAt(0).toUpperCase() + rowData.filter.dpasFilter.slice(1)}
-        />
-      </Tooltip>
-    )
+    if (rowData.filter !== undefined) {
+      return (
+        <Tooltip title={(rowData.filter.schemaPath != "" ? rowData.filter.schemaPath : rowData.filter.filterType)} aria-label="to">
+          <Chip
+            color="secondary"
+            label={rowData.filter.dpasFilter.charAt(0).toUpperCase() + rowData.filter.dpasFilter.slice(1)}
+          />
+        </Tooltip>
+      )
+    }
   }
 
 
@@ -82,13 +84,15 @@ export class RuleTable extends Component {
 
 
   RenderMethodChips = (rowData) => {
-    if (rowData.methods.length !== 0) {
-      return rowData.methods.map((method) => {
-        return (<Chip
-          color="primary"
-          label={method}
-        />)
-      })
+    if (rowData.methods !== undefined) {
+      if (rowData.methods.length !== 0) {
+        return rowData.methods.map((method) => {
+          return (<Chip
+            color="primary"
+            label={method}
+          />)
+        })
+      }
     }
   }
 
@@ -96,7 +100,7 @@ export class RuleTable extends Component {
   ExtractTableDataFromProps = (propRules) => {
     let rules = JSON.parse(JSON.stringify(propRules))
     let data = []
- 
+
     rules.forEach((rule) => {
       for (let [key, value] of Object.entries(rule)) {
         if (["srcAddr", "destAddr"].includes(key)) {

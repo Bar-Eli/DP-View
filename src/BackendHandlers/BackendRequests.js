@@ -3,7 +3,6 @@ import BackendConfigInput from './BackendConfigInput.js'
 export default class BackendRequests {
 
     // CONSTANTS
-    static DP_URL_PARAMS = "?host=10.0.3.4&port=5554&username=admin&password=admin&domain=Sandbox";
     static BACKEND_URL = "http://10.0.3.8:4000";
     // static BACKEND_URL = "http://localhost:4000";
 

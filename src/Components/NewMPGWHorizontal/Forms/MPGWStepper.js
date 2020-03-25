@@ -47,14 +47,16 @@ class RouteStepper extends Component {
           projectNameValue: "",
           projectMadorValue: "",
           projectTeamValue: "",
+          clusterName: "", // **
           testOrProd: ""
         },
         rules: [
           {
+            name: "", // **
             srcAddr: {
               network: "",
               protocol: "",
-              primaryAddress: "",
+              primaryAddress: "=",
               secondaryAddress: "",
               methods: ["", ""]
             },
@@ -67,11 +69,16 @@ class RouteStepper extends Component {
             },
             filter: {
               filterType: "",
-              dexterFilter: "",
+              dpasFilter: "", // **
               schemaPath: ""
             }
           }
-        ]
+        ],
+        dpCredentials: {
+          // **
+          username: "",
+          password: ""
+        }
       }
     };
   }
@@ -128,7 +135,13 @@ class RouteStepper extends Component {
           // hideCreate={this.hideCreate}
           // />
           <HorizontalNonLinearAlternativeLabelStepper
-            params={this.state.params.rules}
+            rules={this.state.params.rules}
+            // update the parameters
+            onRulesChange={newRules => {
+              this.setState({
+                params: { ...this.state.params, rules: newRules }
+              });
+            }}
           ></HorizontalNonLinearAlternativeLabelStepper>
         );
       case 2:

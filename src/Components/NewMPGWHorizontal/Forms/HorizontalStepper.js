@@ -27,13 +27,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function HorizontalNonLinearAlternativeLabelStepper(ruleParams) {
+export default function HorizontalNonLinearAlternativeLabelStepper({
+  rules,
+  onRulesChange
+}) {
   const classes = useStyles();
-  const parameters = ruleParams;
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(new Set());
   const [skipped, setSkipped] = React.useState(new Set());
-  const [params, setParams] = React.useState(parameters);
+  // const [params, setParams] = React.useState(parameters);
   const [rulesIndex, setRulesIndex] = React.useState(0);
   const steps = getSteps();
 
@@ -47,16 +49,16 @@ export default function HorizontalNonLinearAlternativeLabelStepper(ruleParams) {
         return (
           <AddressForm
             whichForm="srcAddr"
-            setParams={handleSetParams}
+            setParams={handleRuleChange}
           ></AddressForm>
         );
       case 1:
-        return <FilterFormForm setParams={handleSetParams}></FilterFormForm>;
+        return <FilterFormForm setParams={handleRuleChange}></FilterFormForm>;
       case 2:
         return (
           <AddressForm
             whichForm="destAddr"
-            setParams={handleSetParams}
+            setParams={handleRuleChange}
           ></AddressForm>
         );
       default:
@@ -64,20 +66,20 @@ export default function HorizontalNonLinearAlternativeLabelStepper(ruleParams) {
     }
   }
 
-  const handleSetParams = (value, field, form) => {
-    // setSkipped(prevSkipped => {
-    //   const newSkipped = new Set(prevSkipped.values());
-    //   newSkipped.add(activeStep);
-    //   return newSkipped;
-    // });
-
-    setParams(prevParams => {
-      console.log(prevParams);
-      const newParams = prevParams[rulesIndex];
-      console.log(newParams[form]);
-      newParams[form][field] = value;
-      return newParams;
+  const handleRuleChange = (value, field, form) => {
+    //change the field to the value from function in the correct form
+    const newRules = rules.map((currRules, index) => {
+      return index === rulesIndex
+        ? {
+            ...currRules,
+            [form]: {
+              ...currRules[form],
+              [field]: value
+            }
+          }
+        : currRules;
     });
+    onRulesChange(newRules);
   };
 
   const totalSteps = () => {

@@ -63,6 +63,7 @@ class AddressForm extends Component {
       primaryAddress: "Queue manager",
       secondaryAddress: "Queue name"
     });
+    this.props.setParams("mq", "protocol", "srcAddr");
   };
 
   handleChangeNetwork = event => {

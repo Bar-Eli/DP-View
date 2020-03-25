@@ -1,36 +1,37 @@
-  {
-    "details": {
-      "projectNameValue": "",
-      "projectMadorValue": "",
-      "projectTeamValue": "",
-      "testOrProd": ""
-    },
-    "rules": [
-      {
-        "srcAddr": {
-          "network": "",
-          "protocol": "",
-          "primaryAddress": "",
-          "secondaryAddress": "",
-          "methods": [
-            "",
-            ""
-          ]
-        },
-        "destAddr": {
-          "network": "",
-          "protocol": "",
-          "primaryAddress": "",
-          "secondaryAddress": "",
-          "methods": [
-            ""
-          ]
-        },
-        "filter": {
-          "filterType": "",
-          "dexterFilter": "",
-          "schemaPath": ""
-        }
+{
+  "details": {
+    "projectNameValue": "",
+    "projectMadorValue": "",
+    "projectTeamValue": "",
+    "clusterName": "",
+    "testOrProd": ""
+  },
+  "rules": [
+    {
+      "name": "",
+      "srcAddr": {
+        "network": "",
+        "protocol": "",
+        "primaryAddress": "",
+        "secondaryAddress": "",
+        "methods": ["", ""]
+      },
+      "destAddr": {
+        "network": "",
+        "protocol": "",
+        "primaryAddress": "",
+        "secondaryAddress": "",
+        "methods": [""]
+      },
+      "filter": {
+        "filterType": "",
+        "dpasFilter": "",
+        "schemaPath": ""
       }
-    ]
+    }
+  ],
+  "dpCredentials": {
+    "username": "",
+    "password": ""
   }
+}

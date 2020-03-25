@@ -56,7 +56,7 @@ class RouteStepper extends Component {
             srcAddr: {
               network: "",
               protocol: "",
-              primaryAddress: "=",
+              primaryAddress: "",
               secondaryAddress: "",
               methods: ["", ""]
             },

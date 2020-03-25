@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FilterFormForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
+import NameForm from "./NameForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,21 +41,23 @@ export default function HorizontalNonLinearAlternativeLabelStepper({
   const steps = getSteps();
 
   function getSteps() {
-    return ["Source", "Filter", "Destination"];
+    return ["Rule Name", "Source", "Filter", "Destination"];
   }
 
   function getStepContent(step) {
     switch (step) {
       case 0:
+        return <NameForm updateRuleName={handleRuleNameChange}></NameForm>;
+      case 1:
         return (
           <AddressForm
             whichForm="srcAddr"
             setParams={handleRuleChange}
           ></AddressForm>
         );
-      case 1:
-        return <FilterFormForm setParams={handleRuleChange}></FilterFormForm>;
       case 2:
+        return <FilterFormForm setParams={handleRuleChange}></FilterFormForm>;
+      case 3:
         return (
           <AddressForm
             whichForm="destAddr"
@@ -82,12 +85,28 @@ export default function HorizontalNonLinearAlternativeLabelStepper({
     onRulesChange(newRules);
   };
 
+  const handleRuleNameChange = (newName, form) => {
+    //change the field to the value from function in the correct form
+    const newRules = rules.map((currRules, index) => {
+      return index === rulesIndex
+        ? {
+            ...currRules,
+            [form]: {
+              ...currRules[form],
+              ["name"]: newName
+            }
+          }
+        : currRules;
+    });
+    onRulesChange(newRules);
+  };
+
   const totalSteps = () => {
     return getSteps().length;
   };
 
   const isStepOptional = step => {
-    return step === 1;
+    return step === 2;
   };
 
   const handleSkip = () => {

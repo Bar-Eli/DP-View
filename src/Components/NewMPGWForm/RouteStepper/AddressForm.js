@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = theme => ({
   root: {
@@ -27,6 +28,12 @@ const useStyles = theme => ({
     display: "block"
   }
 });
+
+let methodList = [
+  { id: 0, name: "POST", checked: false },
+  { id: 1, name: "GET", checked: false },
+  { id: 2, name: "PUT", checked: false }
+];
 
 class AddressForm extends Component {
   constructor(props) {
@@ -52,7 +59,7 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port"
     });
-    this.props.setParams("http", "protocol", "srcAddr");
+    this.props.setParams("http", "protocol", this.props.whichForm);
   };
 
   mqBtnClick = () => {
@@ -63,17 +70,21 @@ class AddressForm extends Component {
       primaryAddress: "Queue manager",
       secondaryAddress: "Queue name"
     });
-    this.props.setParams("mq", "protocol", "srcAddr");
+    this.props.setParams("mq", "protocol", this.props.whichForm);
   };
 
   handleChangeNetwork = event => {
     // setAge(event.target.value);
-    this.setState({ network: event.target.value });
+    this.props.setParams(event.target.value, "network", this.props.whichForm);
   };
 
   handleChangeHttpMethod = event => {
     // setAge(event.target.value);
     this.setState({ httpMethod: event.target.value });
+  };
+
+  hadnleCheckMethod = event => {
+    methodList[event.target.value].checked = true;
   };
 
   render() {
@@ -113,10 +124,27 @@ class AddressForm extends Component {
             </Select>
           </FormControl>
 
-          <TextField id="primary-address" label={this.state.primaryAddress} />
+          <TextField
+            id="primary-address"
+            label={this.state.primaryAddress}
+            onChange={e => {
+              this.props.setParams(
+                e.target.value,
+                "primaryAddress",
+                this.props.whichForm
+              );
+            }}
+          />
           <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
+            onChange={e => {
+              this.props.setParams(
+                e.target.value,
+                "secondaryAddress",
+                this.props.whichForm
+              );
+            }}
           />
           <br />
           <br />
@@ -125,7 +153,7 @@ class AddressForm extends Component {
             style={{ display: this.state.showMethods }}
           >
             <h5 className={classes.centerMargin}>Method</h5>
-            <RadioGroup
+            {/* <RadioGroup
               aria-label="httpMethod"
               name="httpMethod"
               value={this.state.httpMethod}
@@ -134,7 +162,19 @@ class AddressForm extends Component {
               <FormControlLabel value="GET" control={<Radio />} label="GET" />
               <FormControlLabel value="POST" control={<Radio />} label="POST" />
               <FormControlLabel value="PUT" control={<Radio />} label="PUT" />
-            </RadioGroup>
+            </RadioGroup> */}
+            {methodList.map(method => (
+              //Store the the student id in the value of each check box
+              <div>
+                <FormControlLabel
+                  value={method.id}
+                  control={<Checkbox />}
+                  label={method.name}
+                  checked={method.checked}
+                  onCheck={this.hadnleCheckMethod}
+                />
+              </div>
+            ))}
           </div>
         </form>
         <br />

@@ -51,7 +51,7 @@ class RouteStepper extends Component {
           projectMadorValue: null,
           projectTeamValue: null,
           clusterName: null, // **
-          testOrProd: null
+          testOrProd: "test"
         },
         rules: [
           {
@@ -190,6 +190,7 @@ class RouteStepper extends Component {
         testOrProd: "test"
       }
     })
+    console.log(this.state)
   }
 
   handleNext = () => {

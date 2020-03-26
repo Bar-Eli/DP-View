@@ -14,14 +14,19 @@
         "protocol": "",
         "primaryAddress": "",
         "secondaryAddress": "",
-        "methods": ["", ""]
+        "methods": [
+          "",
+          ""
+        ]
       },
       "destAddr": {
         "network": "",
         "protocol": "",
         "primaryAddress": "",
         "secondaryAddress": "",
-        "methods": [""]
+        "methods": [
+          ""
+        ]
       },
       "filter": {
         "filterType": "",

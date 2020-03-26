@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
 import HorizontalNonLinearAlternativeLabelStepper from "./HorizontalStepper";
 import Overview from "./Overview";
+import DpCredsPopup from './DpCredsPopup';
 // import AddressForm from "./AddressForm";
 // import FilterForm from "./FilterForm";
 
@@ -40,16 +41,17 @@ class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      popUpStatus: false,
       stepIsValid: false,
       step: 0,
       // step: 3 // FOR DEBUG
       params: {
         details: {
-          projectNameValue: "",
-          projectMadorValue: "",
-          projectTeamValue: "",
-          clusterName: "", // **
-          testOrProd: ""
+          projectNameValue: null,
+          projectMadorValue: null,
+          projectTeamValue: null,
+          clusterName: null, // **
+          testOrProd: null
         },
         rules: [
           {
@@ -95,6 +97,8 @@ class RouteStepper extends Component {
       this.setState({ destAddr: object });
     } else if (form === "filter") {
       this.setState({ filter: object });
+    } else if (form === "dpCredentials") {
+      this.setState({ dpCredentials: object });
     } else {
       alert("Something went wrong, no such form");
     }
@@ -111,11 +115,6 @@ class RouteStepper extends Component {
       this.setState({ destAddr: destAddrObject });
     }
     alert("You have submitted the rules!");
-  };
-
-  handleStepValidation = flag => {
-    // Set current step status, valid or not
-    this.setState({ stepIsValid: flag });
   };
 
   getStepContent = step => {
@@ -170,30 +169,68 @@ class RouteStepper extends Component {
 
   setActiveStep = newStep => {
     // React.useState(0)
-    this.setState({ step: newStep });
+    this.setState({ 
+      step: newStep,
+      stepIsValid: true
+    });
   };
 
+  handleStepValidation = (flag) => {
+    // Set current step status, valid or not
+    this.setState({ stepIsValid: true });
+  };
+
+  initDetailsForm = () => {
+    // initialize form details state beacause a press on the next button occurred
+    this.setState({
+      details: {
+        projectNameValue: this.state.params.details.projectNameValue === null ? "" : this.state.params.details.projectNameValue,
+        projectMadorValue: this.state.params.details.projectMadorValue === null ? "" : this.state.params.details.projectMadorValue,
+        projectTeamValue: this.state.params.details.projectTeamValue === null ? "" : this.state.params.details.projectTeamValue,
+        testOrProd: "test"
+      }
+    })
+  }
+
   handleNext = () => {
-    this.setActiveStep(this.state.step + 1);
+    // Handle a press on the next button
+    const valid = this.state.stepIsValid;
+    if(valid){
+      this.setActiveStep(this.state.step + 1);  
+    }
+    else{
+      this.initDetailsForm();
+    }
   };
 
   handleBack = () => {
+    // Handle a press on the back button
     this.setActiveStep(this.state.step - 1);
   };
 
   handleFinish = () => {
-    this.setActiveStep(this.state.step + 1);
+    // Handle a press on the finish button
+    this.setState({ popUpStatus: true });
+  };
 
+  handleNextStepForFinish = () => {
+    this.setActiveStep(this.state.step + 1);
     const newMpgwParams = {
       details: this.state.details,
       srcAddr: this.state.srcAddr,
       destAddr: this.state.destAddr,
-      filter: this.state.filter
+      filter: this.state.filter,
+      credentials: this.state.credentials
     };
+    this.props.setInput(newMpgwParams);
     // This is the json with the params that should be sent to the backend
     console.log(newMpgwParams);
     this.props.setInput(newMpgwParams);
-  };
+  }
+
+  handlePopUpClose = () => {
+    this.setState({ popUpStatus: false });
+  }
 
   handleReset = () => {
     this.props.hideCreate();
@@ -203,6 +240,7 @@ class RouteStepper extends Component {
   render() {
     const { classes } = this.props;
     const activeStep = this.state.step;
+    const allValid = this.state.stepIsValid;
     const steps = getSteps();
     return (
       <div className={classes.root}>
@@ -235,13 +273,20 @@ class RouteStepper extends Component {
                     >
                       {activeStep === steps.length - 1 ? "Finish" : "Next"}
                     </Button>
+                    <DpCredsPopup 
+                    status={this.state.popUpStatus} 
+                    handleClose={this.handlePopUpClose} 
+                    updateParams={this.updateParamState}
+                    credentials={this.state.params.dpCredentials}
+                    nextStep={this.handleNextStepForFinish}
+                    />
                   </div>
                 </div>
               </StepContent>
             </Step>
           ))}
         </Stepper>
-        {activeStep === steps.length && (
+        {activeStep === steps.length && allValid &&(
           <Paper square elevation={0} className={classes.resetContainer}>
             <Typography>All steps completed - you&apos;re finished</Typography>
             <Button

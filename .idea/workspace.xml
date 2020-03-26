@@ -4,6 +4,7 @@
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWHorizontal/Forms/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWHorizontal/Forms/HorizontalStepper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -132,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585146304436</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Pre Merge DP Credentials">
+      <created>1585256221469</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585256221469</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +189,7 @@
     <MESSAGE value="Backend connection + Table" />
     <MESSAGE value="Backend connection improvement + Override" />
     <MESSAGE value="Backend connection with cluster and multiple rules" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend connection with cluster and multiple rules" />
+    <MESSAGE value="Pre Merge DP Credentials" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pre Merge DP Credentials" />
   </component>
 </project>

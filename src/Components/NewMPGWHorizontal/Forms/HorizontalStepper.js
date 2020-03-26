@@ -171,13 +171,30 @@ export default function HorizontalNonLinearAlternativeLabelStepper({
      */
     if (completed.size !== totalSteps() - skippedSteps()) {
       handleNext();
+    } else if (completedSteps() === totalSteps() - 1) {
+      handleFinish();
     }
+  };
+
+  const handleFinish = () => {
+    onRulesChange(rules);
+    setRulesIndex(rulesIndex + 1);
   };
 
   const handleReset = () => {
     setActiveStep(0);
     setCompleted(new Set());
     setSkipped(new Set());
+  };
+
+  const handleRuleDelete = index => {
+    let newRulesArray = rules.filter((value, ruleIndex) => {
+      return ruleIndex !== index;
+    });
+    onRulesChange(newRulesArray);
+    if (rulesIndex > 1) {
+      setRulesIndex(rulesIndex - 1);
+    }
   };
 
   const isStepSkipped = step => {

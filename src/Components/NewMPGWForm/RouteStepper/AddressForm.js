@@ -29,12 +29,6 @@ const useStyles = theme => ({
   }
 });
 
-let methodList = [
-  { id: 0, name: "POST", checked: false },
-  { id: 1, name: "GET", checked: false },
-  { id: 2, name: "PUT", checked: false }
-];
-
 class AddressForm extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +41,9 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port",
       httpMethod: undefined,
-      showMethods: "block"
+      showMethods: "block",
+      methodList: ["POST", "PUT", "GET"],
+      checkedValues: []
     };
   }
 
@@ -83,9 +79,18 @@ class AddressForm extends Component {
     this.setState({ httpMethod: event.target.value });
   };
 
-  hadnleCheckMethod = event => {
-    methodList[event.target.value].checked = true;
-  };
+  hadnleCheckMethod(method) {
+    this.setState(state => ({
+      checkedValues: state.checkedValues.includes(method)
+        ? state.checkedValues.filter(c => c !== method)
+        : [...state.checkedValues, method]
+    }));
+    this.props.setParams(
+      this.state.checkedValues,
+      "methods",
+      this.props.whichForm
+    );
+  }
 
   render() {
     const { classes } = this.props;
@@ -163,15 +168,15 @@ class AddressForm extends Component {
               <FormControlLabel value="POST" control={<Radio />} label="POST" />
               <FormControlLabel value="PUT" control={<Radio />} label="PUT" />
             </RadioGroup> */}
-            {methodList.map(method => (
+            {this.state.methodList.map(method => (
               //Store the the student id in the value of each check box
               <div>
                 <FormControlLabel
-                  value={method.id}
+                  value={method}
                   control={<Checkbox />}
-                  label={method.name}
-                  checked={method.checked}
-                  onCheck={this.hadnleCheckMethod}
+                  label={method}
+                  checked={this.state.checkedValues.includes(method)}
+                  onChange={() => this.hadnleCheckMethod(method)}
                 />
               </div>
             ))}

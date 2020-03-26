@@ -10,7 +10,7 @@ function AppRouter() {
   return (
     <Router>
       <div>
-        <Route path="/" exact component={HorizontalPage} />
+        <Route path="/" exact component={NewRoutePage} />
         {/* <Route path="/addRule" component={NewRulePage} /> */}
         <Route path="/editRule" component={EditRuleStepper} />
         <Route

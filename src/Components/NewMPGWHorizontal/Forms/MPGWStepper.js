@@ -40,6 +40,7 @@ class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      stepIsValid: false,
       step: 0,
       // step: 3 // FOR DEBUG
       params: {
@@ -112,6 +113,11 @@ class RouteStepper extends Component {
     alert("You have submitted the rules!");
   };
 
+  handleStepValidation = flag => {
+    // Set current step status, valid or not
+    this.setState({ stepIsValid: flag });
+  };
+
   getStepContent = step => {
     switch (step) {
       case 0:
@@ -119,6 +125,7 @@ class RouteStepper extends Component {
           <DetailsForm
             details={this.state.params.details}
             updateParams={this.updateParamState}
+            validationHandler={this.handleStepValidation}
           />
         );
       case 1:

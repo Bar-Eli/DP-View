@@ -129,17 +129,6 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
-          // <AddressForm
-          //   params={this.state.srcAddr}
-          //   whichForm="srcAddr"
-          //   updateParams={this.updateParamState}
-          //   updateTableParams={this.updateTableParams}
-          //   tableHeader="Add New Rules"
-          // />
-          //<HorizontalStepper
-          // setInput={this.setInput}
-          // hideCreate={this.hideCreate}
-          // />
           <HorizontalNonLinearAlternativeLabelStepper
             rules={this.state.params.rules}
             // update the parameters
@@ -148,19 +137,11 @@ class RouteStepper extends Component {
                 params: { ...this.state.params, rules: newRules }
               });
             }}
-          ></HorizontalNonLinearAlternativeLabelStepper>
+          />
         );
       case 2:
         return (
-          // <AddressForm
-          //   params={this.state.destAddr}
-          //   whichForm="destAddr"
-          //   updateParams={this.updateParamState}
-          //   updateTableParams={this.updateTableParams}
-          //   tableHeader="Add New Rules"
-          // />
-          //<Overview></Overview>
-          <Overview></Overview>
+          <Overview/>
         );
       default:
         return "Unknown step";
@@ -189,9 +170,9 @@ class RouteStepper extends Component {
         projectTeamValue: this.state.params.details.projectTeamValue === null ? "" : this.state.params.details.projectTeamValue,
         testOrProd: "test"
       }
-    })
+    });
     console.log(this.state)
-  }
+  };
 
   handleNext = () => {
     // Handle a press on the next button
@@ -216,22 +197,24 @@ class RouteStepper extends Component {
 
   handleNextStepForFinish = () => {
     this.setActiveStep(this.state.step + 1);
-    const newMpgwParams = {
-      details: this.state.details,
-      srcAddr: this.state.srcAddr,
-      destAddr: this.state.destAddr,
-      filter: this.state.filter,
-      credentials: this.state.credentials
-    };
+    // const newMpgwParams = {
+    //   details: this.state.details,
+    //   srcAddr: this.state.srcAddr,
+    //   destAddr: this.state.destAddr,
+    //   filter: this.state.filter,
+    //   credentials: this.state.credentials
+    // };
+    const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
     this.props.setInput(newMpgwParams);
     // This is the json with the params that should be sent to the backend
+    console.log("PARAMS");
     console.log(newMpgwParams);
     this.props.setInput(newMpgwParams);
-  }
+  };
 
   handlePopUpClose = () => {
     this.setState({ popUpStatus: false });
-  }
+  };
 
   handleReset = () => {
     this.props.hideCreate();

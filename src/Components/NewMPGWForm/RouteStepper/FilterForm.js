@@ -50,7 +50,7 @@ class FilterFormForm extends Component {
       showDpas: "none",
       showUpload: "inline-flex"
     });
-    this.props.updateParams("schema", "filterType", "filter");
+    this.props.setParams("schema", "filterType", "filter");
   };
 
   dpasBtnClick = () => {
@@ -62,6 +62,7 @@ class FilterFormForm extends Component {
       showDpas: "inline-flex",
       showUpload: "none"
     });
+    this.props.setParams("dpass", "filterType", "filter");
   };
 
   // greenBtnClick = () => {
@@ -77,8 +78,9 @@ class FilterFormForm extends Component {
   // };
 
   handleChangeDpas = event => {
-    this.props.updateParams("dexter", "filterType", "filter");
-    this.props.updateParams(event.target.value, "dexterFilter", "filter");
+    // this.props.updateParams("dexter", "filterType", "filter");
+    // this.props.updateParams(event.target.value, "dexterFilter", "filter");
+    this.props.setParams(event.target.value, "dpasFilter", "filter");
   };
 
   render() {

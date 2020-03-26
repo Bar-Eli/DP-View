@@ -1,9 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
-import NewRulePage from "./Components/NewRuleForm/NewRulePage";
 import EditRuleStepper from "./Components/EditRuleForm/EditRules";
+<<<<<<< HEAD
 import RuleTable from "./Components/RuleTable";
+=======
+import HorizontalPage from "./Components/NewMPGWHorizontal/HorizontalPage";
+>>>>>>> horizontalStepper
 // import HorizontalNonLinearAlternativeLabelStepper from "./Components/HorizontalStepper";
 
 function AppRouter() {
@@ -13,6 +16,7 @@ function AppRouter() {
         <Route path="/" exact component={NewRoutePage} />
         {/* <Route path="/addRule" component={NewRulePage} /> */}
         <Route path="/editRule" component={EditRuleStepper} />
+<<<<<<< HEAD
         <Route path="/rule" component={() => <RuleTable data={{
           "details": {
             "projectNameValue": "",
@@ -72,6 +76,9 @@ function AppRouter() {
             }
           ]
         }} title="Overview" />} />
+=======
+        <Route path="/horizontal" component={HorizontalPage} />
+>>>>>>> horizontalStepper
       </div>
     </Router>
   );

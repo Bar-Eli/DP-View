@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = theme => ({
   root: {
@@ -33,14 +34,16 @@ class AddressForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      httpBtnColor: "primary",
+      httpBtnColor: "default",
       mqBtnColor: "default",
       network: undefined,
       protocol: "http",
       primaryAddress: "IP / URL",
       secondaryAddress: "Port",
       httpMethod: undefined,
-      showMethods: "block"
+      showMethods: "block",
+      methodList: ["POST", "PUT", "GET"],
+      checkedValues: []
     };
   }
 
@@ -52,6 +55,7 @@ class AddressForm extends Component {
       primaryAddress: "IP / URL",
       secondaryAddress: "Port"
     });
+    this.props.setParams("http", "protocol", this.props.whichForm);
   };
 
   mqBtnClick = () => {
@@ -62,17 +66,31 @@ class AddressForm extends Component {
       primaryAddress: "Queue manager",
       secondaryAddress: "Queue name"
     });
+    this.props.setParams("mq", "protocol", this.props.whichForm);
   };
 
   handleChangeNetwork = event => {
     // setAge(event.target.value);
-    this.setState({ network: event.target.value });
+    this.props.setParams(event.target.value, "network", this.props.whichForm);
   };
 
   handleChangeHttpMethod = event => {
     // setAge(event.target.value);
     this.setState({ httpMethod: event.target.value });
   };
+
+  hadnleCheckMethod(method) {
+    this.setState(state => ({
+      checkedValues: state.checkedValues.includes(method)
+        ? state.checkedValues.filter(c => c !== method)
+        : [...state.checkedValues, method]
+    }));
+    this.props.setParams(
+      this.state.checkedValues,
+      "methods",
+      this.props.whichForm
+    );
+  }
 
   render() {
     const { classes } = this.props;
@@ -111,10 +129,27 @@ class AddressForm extends Component {
             </Select>
           </FormControl>
 
-          <TextField id="primary-address" label={this.state.primaryAddress} />
+          <TextField
+            id="primary-address"
+            label={this.state.primaryAddress}
+            onChange={e => {
+              this.props.setParams(
+                e.target.value,
+                "primaryAddress",
+                this.props.whichForm
+              );
+            }}
+          />
           <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
+            onChange={e => {
+              this.props.setParams(
+                e.target.value,
+                "secondaryAddress",
+                this.props.whichForm
+              );
+            }}
           />
           <br />
           <br />
@@ -123,7 +158,7 @@ class AddressForm extends Component {
             style={{ display: this.state.showMethods }}
           >
             <h5 className={classes.centerMargin}>Method</h5>
-            <RadioGroup
+            {/* <RadioGroup
               aria-label="httpMethod"
               name="httpMethod"
               value={this.state.httpMethod}
@@ -132,7 +167,19 @@ class AddressForm extends Component {
               <FormControlLabel value="GET" control={<Radio />} label="GET" />
               <FormControlLabel value="POST" control={<Radio />} label="POST" />
               <FormControlLabel value="PUT" control={<Radio />} label="PUT" />
-            </RadioGroup>
+            </RadioGroup> */}
+            {this.state.methodList.map(method => (
+              //Store the the student id in the value of each check box
+              <div>
+                <FormControlLabel
+                  value={method}
+                  control={<Checkbox />}
+                  label={method}
+                  checked={this.state.checkedValues.includes(method)}
+                  onChange={() => this.hadnleCheckMethod(method)}
+                />
+              </div>
+            ))}
           </div>
         </form>
         <br />

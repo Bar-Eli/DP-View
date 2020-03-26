@@ -1,3 +1,4 @@
+
 import BackendConfigInput from './BackendConfigInput.js'
 
 export default class BackendRequests {
@@ -107,6 +108,8 @@ export default class BackendRequests {
      */
     static async createNewMpgw(input) {
 
+        this.getFileContent();
+        /*
         const clusterDetails = await this.getClusterDetails(input);
         const urlParamsList = BackendConfigInput.generateClusterUrlParams(input, clusterDetails);
         const rules = input["rules"];
@@ -131,7 +134,28 @@ export default class BackendRequests {
 
         // alert(responseData["message"] + " on port " + port);
 
+         */
+
     }
+
+    static async getFileContent() {
+
+        const path ="C:\\Users\\Alon\\Desktop\\someFile.json";
+        // const config_file = require(path);
+        // console.log(config_file);
+
+
+        const fs = require('fs');
+
+        fs.readFile(path, (err, data) => {
+            if (err) throw err;
+
+            console.log(data.toString());
+        })
+
+
+    }
+
 
 
 }

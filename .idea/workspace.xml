@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,7 +59,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Debug Application">
+  <component name="RunManager" selected="npm.npm start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -93,6 +94,8 @@
       <updated>1584357065551</updated>
       <workItem from="1584357067785" duration="13763000" />
       <workItem from="1584616250224" duration="11024000" />
+      <workItem from="1585226525190" duration="1698000" />
+      <workItem from="1585229124014" duration="793000" />
     </task>
     <task id="LOCAL-00001" summary="Backend connection + Table">
       <created>1584974922221</created>
@@ -122,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585146278636</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Backend connection with cluster and multiple rules">
+      <created>1585146304436</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585146304436</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

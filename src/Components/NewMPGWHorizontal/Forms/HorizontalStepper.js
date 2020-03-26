@@ -93,7 +93,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper({
             ...currRules,
             [form]: {
               ...currRules[form],
-              ["name"]: newName
+              name: newName
             }
           }
         : currRules;
@@ -178,7 +178,32 @@ export default function HorizontalNonLinearAlternativeLabelStepper({
 
   const handleFinish = () => {
     onRulesChange(rules);
-    setRulesIndex(rulesIndex + 1);
+    setRulesIndex(+1);
+    let newRules = rules;
+    newRules.push({
+      name: "", // **
+      srcAddr: {
+        network: "",
+        protocol: "",
+        primaryAddress: "",
+        secondaryAddress: "",
+        methods: ["", ""]
+      },
+      destAddr: {
+        network: "",
+        protocol: "",
+        primaryAddress: "",
+        secondaryAddress: "",
+        methods: [""]
+      },
+      filter: {
+        filterType: "",
+        dpasFilter: "", // **
+        schemaPath: ""
+      }
+    });
+    onRulesChange(newRules);
+    rules = newRules;
   };
 
   const handleReset = () => {

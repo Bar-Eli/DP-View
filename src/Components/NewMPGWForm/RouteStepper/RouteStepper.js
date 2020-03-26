@@ -82,7 +82,7 @@ class RouteStepper extends Component {
           username: "",
           password: ""
         }
-      }
+      },
     };
   }
 
@@ -171,26 +171,27 @@ class RouteStepper extends Component {
     // React.useState(0)
     this.setState({ 
       step: newStep,
-      stepIsValid: true
+      stepIsValid: false
     });
   };
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    this.setState({ stepIsValid: true });
+    this.setState({ stepIsValid: flag });
   };
 
   initDetailsForm = () => {
     // initialize form details state beacause a press on the next button occurred
+    let a = this.state.params;
     this.setState({
-      details: {
+      params: { ...this.state.params, details: {
         projectNameValue: this.state.params.details.projectNameValue === null ? "" : this.state.params.details.projectNameValue,
         projectMadorValue: this.state.params.details.projectMadorValue === null ? "" : this.state.params.details.projectMadorValue,
         projectTeamValue: this.state.params.details.projectTeamValue === null ? "" : this.state.params.details.projectTeamValue,
         testOrProd: "test"
-      }
-    })
-    console.log(this.state)
+      } 
+    }
+    });
   }
 
   handleNext = () => {

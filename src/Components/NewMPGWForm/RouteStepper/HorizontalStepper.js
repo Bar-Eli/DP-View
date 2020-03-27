@@ -1,5 +1,5 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {Component} from "react";
+import {withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
@@ -9,314 +9,319 @@ import FilterFormForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import NameForm from "./NameForm";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%"
-  },
-  button: {
-    marginRight: theme.spacing(1)
-  },
-  backButton: {
-    marginRight: theme.spacing(1)
-  },
-  completed: {
-    display: "inline-block"
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
-}));
+const useStyles = theme => ({
+    root: {
+        width: "100%"
+    },
+    button: {
+        marginRight: theme.spacing(1)
+    },
+    backButton: {
+        marginRight: theme.spacing(1)
+    },
+    completed: {
+        display: "inline-block"
+    },
+    instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1)
+    }
+});
 
-export default function HorizontalNonLinearAlternativeLabelStepper({
-  rules,
-  onRulesChange
-}) {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState(new Set());
-  const [skipped, setSkipped] = React.useState(new Set());
-  // const [params, setParams] = React.useState(parameters);
-  const [rulesIndex, setRulesIndex] = React.useState(0);
-  const steps = getSteps();
-
-  function getSteps() {
+function getSteps() {
     return ["Rule Name", "Source", "Filter", "Destination"];
-  }
-
-  function getStepContent(step) {
-    switch (step) {
-      case 0:
-        return <NameForm updateRuleName={handleRuleNameChange}></NameForm>;
-      case 1:
-        return (
-          <AddressForm
-            whichForm="srcAddr"
-            setParams={handleRuleChange}
-          ></AddressForm>
-        );
-      case 2:
-        return <FilterFormForm setParams={handleRuleChange}></FilterFormForm>;
-      case 3:
-        return (
-          <AddressForm
-            whichForm="destAddr"
-            setParams={handleRuleChange}
-          ></AddressForm>
-        );
-      default:
-        return "Unknown step";
-    }
-  }
-
-  const handleRuleChange = (value, field, form) => {
-    //change the field to the value from function in the correct form
-    const newRules = rules.map((currRules, index) => {
-      return index === rulesIndex
-        ? {
-            ...currRules,
-            [form]: {
-              ...currRules[form],
-              [field]: value
-            }
-          }
-        : currRules;
-    });
-    onRulesChange(newRules);
-  };
-
-  const handleRuleNameChange = (newName, form) => {
-    //change the field to the value from function in the correct form
-    const newRules = rules.map((currRules, index) => {
-      return index === rulesIndex
-        ? {
-            ...currRules,
-            [form]: {
-              ...currRules[form],
-              name: newName
-            }
-          }
-        : currRules;
-    });
-    onRulesChange(newRules);
-  };
-
-  const totalSteps = () => {
-    return getSteps().length;
-  };
-
-  const isStepOptional = step => {
-    return step === 2;
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(prevSkipped => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const skippedSteps = () => {
-    return skipped.size;
-  };
-
-  const completedSteps = () => {
-    return completed.size;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps() - skippedSteps();
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !completed.has(i))
-        : activeStep + 1;
-
-    setActiveStep(newActiveStep);
-  };
-
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
-
-  const handleStep = step => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = new Set(completed);
-    newCompleted.add(activeStep);
-    setCompleted(newCompleted);
-
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
-    if (completed.size !== totalSteps() - skippedSteps()) {
-      handleNext();
-    } else if (completedSteps() === totalSteps() - 1) {
-      handleFinish();
-    }
-  };
-
-  const handleFinish = () => {
-    onRulesChange(rules);
-    setRulesIndex(+1);
-    let newRules = rules;
-    newRules.push({
-      name: "", // **
-      srcAddr: {
-        network: "",
-        protocol: "",
-        primaryAddress: "",
-        secondaryAddress: "",
-        methods: ["", ""]
-      },
-      destAddr: {
-        network: "",
-        protocol: "",
-        primaryAddress: "",
-        secondaryAddress: "",
-        methods: [""]
-      },
-      filter: {
-        filterType: "",
-        dpasFilter: "", // **
-        schemaPath: ""
-      }
-    });
-    onRulesChange(newRules);
-    rules = newRules;
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted(new Set());
-    setSkipped(new Set());
-  };
-
-  const handleRuleDelete = index => {
-    let newRulesArray = rules.filter((value, ruleIndex) => {
-      return ruleIndex !== index;
-    });
-    onRulesChange(newRulesArray);
-    if (rulesIndex > 1) {
-      setRulesIndex(rulesIndex - 1);
-    }
-  };
-
-  const isStepSkipped = step => {
-    return skipped.has(step);
-  };
-
-  function isStepComplete(step) {
-    return completed.has(step);
-  }
-
-  return (
-    <div className={classes.root} style={{ marginBottom: "200px" }}>
-      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const buttonProps = {};
-          if (isStepOptional(index)) {
-            buttonProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepButton
-                onClick={handleStep(index)}
-                completed={isStepComplete(index)}
-                {...buttonProps}
-              >
-                {label}
-              </StepButton>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {allStepsCompleted() ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button>
-              {isStepOptional(activeStep) && !completed.has(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
-
-              {activeStep !== steps.length &&
-                (completed.has(activeStep) ? (
-                  <Typography variant="caption" className={classes.completed}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleComplete}
-                  >
-                    {completedSteps() === totalSteps() - 1
-                      ? "Finish"
-                      : "Complete Step"}
-                  </Button>
-                ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
 }
+
+class HorizontalStepper extends Component {
+
+    constructor(props) {
+        super(props);
+        this.steps = getSteps();
+        this.state = {
+            step: 0,
+            completed: [],
+            skipped: [],
+            rule: {
+                name: "",
+                srcAddr: {
+                    network: "",
+                    protocol: "",
+                    primaryAddress: "",
+                    secondaryAddress: "",
+                    methods: []
+                },
+                destAddr: {
+                    network: "",
+                    protocol: "",
+                    primaryAddress: "",
+                    secondaryAddress: "",
+                    methods: []
+                },
+                filter: {
+                    filterType: "",
+                    dpasFilter: "",
+                    schemaPath: ""
+                }
+            }
+        };
+
+    }
+
+    getStepContent = step => {
+        switch (step) {
+            case 0:
+                return <NameForm updateRuleName={this.handleRuleNameChange}/>;
+            case 1:
+                return (
+                    <AddressForm
+                        whichForm="srcAddr"
+                        setParams={this.handleRuleChange}
+                    />
+                );
+            case 2:
+                return <FilterFormForm setParams={this.handleRuleChange}/>;
+            case 3:
+                return (
+                    <AddressForm
+                        whichForm="destAddr"
+                        setParams={this.handleRuleChange}
+                    />
+                );
+            default:
+                return "Unknown step";
+        }
+    };
+
+    setActiveStep = newStep => {
+        this.setState({
+            step: newStep,
+            // stepIsValid: false
+            stepIsValid: true // DEBUG
+        });
+    };
+
+    handleRuleChange = (value, field, form) => {
+        let newRule = JSON.parse(JSON.stringify(this.state.rule));
+        newRule[form][field] = value;
+        this.setState({rule: newRule});
+    };
+
+    handleRuleNameChange = (newName, form) => {
+        let newRule = JSON.parse(JSON.stringify(this.state.rule));
+        newRule[form] = newName;
+        this.setState({rule: newRule});
+    };
+
+    totalSteps = () => {
+        return getSteps().length;
+    };
+
+    isStepOptional = step => {
+        return step === 2;
+    };
+
+    handleSkip = () => {
+        if (!this.isStepOptional(this.state.step)) {
+            // You probably want to guard against something like this
+            // it should never occur unless someone's actively trying to break something.
+            throw new Error("You can't skip a step that isn't optional.");
+        }
+
+        this.setActiveStep(this.state.step + 1);
+    };
+
+    skippedSteps = () => {
+        return this.state.skipped.length;
+    };
+
+    completedSteps = () => {
+        return this.state.completed.length;
+    };
+
+    allStepsCompleted = () => {
+        return this.completedSteps() === this.totalSteps() - this.skippedSteps();
+    };
+
+    isLastStep = () => {
+        return this.state.step === this.totalSteps() - 1;
+    };
+
+    handleNext = () => {
+        const newActiveStep =
+            this.isLastStep() && !this.allStepsCompleted()
+                ? // It's the last step, but not all steps have been completed
+                  // find the first step that has been completed
+                this.steps.findIndex((step, i) => !this.state.completed.includes(i))
+                : this.state.step + 1;
+
+        this.setActiveStep(newActiveStep);
+    };
+
+    handleBack = () => {
+        // Handle a press on the back button
+        this.setActiveStep(this.state.step - 1);
+    };
+
+    handleStep = step => () => {
+        this.setActiveStep(step);
+    };
+
+    handleComplete = () => {
+        let newCompleted = this.state.completed;
+        newCompleted.push(this.state.step);
+        this.setState({completed: newCompleted});
+
+
+        if (this.state.completed.length !== this.totalSteps() - this.skippedSteps()) {
+            this.handleNext();
+        } else if (this.completedSteps() === this.totalSteps()) {
+            this.handleFinish();
+        }
+    };
+
+    handleFinish = () => {
+        const rule = JSON.parse(JSON.stringify(this.state.rule));
+        this.props.addRule(rule);
+    };
+
+    ruleReset = () => {
+        this.setActiveStep(0);
+        this.setState({
+            rule:
+                {
+                    name: "",
+                    srcAddr: {
+                        network: "",
+                        protocol: "",
+                        primaryAddress: "",
+                        secondaryAddress: "",
+                        methods: ["", ""]
+                    },
+                    destAddr: {
+                        network: "",
+                        protocol: "",
+                        primaryAddress: "",
+                        secondaryAddress: "",
+                        methods: [""]
+                    },
+                    filter: {
+                        filterType: "",
+                        dpasFilter: "",
+                        schemaPath: ""
+                    }
+                }
+        })
+    };
+
+    handleReset = () => {
+        this.setActiveStep(0);
+        this.setState({completed: []});
+        this.setState({skipped: []});
+        this.ruleReset();
+    };
+
+    isStepSkipped = step => {
+        return this.state.skipped.includes(step);
+    };
+
+    isStepComplete = step => {
+        return this.state.completed.includes(step);
+    };
+
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <div className={classes.root} style={{marginBottom: "200px"}}>
+                <Stepper alternativeLabel nonLinear activeStep={this.state.step}>
+                    {this.steps.map((label, index) => {
+                        const stepProps = {};
+                        const buttonProps = {};
+                        if (this.isStepOptional(index)) {
+                            buttonProps.optional = (
+                                <Typography variant="caption">Optional</Typography>
+                            );
+                        }
+                        if (this.isStepSkipped(index)) {
+                            stepProps.completed = false;
+                        }
+                        return (
+                            <Step key={label} {...stepProps}>
+                                <StepButton
+                                    onClick={this.handleStep(index)}
+                                    completed={this.isStepComplete(index)}
+                                    {...buttonProps}
+                                >
+                                    {label}
+                                </StepButton>
+                            </Step>
+                        );
+                    })}
+                </Stepper>
+                <div>
+                    {this.allStepsCompleted() ? (
+                        <div>
+                            <Typography className={classes.instructions}>
+                                All steps completed - you&apos;re finished
+                            </Typography>
+                            <Button onClick={this.handleReset}>Reset</Button>
+                        </div>
+                    ) : (
+                        <div>
+                            <Typography className={classes.instructions}>
+                                {this.getStepContent(this.state.step)}
+                            </Typography>
+                            <div>
+                                <Button
+                                    disabled={this.state.step === 0}
+                                    onClick={this.handleBack}
+                                    className={classes.button}
+                                >
+                                    Back
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.handleNext}
+                                    className={classes.button}
+                                >
+                                    Next
+                                </Button>
+                                {this.isStepOptional(this.state.step) && !this.state.completed.includes(this.state.step) && (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleSkip}
+                                        className={classes.button}
+                                    >
+                                        Skip
+                                    </Button>
+                                )}
+
+                                {this.state.step !== this.steps.length &&
+                                (this.state.completed.includes(this.state.step) ? (
+                                    <Typography variant="caption" className={classes.completed}>
+                                        Step {this.state.step + 1} already completed
+                                    </Typography>
+                                ) : (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleComplete}
+                                    >
+                                        {this.completedSteps() === this.totalSteps() - 1
+                                            ? "Finish"
+                                            : "Complete Step"}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    }
+}
+
+export default withStyles(useStyles, {withTheme: true})(HorizontalStepper);

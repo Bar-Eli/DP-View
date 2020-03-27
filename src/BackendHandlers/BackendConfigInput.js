@@ -10,12 +10,12 @@ export default class BackendConfigInput {
         let config = JSON.parse(JSON.stringify(config_file));
 
         // Acquire input from user
-        const mpgwName = input["details"]["projectNameValue"];
+        const ruleName = input["name"];
         const queueMgr = input["srcAddr"]["primaryAddress"];
         const queueName = input["srcAddr"]["secondaryAddress"];
 
         // Set configuration params
-        config["name"] = mpgwName + "_FSH"; // Set FSH name
+        config["name"] = ruleName + "_FSH"; // Set FSH name
         config["QueueManager"]["value"] = queueMgr;
         config["GetQueue"] = queueName;
 
@@ -57,7 +57,8 @@ export default class BackendConfigInput {
     static generateRuleReq(input, num) {
 
         const config_file = require('./Configuraions/newRule');
-        let config = JSON.parse(JSON.stringify(config_file))["rules"][0]; // Configuration JSON for one rule.
+        // let config = JSON.parse(JSON.stringify(config_file))["rules"][0]; // Configuration JSON for one rule.
+        let config = JSON.parse(JSON.stringify(config_file)); // Configuration JSON for one rule.
 
         // Acquire input from user
 
@@ -148,7 +149,7 @@ export default class BackendConfigInput {
         for (let i = 0; i < nodes.length; i++) {
             // let urlParams = "?host=" + nodes[i]["host"] + "&port=" + nodes[i]["port"] + "&username=" +
             //     dpCredentials["username"] + "&password=" + dpCredentials["password"] + "&domain=" + clusterDetails["domain"];
-            let urlParams = `"?host=${nodes[i]["host"]}&port=${nodes[i]["port"]}&username=${dpCredentials["username"]}&password=${dpCredentials["password"]}&domain=${clusterDetails["domain"]}`;
+            let urlParams = `?host=${nodes[i]["host"]}&port=${nodes[i]["port"]}&username=${dpCredentials["username"]}&password=${dpCredentials["password"]}&domain=${clusterDetails["domain"]}`;
             urlParamsList.push(urlParams);
         }
         return urlParamsList;

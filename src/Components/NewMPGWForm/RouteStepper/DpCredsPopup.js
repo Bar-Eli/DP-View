@@ -35,7 +35,7 @@ class DpcredentialsPopup extends Component {
                 passwordTouched: true
             });
         }
-    }
+    };
 
   render(){
     return (

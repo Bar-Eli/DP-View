@@ -1,11 +1,10 @@
-
 import BackendConfigInput from './BackendConfigInput.js'
 
 export default class BackendRequests {
 
     // CONSTANTS
-    static BACKEND_URL = "http://10.0.3.8:4000";
-    // static BACKEND_URL = "http://localhost:4000";
+    // static BACKEND_URL = "http://10.0.3.8:4000";
+    static BACKEND_URL = "http://localhost:4000";
 
     /**
      * Get list of clusters for input choosing
@@ -94,7 +93,7 @@ export default class BackendRequests {
      */
     static async createNewFshs(rules, urlParamsList) {
         for (let i = 0; i < rules.length; i++) {  // For each rule
-            for (let j = 0; j < urlParamsList; j++) {  // For each machine in cluster
+            for (let j = 0; j < urlParamsList.length; j++) {  // For each machine in cluster
                 this.createNewFsh(rules[i], urlParamsList[j]);
             }
         }
@@ -108,8 +107,8 @@ export default class BackendRequests {
      */
     static async createNewMpgw(input) {
 
-        this.getFileContent();
-        /*
+        // this.getFileContent();
+
         const clusterDetails = await this.getClusterDetails(input);
         const urlParamsList = BackendConfigInput.generateClusterUrlParams(input, clusterDetails);
         const rules = input["rules"];
@@ -125,7 +124,7 @@ export default class BackendRequests {
             body: data,
         };
 
-        for (let i = 0; i < urlParamsList; i++) {
+        for (let i = 0; i < urlParamsList.length; i++) {
             let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
             let response = await fetch(url, options);
             let responseData = await response.json();
@@ -134,13 +133,12 @@ export default class BackendRequests {
 
         // alert(responseData["message"] + " on port " + port);
 
-         */
 
     }
 
     static async getFileContent() {
 
-        const path ="C:\\Users\\Alon\\Desktop\\someFile.json";
+        const path = "C:\\Users\\Alon\\Desktop\\someFile.json";
         // const config_file = require(path);
         // console.log(config_file);
 
@@ -155,7 +153,6 @@ export default class BackendRequests {
 
 
     }
-
 
 
 }

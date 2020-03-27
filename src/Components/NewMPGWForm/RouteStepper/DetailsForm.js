@@ -157,6 +157,11 @@ class DetailsForm extends Component {
                         onChange={(e, value) => {
                             this.setState({displayMpgwSelection: "inline-flex"});
                             this.setState({displayButtons: "inline-block"});
+                            this.props.updateParams(
+                                value,
+                                "clusterName",
+                                "details"
+                            );
                         }}
                     />
 

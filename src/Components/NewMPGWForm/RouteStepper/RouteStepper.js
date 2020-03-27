@@ -8,11 +8,9 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
-import HorizontalNonLinearAlternativeLabelStepper from "./HorizontalStepper";
-import Overview from "./Overview";
+import HorizontalStepper from "./HorizontalStepper";
 import DpCredsPopup from './DpCredsPopup';
-// import AddressForm from "./AddressForm";
-// import FilterForm from "./FilterForm";
+import RuleTable from "../../RuleTable";
 
 const useStyles = theme => ({
     root: {
@@ -42,43 +40,20 @@ class RouteStepper extends Component {
         super(props);
         this.state = {
             popUpStatus: false,
-            // stepIsValid: true, // DEBUG
-            stepIsValid: false,
+            stepIsValid: true, // DEBUG
+            // stepIsValid: false,
             step: 0,
+            // step: 2, // DEBUG
             params: {
                 details: {
                     projectNameValue: null,
                     projectMadorValue: null,
                     projectTeamValue: null,
-                    clusterName: null, // **
+                    clusterName: null,
                     testOrProd: "test"
                 },
-                rules: [
-                    {
-                        name: "", // **
-                        srcAddr: {
-                            network: "",
-                            protocol: "",
-                            primaryAddress: "",
-                            secondaryAddress: "",
-                            methods: ["", ""]
-                        },
-                        destAddr: {
-                            network: "",
-                            protocol: "",
-                            primaryAddress: "",
-                            secondaryAddress: "",
-                            methods: [""]
-                        },
-                        filter: {
-                            filterType: "",
-                            dpasFilter: "", // **
-                            schemaPath: ""
-                        }
-                    }
-                ],
+                rules: [],
                 dpCredentials: {
-                    // **
                     username: "",
                     password: ""
                 }
@@ -91,12 +66,6 @@ class RouteStepper extends Component {
         object[paramName] = value;
         if (form === "details") {
             this.setState({details: object});
-        } else if (form === "srcAddr") {
-            this.setState({srcAddr: object});
-        } else if (form === "destAddr") {
-            this.setState({destAddr: object});
-        } else if (form === "filter") {
-            this.setState({filter: object});
         } else if (form === "dpCredentials") {
             this.setState({dpCredentials: object});
         } else {
@@ -104,17 +73,16 @@ class RouteStepper extends Component {
         }
     };
 
-    updateTableParams = (newData, isSrc) => {
-        if (isSrc === "true") {
-            const srcAddrObject = this.state.srcAddr;
-            srcAddrObject.srcTableData.push(newData);
-            this.setState({srcAddr: srcAddrObject});
-        } else if (isSrc === "false") {
-            const destAddrObject = this.state.destAddr;
-            destAddrObject.destTableData.push(newData);
-            this.setState({destAddr: destAddrObject});
-        }
-        alert("You have submitted the rules!");
+    addRule = (rule) => {
+        let newParams = JSON.parse(JSON.stringify(this.state.params));
+        newParams["rules"].push(rule);
+        this.setState({params: newParams});
+    };
+
+    removeRule = (index) => {
+        let newParams = JSON.parse(JSON.stringify(this.state.params));
+        newParams["rules"].splice(index, 1);
+        this.setState({params: newParams});
     };
 
     getStepContent = step => {
@@ -129,19 +97,12 @@ class RouteStepper extends Component {
                 );
             case 1:
                 return (
-                    <HorizontalNonLinearAlternativeLabelStepper
-                        rules={this.state.params.rules}
-                        // update the parameters
-                        onRulesChange={newRules => {
-                            this.setState({
-                                params: {...this.state.params, rules: newRules}
-                            });
-                        }}
-                    />
+                    <HorizontalStepper addRule={this.addRule}/>
                 );
             case 2:
                 return (
-                    <Overview/>
+                    //<Overview/>
+                    <RuleTable data={this.state.params} removeRule={this.removeRule}/>
                 );
             default:
                 return "Unknown step";
@@ -151,8 +112,8 @@ class RouteStepper extends Component {
     setActiveStep = newStep => {
         this.setState({
             step: newStep,
-            stepIsValid: false
-            // stepIsValid: true // DEBUG
+            // stepIsValid: false
+            stepIsValid: true // DEBUG
         });
     };
 
@@ -178,8 +139,8 @@ class RouteStepper extends Component {
 
     handleNext = () => {
         // Handle a press on the next button
-        const valid = this.state.stepIsValid;
-        // const valid = true; // DEBUG
+        // const valid = this.state.stepIsValid;
+        const valid = true; // DEBUG
         if (valid) {
             this.setActiveStep(this.state.step + 1);
         } else {
@@ -227,7 +188,7 @@ class RouteStepper extends Component {
                     {steps.map((label, index) => (
                         <Step key={label}>
                             <StepLabel className={classes.stepLabel}>
-                                <a className={classes.stepLabel}>{label}</a>
+                                <text className={classes.stepLabel}>{label}</text>
                             </StepLabel>
                             <StepContent>
                                 <Typography>{this.getStepContent(index)}</Typography>
@@ -282,5 +243,4 @@ class RouteStepper extends Component {
         );
     }
 }
-
 export default withStyles(useStyles, {withTheme: true})(RouteStepper);

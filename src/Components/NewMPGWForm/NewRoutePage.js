@@ -41,6 +41,7 @@ class NewRoutePage extends Component {
         super(props);
         this.state = {
             showCreate: 'none',
+            // showCreate: 'block', // DEBUG
             inputParams: {}
         };
         this.inputParams = {};

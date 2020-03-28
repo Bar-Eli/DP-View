@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,6 +41,7 @@
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -59,7 +61,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.BackendConfigInput.js">
+  <component name="RunManager" selected="JavaScript Debug.Debug Application">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -94,6 +96,8 @@
       <updated>1584357065551</updated>
       <workItem from="1584357067785" duration="13763000" />
       <workItem from="1584616250224" duration="11024000" />
+      <workItem from="1585226525190" duration="1698000" />
+      <workItem from="1585229124014" duration="793000" />
     </task>
     <task id="LOCAL-00001" summary="Backend connection + Table">
       <created>1584974922221</created>
@@ -109,7 +113,49 @@
       <option name="project" value="LOCAL" />
       <updated>1585048665133</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Backend connection with cluster and multiple rules">
+      <created>1585146267836</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585146267836</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Backend connection with cluster and multiple rules">
+      <created>1585146278636</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585146278636</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Backend connection with cluster and multiple rules">
+      <created>1585146304436</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585146304436</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Pre Merge DP Credentials">
+      <created>1585256221469</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585256221469</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Completed merge">
+      <created>1585259220117</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1585259220117</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Working POC">
+      <created>1585344899988</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1585344899988</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +203,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Backend connection + Table" />
     <MESSAGE value="Backend connection improvement + Override" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend connection improvement + Override" />
+    <MESSAGE value="Backend connection with cluster and multiple rules" />
+    <MESSAGE value="Pre Merge DP Credentials" />
+    <MESSAGE value="Completed merge" />
+    <MESSAGE value="Working POC" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working POC" />
   </component>
 </project>

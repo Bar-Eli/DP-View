@@ -9,6 +9,7 @@ export default class NameForm extends Component {
           id="rule-name"
           label="Rule Name..."
           value={this.props.ruleName}
+          // variant="outlined"
           onChange={e => this.props.updateRuleName(e.target.value, "name")}
         />
       </div>

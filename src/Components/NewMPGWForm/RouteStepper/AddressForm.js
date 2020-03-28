@@ -23,7 +23,12 @@ const useStyles = theme => ({
     centerMargin: {
         margin: "auto",
         marginBlockEnd: "auto",
-        display: "block"
+        display: "block",
+        textAlign: "left",
+    },
+    methodLabel: {
+        marginBottom: "5px",
+        marginTop: "0"
     }
 });
 
@@ -159,10 +164,10 @@ class AddressForm extends Component {
                     />
                     <br/>
                     <br/>
-                    <div
+                    <div className={classes.centerMargin}
                         style={{display: this.state.showMethods}}
                     >
-                        <h5 className={classes.centerMargin}>Method</h5>
+                        <h5 className={classes.methodLabel}>Method</h5>
                         {this.state.methodList.map(method => (
                             <div>
                                 <FormControlLabel

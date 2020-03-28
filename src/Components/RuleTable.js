@@ -128,7 +128,8 @@ export class RuleTable extends Component {
                 <MaterialTable
                     title={this.props.title}
                     columns={this.state.columns}
-                    style={{width: 1200}}
+                    //style={{width: 1200}}
+                    style={{width: "100%"}}
                     data={!(data) ? this.ExtractTableDataFromProps(this.props.data.rules) : data}
                     options={{
                         grouping: true,

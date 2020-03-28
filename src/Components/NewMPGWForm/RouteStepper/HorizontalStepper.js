@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import FilterFormForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import NameForm from "./NameForm";
+import {Paper} from "@material-ui/core";
 
 const useStyles = theme => ({
     root: {
@@ -25,6 +26,14 @@ const useStyles = theme => ({
     instructions: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1)
+    },
+    center: {
+        textAlign: "center"
+    },
+    navBtns: {
+        textAlign: "center",
+        paddingTop: "30px",
+        paddingBottom: "10px"
     }
 });
 
@@ -233,92 +242,99 @@ class HorizontalStepper extends Component {
         const {classes} = this.props;
 
         return (
-            <div className={classes.root} style={{marginBottom: "200px"}}>
-                <Stepper alternativeLabel nonLinear activeStep={this.state.step}>
-                    {this.steps.map((label, index) => {
-                        const stepProps = {};
-                        const buttonProps = {};
-                        if (this.isStepOptional(index)) {
-                            buttonProps.optional = (
-                                <Typography variant="caption">Optional</Typography>
-                            );
-                        }
-                        if (this.isStepSkipped(index)) {
-                            stepProps.completed = false;
-                        }
-                        return (
-                            <Step key={label} {...stepProps}>
-                                <StepButton
-                                    onClick={this.handleStep(index)}
-                                    completed={this.isStepComplete(index)}
-                                    {...buttonProps}
-                                >
-                                    {label}
-                                </StepButton>
-                            </Step>
-                        );
-                    })}
-                </Stepper>
-                <div>
-                    {this.allStepsCompleted() ? (
-                        <div>
-                            <Typography className={classes.instructions}>
-                                All steps completed - you&apos;re finished
-                            </Typography>
-                            <Button onClick={this.handleReset}>Reset</Button>
-                        </div>
-                    ) : (
-                        <div>
-                            <Typography className={classes.instructions}>
-                                {this.getStepContent(this.state.step)}
-                            </Typography>
-                            <div>
-                                <Button
-                                    disabled={this.state.step === 0}
-                                    onClick={this.handleBack}
-                                    className={classes.button}
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={this.handleNext}
-                                    className={classes.button}
-                                >
-                                    Next
-                                </Button>
-                                {this.isStepOptional(this.state.step) && !this.state.completed.includes(this.state.step) && (
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={this.handleSkip}
-                                        className={classes.button}
-                                    >
-                                        Skip
-                                    </Button>
-                                )}
+            <div className={classes.root}>
 
-                                {this.state.step !== this.steps.length &&
-                                (this.state.completed.includes(this.state.step) ? (
-                                    <Typography variant="caption" className={classes.completed}>
-                                        Step {this.state.step + 1} already completed
-                                    </Typography>
-                                ) : (
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={this.handleComplete}
+                <Paper elevation={3} style={{marginBottom: "25px", marginTop: "25px"}}>
+
+                    <Stepper alternativeLabel nonLinear activeStep={this.state.step}>
+                        {this.steps.map((label, index) => {
+                            const stepProps = {};
+                            const buttonProps = {};
+                            if (this.isStepOptional(index)) {
+                                buttonProps.optional = (
+                                    <Typography variant="caption">Optional</Typography>
+                                );
+                            }
+                            if (this.isStepSkipped(index)) {
+                                stepProps.completed = false;
+                            }
+                            return (
+                                <Step key={label} {...stepProps}>
+                                    <StepButton
+                                        onClick={this.handleStep(index)}
+                                        completed={this.isStepComplete(index)}
+                                        {...buttonProps}
                                     >
-                                        {this.completedSteps() === this.totalSteps() - 1
-                                            ? "Finish"
-                                            : "Complete Step"}
-                                    </Button>
-                                ))}
-                            </div>
+                                        {label}
+                                    </StepButton>
+                                </Step>
+                            );
+                        })}
+                    </Stepper>
+
+                    <div className={classes.center}>
+                        <div>
+                            {this.allStepsCompleted() ? (
+                                <div className={classes.navBtns}>
+                                    <Typography className={classes.instructions}>
+                                        All steps completed - you&apos;re finished
+                                    </Typography>
+                                    <Button variant="outlined" onClick={this.handleReset}>Add another rule</Button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <Typography className={classes.instructions}>
+                                        {this.getStepContent(this.state.step)}
+                                    </Typography>
+                                    <div className={classes.navBtns}>
+                                        <Button
+                                            disabled={this.state.step === 0}
+                                            onClick={this.handleBack}
+                                            className={classes.button}
+                                        >
+                                            Back
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.handleNext}
+                                            className={classes.button}
+                                        >
+                                            Next
+                                        </Button>
+                                        {this.isStepOptional(this.state.step) && !this.state.completed.includes(this.state.step) && (
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.handleSkip}
+                                                className={classes.button}
+                                            >
+                                                Skip
+                                            </Button>
+                                        )}
+
+                                        {this.state.step !== this.steps.length &&
+                                        (this.state.completed.includes(this.state.step) ? (
+                                            <Typography variant="caption" className={classes.completed}>
+                                                Step {this.state.step + 1} already completed
+                                            </Typography>
+                                        ) : (
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.handleComplete}
+                                            >
+                                                {this.completedSteps() === this.totalSteps() - 1
+                                                    ? "Finish"
+                                                    : "Complete Step"}
+                                            </Button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
+                    </div>
+                </Paper>
             </div>
         );
     }

@@ -129,9 +129,9 @@ export default class BackendRequests {
             let response = await fetch(url, options);
             let responseData = await response.json();
             console.log(responseData);
+            alert(responseData["message"]);
         }
 
-        // alert(responseData["message"] + " on port " + port);
 
 
     }

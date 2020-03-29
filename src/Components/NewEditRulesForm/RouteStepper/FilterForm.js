@@ -31,11 +31,11 @@ class FilterFormForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      greenBtnBackground: "default",
-      greenBtnColor: "default",
+      // greenBtnBackground: "default",
+      // greenBtnColor: "default",
       schemaBtnColor: "default",
       dpasBtnColor: "default",
-      dpasService: undefined,
+      dpasService: "",
       showDpas: "none",
       showUpload: "none"
     };
@@ -82,6 +82,29 @@ class FilterFormForm extends Component {
     // this.props.updateParams(event.target.value, "dexterFilter", "filter");
     this.props.setParams(event.target.value, "dpasFilter", "filter");
   };
+
+  componentDidMount() {
+    this.props.currFilterRules.filterType === "dpass"
+      ? this.setState(prevState => {
+          const newState = prevState;
+          newState.schemaBtnColor = "default";
+          newState.dpasBtnColor = "primary";
+          newState.showDpas = "inline-flex";
+          newState.showUpload = "none";
+          newState.dpasService = this.props.currFilterRules.dpasFilter;
+          return newState;
+        })
+      : this.setState(prevState => {
+          const newState = prevState;
+          newState.greenBtnColor = "default";
+          newState.schemaBtnColor = "primary";
+          newState.dpasBtnColor = "default";
+          newState.greenBtnBackground = "#e0e0e0";
+          newState.showDpas = "none";
+          newState.showUpload = "inline-flex";
+          return newState;
+        });
+  }
 
   render() {
     const { classes } = this.props;

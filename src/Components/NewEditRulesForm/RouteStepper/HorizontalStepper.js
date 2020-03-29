@@ -7,7 +7,8 @@ import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FilterFormForm from "./FilterForm";
-import AddressForm from "./AddressForm";
+import AddressForm from "./SrcAddressForm";
+import DestAddressForm from "./DestAddressForm";
 import NameForm from "./NameForm";
 import { Paper } from "@material-ui/core";
 
@@ -50,25 +51,26 @@ class HorizontalStepper extends Component {
       step: 0,
       completed: [],
       skipped: [],
+      // manually inserted for testing, should come as props from above
       rule: {
-        name: "",
+        name: "TestRule",
         srcAddr: {
-          network: "",
-          protocol: "",
-          primaryAddress: "",
-          secondaryAddress: "",
-          methods: []
+          network: "Salim",
+          protocol: "http",
+          primaryAddress: "http://zibi.com",
+          secondaryAddress: "80",
+          methods: ["PUT", "GET"]
         },
         destAddr: {
-          network: "",
-          protocol: "",
-          primaryAddress: "",
-          secondaryAddress: "",
+          network: "Tzadok",
+          protocol: "mq",
+          primaryAddress: "queue_manager",
+          secondaryAddress: "queue",
           methods: []
         },
         filter: {
-          filterType: "",
-          dpasFilter: "",
+          filterType: "dpass",
+          dpasFilter: "Nimbus",
           schemaPath: ""
         }
       }
@@ -78,16 +80,33 @@ class HorizontalStepper extends Component {
   getStepContent = step => {
     switch (step) {
       case 0:
-        return <NameForm updateRuleName={this.handleRuleNameChange} />;
+        return (
+          <NameForm
+            updateRuleName={this.handleRuleNameChange}
+            ruleName={this.state.rule.name}
+          />
+        );
       case 1:
         return (
-          <AddressForm whichForm="srcAddr" setParams={this.handleRuleChange} />
+          <AddressForm
+            currSrcAddrRules={this.state.rule.srcAddr}
+            setParams={this.handleRuleChange}
+          />
         );
       case 2:
-        return <FilterFormForm setParams={this.handleRuleChange} />;
+        return (
+          <FilterFormForm
+            setParams={this.handleRuleChange}
+            currFilterRules={this.state.rule.filter}
+          />
+        );
       case 3:
         return (
-          <AddressForm whichForm="destAddr" setParams={this.handleRuleChange} />
+          <DestAddressForm
+            whichForm="destAddr"
+            currDestAddrRules={this.state.rule.destAddr}
+            setParams={this.handleRuleChange}
+          />
         );
       default:
         return "Unknown step";

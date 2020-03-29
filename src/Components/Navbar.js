@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import Link from "@material-ui/core/Link";
 import { withRouter } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFootballBall } from "@fortawesome/free-solid-svg-icons";
 
 export class Navbar extends Component {
   constructor(props) {
@@ -27,6 +29,9 @@ export class Navbar extends Component {
       font-weight: bold;
       font-size: 100%;
     }
+    #logo {
+      margin-right: 15px;
+    }
   `;
 
   handleRedirect = num => {
@@ -47,6 +52,7 @@ export class Navbar extends Component {
         <AppBar position="static">
           <Toolbar variant="dense">
             <Typography color="inherit" id="text">
+              <FontAwesomeIcon icon={faFootballBall} id="logo" />
               DP View
             </Typography>
             <Link

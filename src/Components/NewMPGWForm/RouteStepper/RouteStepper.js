@@ -41,15 +41,16 @@ class RouteStepper extends Component {
         this.state = {
             popUpStatus: false,
             stepIsValid: true, // DEBUG
+            detailsFormTouched: false,
             // stepIsValid: false,
             step: 0,
             // step: 2, // DEBUG
             params: {
                 details: {
-                    projectNameValue: null,
-                    projectMadorValue: null,
-                    projectTeamValue: null,
-                    clusterName: null,
+                    projectNameValue: "",
+                    projectMadorValue: "",
+                    projectTeamValue: "",
+                    clusterName: "",
                     testOrProd: "test"
                 },
                 rules: [],
@@ -93,6 +94,7 @@ class RouteStepper extends Component {
                         details={this.state.params.details}
                         updateParams={this.updateParamState}
                         validationHandler={this.handleStepValidation}
+                        allTouched={this.state.detailsFormTouched}
                     />
                 );
             case 1:
@@ -112,8 +114,8 @@ class RouteStepper extends Component {
     setActiveStep = newStep => {
         this.setState({
             step: newStep,
-            // stepIsValid: false
-            stepIsValid: true // DEBUG
+            stepIsValid: false
+            // stepIsValid: true // DEBUG
         });
     };
 
@@ -122,29 +124,14 @@ class RouteStepper extends Component {
         this.setState({stepIsValid: flag});
     };
 
-    initDetailsForm = () => {
-        // initialize form details state beacause a press on the next button occurred
-        // let a = this.state.params; // CHECK
-        this.setState({
-            params: {
-                ...this.state.params, details: {
-                    projectNameValue: this.state.params.details.projectNameValue === null ? "" : this.state.params.details.projectNameValue,
-                    projectMadorValue: this.state.params.details.projectMadorValue === null ? "" : this.state.params.details.projectMadorValue,
-                    projectTeamValue: this.state.params.details.projectTeamValue === null ? "" : this.state.params.details.projectTeamValue,
-                    testOrProd: "test"
-                }
-            }
-        });
-    };
-
     handleNext = () => {
         // Handle a press on the next button
-        // const valid = this.state.stepIsValid;
-        const valid = true; // DEBUG
+        const valid = this.state.stepIsValid;
+        // const valid = true; // DEBUG
         if (valid) {
             this.setActiveStep(this.state.step + 1);
         } else {
-            this.initDetailsForm();
+            this.setState({ detailsFormTouched: true });
         }
     };
 

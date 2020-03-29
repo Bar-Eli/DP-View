@@ -86,7 +86,7 @@ class DetailsForm extends Component {
                             this.checkIfAllValid();
                         }
                         }
-                        error={!this.validator.fieldValid('Project Name') && this.props.details.projectNameValue != null}
+                        error={!this.validator.fieldValid('Project Name') && this.props.allTouched == true}
                         helperText={this.validator.getErrorMessages()["Project Name"]}
                     />
                     <TextField
@@ -103,7 +103,7 @@ class DetailsForm extends Component {
                             this.checkIfAllValid();
                         }
                         }
-                        error={!this.validator.fieldValid('Mador') && this.props.details.projectMadorValue != null}
+                        error={!this.validator.fieldValid('Mador') && this.props.allTouched == true}
                         helperText={this.validator.getErrorMessages()["Mador"]}
                     />
                     <TextField
@@ -120,7 +120,7 @@ class DetailsForm extends Component {
                             this.checkIfAllValid();
                         }
                         }
-                        error={!this.validator.fieldValid('Team') && this.props.details.projectTeamValue != null}
+                        error={!this.validator.fieldValid('Team') && this.props.allTouched == true}
                         helperText={this.validator.getErrorMessages()["Team"]}
                         InputProps={{
                             startAdornment: (

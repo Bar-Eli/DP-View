@@ -9,7 +9,6 @@ import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import { render } from '@testing-library/react';
 import CreateIcon from '@material-ui/icons/Create';
-import MachineButton from './MachineButtonComponent';
 
 const useStyles = theme => ({
     root: {
@@ -43,70 +42,37 @@ const useStyles = theme => ({
       }
   });
 
-class CircularIntegration extends Component{
+class MachineButton extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          loading: false,
-          success: false,
-          buttonClass: "",
-          clusterSize: 3  
+          loading: this.props.loading,
+          success: this.props.success,
+          failed: false,
+          buttonClass: "", 
         };
         
       }
 
-  handleButtonClick = () => {
-    const { classes } = this.props;
-    this.setState({ loading: true});
-
-    const timer = setTimeout(() => {
-        this.setState({ 
-            loading: false,
-            success: true,
-            buttonClass: classes.buttonSuccess
-        });
-      }, 1000);
-    return () => clearTimeout(timer);
-  }
-
 
   render(){
     const { classes } = this.props;
-    let arr= new Array(3);
-    let i;
-    for (i = 1; i < 3 + 1; i++) {
-        arr[i] = i;
-    }
 
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
-        <Button
-          variant="contained"
+        <Fab
+          aria-label="create route"
           color="primary"
           className={this.state.buttonClass}
-          disabled={this.state.success}
-          onClick={this.handleButtonClick}
         >
-         Create
-        </Button>
-        {this.state.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+          {this.props.success ? <CheckIcon /> : <CreateIcon fontSize='large' />}
+        </Fab>
+        {this.props.loading && <CircularProgress size={68} className={classes.fabProgress} />}
       </div>
-
-      <div> 
-        {arr.map(item => 
-        <li key={item} value={item}>
-            <MachineButton 
-            loading={this.state.loading}
-            success={this.state.success}
-            />
-        </li>
-        )}
-      </div>
-
     </div>
   );
   }
 }
 
-export default withStyles(useStyles, { withTheme: true })(CircularIntegration);
+export default withStyles(useStyles, { withTheme: true })(MachineButton);

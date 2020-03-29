@@ -42,7 +42,11 @@ class NewRoutePage extends Component {
         this.state = {
             showCreate: 'none',
             // showCreate: 'block', // DEBUG
-            inputParams: {}
+            inputParams: {},
+            cluster:{
+                    "dp1": true,
+                    "dp2": false
+            }
         };
         this.inputParams = {};
     }

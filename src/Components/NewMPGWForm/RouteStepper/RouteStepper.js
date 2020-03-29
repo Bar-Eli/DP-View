@@ -114,8 +114,8 @@ class RouteStepper extends Component {
     setActiveStep = newStep => {
         this.setState({
             step: newStep,
-            stepIsValid: false
-            // stepIsValid: true // DEBUG
+            // stepIsValid: false
+            stepIsValid: true // DEBUG
         });
     };
 
@@ -126,8 +126,8 @@ class RouteStepper extends Component {
 
     handleNext = () => {
         // Handle a press on the next button
-        const valid = this.state.stepIsValid;
-        // const valid = true; // DEBUG
+        // const valid = this.state.stepIsValid;
+        const valid = true; // DEBUG
         if (valid) {
             this.setActiveStep(this.state.step + 1);
         } else {

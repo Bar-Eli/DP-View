@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 import EditRuleStepper from "./Components/EditRuleForm/EditRules";
 import RuleTable from "./Components/RuleTable";
-import HorizontalPage from "./Components/NewMPGWHorizontal/HorizontalPage";
-// import HorizontalNonLinearAlternativeLabelStepper from "./Components/HorizontalStepper";
 
 function AppRouter() {
   return (

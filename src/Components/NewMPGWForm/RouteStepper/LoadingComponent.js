@@ -40,6 +40,9 @@ const useStyles = theme => ({
         left: '50%',
         marginTop: -12,
         marginLeft: -12,
+      },
+      ul:{
+        listStyleType: 'none'
       }
   });
 
@@ -72,6 +75,11 @@ class CircularIntegration extends Component{
 
   render(){
     const { classes } = this.props;
+    const cluster = {
+        "host1": true,
+        "host2": false,
+        "host3": true
+    }
     let arr= new Array(3);
     let i;
     for (i = 1; i < 3 + 1; i++) {
@@ -95,12 +103,15 @@ class CircularIntegration extends Component{
 
       <div> 
         {arr.map(item => 
+        <ul className={classes.ul}>
         <li key={item} value={item}>
             <MachineButton 
             loading={this.state.loading}
             success={this.state.success}
+            buttonClass={this.state.buttonClass}
             />
         </li>
+        </ul>
         )}
       </div>
 

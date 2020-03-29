@@ -46,25 +46,26 @@ class MachineButton extends Component{
     constructor(props) {
         super(props);
         this.state = {
+          hostname: "dp1",
           loading: this.props.loading,
           success: this.props.success,
           failed: false,
-          buttonClass: "", 
+          buttonClass: this.props.buttonClass, 
         };
         
       }
-
 
   render(){
     const { classes } = this.props;
 
   return (
     <div className={classes.root}>
+        <p>{this.state.hostname}</p>
       <div className={classes.wrapper}>
         <Fab
           aria-label="create route"
           color="primary"
-          className={this.state.buttonClass}
+          className={this.props.buttonClass}
         >
           {this.props.success ? <CheckIcon /> : <CreateIcon fontSize='large' />}
         </Fab>

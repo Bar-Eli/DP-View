@@ -75,7 +75,7 @@ class EditRulesForm extends Component {
           onClick={this.refreshPage}
         >
           <Typography variant="h4" component="h2">
-            New MPGW
+            Edit Rules
           </Typography>
         </Button>
 

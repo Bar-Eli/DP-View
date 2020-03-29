@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { createStyles, makeStyles, Theme, withStyles  } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
@@ -24,6 +25,12 @@ const useStyles = theme => ({
         backgroundColor: green[500],
         '&:hover': {
           backgroundColor: green[700],
+        },
+      },
+      buttonFailed: {
+        backgroundColor: red[500],
+        '&:hover': {
+          backgroundColor: red[700],
         },
       },
       fabProgress: {
@@ -63,6 +70,11 @@ class CircularIntegration extends Component{
     this.setState({ loading: true});
 
     const timer = setTimeout(() => {
+        const successResponse = {
+            "DataPower2": true,
+            "DataPower4": false,
+            "DataPower6": true
+        }
         this.setState({ 
             loading: false,
             success: true,
@@ -72,19 +84,22 @@ class CircularIntegration extends Component{
     return () => clearTimeout(timer);
   }
 
+  componentWillMount = () => {
+    let arr = ["DataPower2", "DataPower4", "DataPower6"];
+    let hostnameStatus = {};
+    for (let index = 0; index < arr.length; index++) {
+      let hostname = arr[index];
+      hostnameStatus[hostname] = false;
+    };
+    this.setState({
+      hostnameStatus
+  });
+  }
 
   render(){
     const { classes } = this.props;
-    const cluster = {
-        "host1": true,
-        "host2": false,
-        "host3": true
-    }
-    let arr= new Array(3);
-    let i;
-    for (i = 1; i < 3 + 1; i++) {
-        arr[i] = i;
-    }
+    let arr = ["DataPower2", "DataPower4", "DataPower6"];
+    console.log(this.state)
 
   return (
     <div className={classes.root}>
@@ -102,19 +117,20 @@ class CircularIntegration extends Component{
       </div>
 
       <div> 
-        {arr.map(item => 
         <ul className={classes.ul}>
+        {arr.map(item => 
         <li key={item} value={item}>
             <MachineButton 
             loading={this.state.loading}
             success={this.state.success}
             buttonClass={this.state.buttonClass}
+            hostname={item}
+            failed={false}
             />
         </li>
-        </ul>
         )}
+        </ul>
       </div>
-
     </div>
   );
   }

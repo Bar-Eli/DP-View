@@ -9,6 +9,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import { render } from '@testing-library/react';
 import CreateIcon from '@material-ui/icons/Create';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const useStyles = theme => ({
     root: {
@@ -46,11 +47,11 @@ class MachineButton extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          hostname: "dp1",
+          hostname: this.props.hostname,
           loading: this.props.loading,
           success: this.props.success,
-          failed: false,
           buttonClass: this.props.buttonClass, 
+          failed: this.props.failed
         };
         
       }
@@ -67,7 +68,7 @@ class MachineButton extends Component{
           color="primary"
           className={this.props.buttonClass}
         >
-          {this.props.success ? <CheckIcon /> : <CreateIcon fontSize='large' />}
+          {this.props.success ? <CheckIcon /> : (this.props.failed ? <ErrorIcon /> : <CreateIcon fontSize='large' />)}
         </Fab>
         {this.props.loading && <CircularProgress size={68} className={classes.fabProgress} />}
       </div>

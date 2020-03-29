@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 // import EditRuleStepper from "./Components/EditRuleForm/EditRules";
-import EditRulesForm from "./Components/NewEditRulesForm/EditRulePage";
+import EditRulesForm from "./Components/EditRulesForm/EditRulePage";
 import RuleTable from "./Components/RuleTable";
 
 function AppRouter() {

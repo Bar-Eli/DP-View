@@ -80,6 +80,9 @@ class FilterFormForm extends Component {
   handleChangeDpas = event => {
     // this.props.updateParams("dexter", "filterType", "filter");
     // this.props.updateParams(event.target.value, "dexterFilter", "filter");
+    this.setState({
+      dpasService: event.target.value
+    });
     this.props.setParams(event.target.value, "dpasFilter", "filter");
   };
 

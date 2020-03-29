@@ -45,7 +45,9 @@ class AddressForm extends Component {
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false }
+      checkedValues: { POST: false, PUT: false, GET: false },
+      primaryAddressValue: "",
+      secondaryAddressValue: ""
     };
 
     this.props.setParams("http", "protocol", "srcAddr"); // Default protocol
@@ -57,7 +59,10 @@ class AddressForm extends Component {
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port"
+      secondaryAddress: "Port",
+      network: "",
+      secondaryAddressValue: "",
+      primaryAddressValue: ""
     });
     this.props.setParams("http", "protocol", "srcAddr");
   };
@@ -68,7 +73,10 @@ class AddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name"
+      secondaryAddress: "Queue name",
+      network: "",
+      secondaryAddressValue: "",
+      primaryAddressValue: ""
     });
     this.props.setParams("mq", "protocol", "srcAddr");
   };
@@ -105,12 +113,14 @@ class AddressForm extends Component {
           const newState = prevState;
           newState.protocol = "http";
           newState.network = this.props.currSrcAddrRules.network;
+          newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
+          newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
           newState.httpBtnColor = "primary";
           newState.mqBtnColor = "default";
           newState.showMethods = "block";
           newState.primaryAddress = "IP / URL";
           newState.secondaryAddress = "Port";
-
+          //mark checkboxes of methods
           const currMethods = this.props.currSrcAddrRules.methods;
           currMethods.forEach(method => {
             newState.checkedValues[method] = true;
@@ -122,6 +132,8 @@ class AddressForm extends Component {
           const newState = prevState;
           newState.protocol = "mq";
           newState.network = this.props.currSrcAddrRules.network;
+          newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
+          newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
           newState.mqBtnColor = "primary";
           newState.httpBtnColor = "default";
           newState.showMethods = "none";
@@ -171,16 +183,16 @@ class AddressForm extends Component {
 
           <TextField
             id="primary-address"
-            // label={this.state.primaryAddress}
-            value={this.props.currSrcAddrRules.primaryAddress}
+            label={this.state.primaryAddress}
+            value={this.state.primaryAddressValue}
             onChange={e => {
               this.props.setParams(e.target.value, "primaryAddress", "srcAddr");
             }}
           />
           <TextField
             id="secondary-address"
-            // label={this.state.secondaryAddress}
-            value={this.props.currSrcAddrRules.secondaryAddress}
+            label={this.state.secondaryAddress}
+            value={this.state.secondaryAddressValue}
             onChange={e => {
               this.props.setParams(
                 e.target.value,

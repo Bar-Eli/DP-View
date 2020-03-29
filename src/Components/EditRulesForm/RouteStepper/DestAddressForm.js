@@ -32,7 +32,7 @@ const useStyles = theme => ({
   }
 });
 
-class DestAddressForm extends Component {
+class AddressForm extends Component {
   constructor(props) {
     super(props);
     // verify if form is complete somehow
@@ -45,7 +45,9 @@ class DestAddressForm extends Component {
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false }
+      checkedValues: { POST: false, PUT: false, GET: false },
+      primaryAddressValue: "",
+      secondaryAddressValue: ""
     };
 
     this.props.setParams("http", "protocol", "destAddr"); // Default protocol
@@ -57,7 +59,10 @@ class DestAddressForm extends Component {
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port"
+      secondaryAddress: "Port",
+      network: "",
+      secondaryAddressValue: "",
+      primaryAddressValue: ""
     });
     this.props.setParams("http", "protocol", "destAddr");
   };
@@ -68,7 +73,10 @@ class DestAddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name"
+      secondaryAddress: "Queue name",
+      network: "",
+      secondaryAddressValue: "",
+      primaryAddressValue: ""
     });
     this.props.setParams("mq", "protocol", "destAddr");
   };
@@ -105,12 +113,14 @@ class DestAddressForm extends Component {
           const newState = prevState;
           newState.protocol = "http";
           newState.network = this.props.currDestAddrRules.network;
+          newState.primaryAddressValue = this.props.currDestAddrRules.primaryAddress;
+          newState.secondaryAddressValue = this.props.currDestAddrRules.secondaryAddress;
           newState.httpBtnColor = "primary";
           newState.mqBtnColor = "default";
           newState.showMethods = "block";
           newState.primaryAddress = "IP / URL";
           newState.secondaryAddress = "Port";
-
+          //mark checkboxes of methods
           const currMethods = this.props.currDestAddrRules.methods;
           currMethods.forEach(method => {
             newState.checkedValues[method] = true;
@@ -122,6 +132,8 @@ class DestAddressForm extends Component {
           const newState = prevState;
           newState.protocol = "mq";
           newState.network = this.props.currDestAddrRules.network;
+          newState.primaryAddressValue = this.props.currDestAddrRules.primaryAddress;
+          newState.secondaryAddressValue = this.props.currDestAddrRules.secondaryAddress;
           newState.mqBtnColor = "primary";
           newState.httpBtnColor = "default";
           newState.showMethods = "none";
@@ -171,8 +183,8 @@ class DestAddressForm extends Component {
 
           <TextField
             id="primary-address"
-            // label={this.state.primaryAddress}
-            value={this.props.currDestAddrRules.primaryAddress}
+            label={this.state.primaryAddress}
+            value={this.state.primaryAddressValue}
             onChange={e => {
               this.props.setParams(
                 e.target.value,
@@ -183,8 +195,8 @@ class DestAddressForm extends Component {
           />
           <TextField
             id="secondary-address"
-            // label={this.state.secondaryAddress}
-            value={this.props.currDestAddrRules.secondaryAddress}
+            label={this.state.secondaryAddress}
+            value={this.state.secondaryAddressValue}
             onChange={e => {
               this.props.setParams(
                 e.target.value,
@@ -220,4 +232,4 @@ class DestAddressForm extends Component {
   }
 }
 
-export default withStyles(useStyles, { withTheme: true })(DestAddressForm);
+export default withStyles(useStyles, { withTheme: true })(AddressForm);

@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 // import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import SimpleReactValidator from "simple-react-validator";
 
 const useStyles = theme => ({
   root: {
@@ -20,7 +21,7 @@ class DetailsForm extends Component {
     super(props);
     // add environment as variable?
     this.state = {
-      testBtnColor: "default",
+      testBtnColor: "primary",
       prodBtnColor: "default",
       mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
       environmentsList: ["Tzadok", "Salim", "Zeus"],
@@ -28,7 +29,23 @@ class DetailsForm extends Component {
       displayButtons: "none"
       // verify if form is complete somehow
     };
+
+    this.validator = new SimpleReactValidator();
+    this.validator.message(
+      "Environment",
+      this.props.details.environment,
+      "required"
+    );
+
+    this.checkIfAllValid();
   }
+
+  checkIfAllValid = () => {
+    //Check if the validators were initialized, if so update valid props to true
+    if (this.validator.allValid()) {
+      this.props.validationHandler(true);
+    } else this.props.validationHandler(false);
+  };
 
   testBtnClick = () => {
     this.setState({ testBtnColor: "primary", prodBtnColor: "default" });

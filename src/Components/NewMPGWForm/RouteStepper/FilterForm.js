@@ -42,6 +42,7 @@ class FilterFormForm extends Component {
     };
 
     this.validator = new SimpleReactValidator();
+    this.validator.message();
 
     this.checkIfAllValid();
   }

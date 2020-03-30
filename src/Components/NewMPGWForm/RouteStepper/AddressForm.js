@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -46,8 +47,9 @@ class AddressForm extends Component {
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false },
-      showNetworkValidText: true
+      checkedValues: { POST: false, PUT: false, GET: false }
+      // ,
+      // showNetworkValidText: true
     };
 
     this.validator = new SimpleReactValidator();
@@ -147,7 +149,12 @@ class AddressForm extends Component {
           </Button>
           <br />
           <FormControl>
-            <InputLabel id="demo-simple-select-label">Network</InputLabel>
+            <InputLabel
+              id="demo-simple-select-label"
+              // helperText={this.validator.getErrorMessages()["Network"]}
+            >
+              Network
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -159,23 +166,26 @@ class AddressForm extends Component {
                 this.checkIfAllValid();
                 this.setState({ showNetworkValidText: false });
               }}
-              error={
-                !this.validator.fieldValid("Network") &&
-                this.props.currRule.network != null
-              }
-              helperText={this.validator.getErrorMessages()["Network"]}
             >
               <MenuItem value={"Salim"}>Salim</MenuItem>
               <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
               <MenuItem value={"Zeus"}>Zeus</MenuItem>
             </Select>
-            {this.state.showNetworkValidText ? (
+            {/* {this.state.showNetworkValidText ? (
               <small style={{ color: "grey" }}>
                 The network field is required.
               </small>
             ) : (
               ""
-            )}
+            )} */}
+            <FormHelperText
+              error={
+                !this.validator.fieldValid("Network") &&
+                this.props.currRule.network != null
+              }
+            >
+              the network field is required.
+            </FormHelperText>
           </FormControl>
 
           <TextField

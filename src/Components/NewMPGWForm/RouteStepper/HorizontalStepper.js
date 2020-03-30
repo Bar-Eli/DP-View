@@ -61,7 +61,7 @@ class HorizontalStepper extends Component {
           methods: []
         },
         destAddr: {
-          network: "",
+          network: null,
           protocol: "",
           primaryAddress: null,
           secondaryAddress: null,
@@ -117,7 +117,8 @@ class HorizontalStepper extends Component {
     }
   };
 
-  initForm = field => {
+  initForm = () => {
+    console.log(this.state.rule.srcAddr.network);
     this.setState(prevState => {
       const newState = prevState;
       if (newState.rule.name === null) {

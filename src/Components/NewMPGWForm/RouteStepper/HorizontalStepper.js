@@ -54,17 +54,17 @@ class HorizontalStepper extends Component {
       rule: {
         name: null,
         srcAddr: {
-          network: "",
+          network: null,
           protocol: "",
-          primaryAddress: "",
-          secondaryAddress: "",
+          primaryAddress: null,
+          secondaryAddress: null,
           methods: []
         },
         destAddr: {
           network: "",
           protocol: "",
-          primaryAddress: "",
-          secondaryAddress: "",
+          primaryAddress: null,
+          secondaryAddress: null,
           methods: []
         },
         filter: {
@@ -88,24 +88,52 @@ class HorizontalStepper extends Component {
         );
       case 1:
         return (
-          <AddressForm whichForm="srcAddr" setParams={this.handleRuleChange} />
+          <AddressForm
+            whichForm="srcAddr"
+            setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
+            currRule={this.state.rule.srcAddr}
+          />
         );
       case 2:
-        return <FilterFormForm setParams={this.handleRuleChange} />;
+        return (
+          <FilterFormForm
+            setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
+            currFilter={this.state.rule.filter}
+          />
+        );
       case 3:
         return (
-          <AddressForm whichForm="destAddr" setParams={this.handleRuleChange} />
+          <AddressForm
+            whichForm="destAddr"
+            setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
+            currRule={this.state.rule.srcAddr}
+          />
         );
       default:
         return "Unknown step";
     }
   };
 
-  initDetailsForm = () => {
+  initForm = field => {
     this.setState(prevState => {
       const newState = prevState;
       if (newState.rule.name === null) {
         newState.rule.name = "";
+      } else if (newState.rule.srcAddr.primaryAddress === null) {
+        newState.rule.srcAddr.primaryAddress = "";
+      } else if (newState.rule.srcAddr.secondaryAddress === null) {
+        newState.rule.srcAddr.primaryAddress = "";
+      } else if (newState.rule.destAddr.secondaryAddress === null) {
+        newState.rule.srcAddr.primaryAddress = "";
+      } else if (newState.rule.destAddr.primaryAddress === null) {
+        newState.rule.srcAddr.primaryAddress = "";
+      } else if (newState.rule.srcAddr.network === null) {
+        newState.rule.srcAddr.network = "";
+      } else if (newState.rule.destAddr.network === null) {
+        newState.rule.destAddr.network = "";
       }
       return newState;
     });
@@ -206,7 +234,7 @@ class HorizontalStepper extends Component {
         this.handleFinish();
       }
     } else {
-      this.initDetailsForm();
+      this.initForm();
     }
   };
 

@@ -6,6 +6,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import SimpleReactValidator from "simple-react-validator";
 // import RadioGroup from "@material-ui/core/RadioGroup";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import Radio from "@material-ui/core/Radio";
@@ -39,7 +40,18 @@ class FilterFormForm extends Component {
       showDpas: "none",
       showUpload: "none"
     };
+
+    this.validator = new SimpleReactValidator();
+
+    this.checkIfAllValid();
   }
+
+  checkIfAllValid = () => {
+    //Check if the validators were initialized, if so update valid props to true
+    if (this.validator.allValid()) {
+      this.props.validationHandler(true);
+    } else this.props.validationHandler(false);
+  };
 
   schemaBtnClick = () => {
     this.setState({

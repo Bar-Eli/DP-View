@@ -26,7 +26,7 @@ class DetailsForm extends Component {
         this.props.details.testOrProd === "test" ? "primary" : "default",
       prodBtnColor:
         this.props.details.testOrProd === "prod" ? "primary" : "default",
-      clusters: []
+      clusters: ["TzadokCluster"]
     };
     this.getClusters(); // Assign clusters to select form.
     this.validator = new SimpleReactValidator();
@@ -43,6 +43,11 @@ class DetailsForm extends Component {
     this.validator.message(
       "Team",
       this.props.details.projectTeamValue,
+      "required"
+    );
+    this.validator.message(
+      "Cluster",
+      this.props.details.clusterName,
       "required"
     );
     this.validator.message("btn", "test", "required");
@@ -174,12 +179,24 @@ class DetailsForm extends Component {
             getOptionLabel={clustersList => clustersList}
             // style={{width: 300}}
             renderInput={params => (
-              <TextField {...params} label="Cluster" variant="outlined" />
+              <TextField
+                {...params}
+                label="Cluster"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("Cluster") &&
+                  this.props.details.projectTeamValue != null
+                }
+                helperText={this.validator.getErrorMessages()["Cluster"]}
+              />
             )}
             onChange={(e, value) => {
               this.setState({ displayMpgwSelection: "inline-flex" });
               this.setState({ displayButtons: "inline-block" });
               this.props.updateParams(value, "clusterName", "details");
+
+              this.validator.message("Cluster", e.target.value, "required");
+              this.checkIfAllValid();
             }}
           />
         </form>

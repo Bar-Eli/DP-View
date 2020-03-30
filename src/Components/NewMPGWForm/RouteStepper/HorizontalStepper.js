@@ -47,11 +47,12 @@ class HorizontalStepper extends Component {
     super(props);
     this.steps = getSteps();
     this.state = {
+      stepIsValid: false,
       step: 0,
       completed: [],
       skipped: [],
       rule: {
-        name: "",
+        name: null,
         srcAddr: {
           network: "",
           protocol: "",
@@ -78,7 +79,13 @@ class HorizontalStepper extends Component {
   getStepContent = step => {
     switch (step) {
       case 0:
-        return <NameForm updateRuleName={this.handleRuleNameChange} />;
+        return (
+          <NameForm
+            validationHandler={this.handleStepValidation}
+            updateRuleName={this.handleRuleNameChange}
+            ruleName={this.state.rule.name}
+          />
+        );
       case 1:
         return (
           <AddressForm whichForm="srcAddr" setParams={this.handleRuleChange} />
@@ -92,6 +99,16 @@ class HorizontalStepper extends Component {
       default:
         return "Unknown step";
     }
+  };
+
+  initDetailsForm = () => {
+    this.setState(prevState => {
+      const newState = prevState;
+      if (newState.rule.name === null) {
+        newState.rule.name = "";
+      }
+      return newState;
+    });
   };
 
   setActiveStep = newStep => {
@@ -168,18 +185,28 @@ class HorizontalStepper extends Component {
     this.setActiveStep(step);
   };
 
-  handleComplete = () => {
-    let newCompleted = this.state.completed;
-    newCompleted.push(this.state.step);
-    this.setState({ completed: newCompleted });
+  handleStepValidation = flag => {
+    // Set current step status, valid or not
+    this.setState({ stepIsValid: flag });
+  };
 
-    if (
-      this.state.completed.length !==
-      this.totalSteps() - this.skippedSteps()
-    ) {
-      this.handleNext();
-    } else if (this.completedSteps() === this.totalSteps()) {
-      this.handleFinish();
+  handleComplete = () => {
+    const isValid = this.state.stepIsValid;
+    console.log(isValid);
+    if (isValid === true) {
+      let newCompleted = this.state.completed;
+      newCompleted.push(this.state.step);
+      this.setState({ completed: newCompleted });
+      if (
+        this.state.completed.length !==
+        this.totalSteps() - this.skippedSteps()
+      ) {
+        this.handleNext();
+      } else if (this.completedSteps() === this.totalSteps()) {
+        this.handleFinish();
+      }
+    } else {
+      this.initDetailsForm();
     }
   };
 

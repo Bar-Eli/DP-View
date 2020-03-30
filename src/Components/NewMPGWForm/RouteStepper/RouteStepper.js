@@ -42,7 +42,7 @@ class RouteStepper extends Component {
       popUpStatus: false,
       stepIsValid: false, // DEBUG
       // stepIsValid: false,
-      step: 0,
+      step: 1,
       // step: 2, // DEBUG
       params: {
         details: {
@@ -96,7 +96,12 @@ class RouteStepper extends Component {
           />
         );
       case 1:
-        return <HorizontalStepper addRule={this.addRule} />;
+        return (
+          <HorizontalStepper
+            validationHandler={this.handleStepValidation}
+            addRule={this.addRule}
+          />
+        );
       case 2:
         return (
           //<Overview/>
@@ -147,7 +152,6 @@ class RouteStepper extends Component {
 
   handleNext = () => {
     // Handle a press on the next button
-    // const valid = this.state.stepIsValid;
     // const valid = false; // DEBUG
     const valid = this.state.stepIsValid;
     if (valid) {

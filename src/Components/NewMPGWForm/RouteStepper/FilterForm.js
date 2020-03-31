@@ -6,7 +6,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import SimpleReactValidator from "simple-react-validator";
+// import SimpleReactValidator from "simple-react-validator";
 // import RadioGroup from "@material-ui/core/RadioGroup";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import Radio from "@material-ui/core/Radio";
@@ -41,10 +41,10 @@ class FilterFormForm extends Component {
       showUpload: "none"
     };
 
-    this.validator = new SimpleReactValidator();
-    this.validator.message();
+    // this.validator = new SimpleReactValidator();
+    // this.validator.message();
 
-    this.checkIfAllValid();
+    // this.checkIfAllValid();
   }
 
   checkIfAllValid = () => {

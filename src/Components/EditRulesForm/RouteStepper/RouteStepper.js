@@ -125,18 +125,18 @@ class RouteStepper extends Component {
       params: {
         ...this.state.params,
         details: {
-          projectNameValue:
-            this.state.params.details.projectNameValue === null
+          environment:
+            this.state.params.details.environment === null
               ? ""
               : this.state.params.details.projectNameValue,
-          projectMadorValue:
-            this.state.params.details.projectMadorValue === null
+          clusterName:
+            this.state.params.details.clusterName === null
               ? ""
               : this.state.params.details.projectMadorValue,
-          projectTeamValue:
-            this.state.params.details.projectTeamValue === null
-              ? ""
-              : this.state.params.details.projectTeamValue,
+          // projectTeamValue:
+          //   this.state.params.details.projectTeamValue === null
+          //     ? ""
+          //     : this.state.params.details.projectTeamValue,
           testOrProd: "test"
         }
       }
@@ -146,7 +146,7 @@ class RouteStepper extends Component {
   handleNext = () => {
     // Handle a press on the next button
     // const valid = this.state.stepIsValid;
-    const valid = true; // DEBUG
+    const valid = this.state.stepIsValid; // DEBUG
     if (valid) {
       this.setActiveStep(this.state.step + 1);
     } else {

@@ -36,6 +36,11 @@ class DetailsForm extends Component {
       this.props.details.environment,
       "required"
     );
+    this.validator.message(
+      "Cluster",
+      this.props.details.clusterName,
+      "required"
+    );
 
     this.checkIfAllValid();
   }
@@ -68,11 +73,24 @@ class DetailsForm extends Component {
             getOptionLabel={environmentsList => environmentsList}
             style={{ width: 300, marginBottom: "50px" }}
             renderInput={params => (
-              <TextField {...params} label="Environment" variant="outlined" />
+              <TextField
+                {...params}
+                label="Environment"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("Environment") &&
+                  this.props.details.environment != null
+                }
+                helperText={this.validator.getErrorMessages()["Environment"]}
+              />
             )}
             onChange={(e, value) => {
               this.setState({ displayMpgwSelection: "block" });
               this.setState({ displayButtons: "inline-block" });
+              this.props.updateParams(value, "environment", "details");
+
+              this.validator.message("Environment", value, "required");
+              this.checkIfAllValid();
             }}
           />
           <Autocomplete
@@ -84,8 +102,23 @@ class DetailsForm extends Component {
               display: `${this.state.displayMpgwSelection}`
             }}
             renderInput={params => (
-              <TextField {...params} label="Mpgw Name" variant="outlined" />
+              <TextField
+                {...params}
+                label="Mpgw Name"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("Cluster") &&
+                  this.props.details.clusterName != null
+                }
+                helperText={this.validator.getErrorMessages()["Cluster"]}
+              />
             )}
+            onChange={(e, value) => {
+              this.props.updateParams(value, "clusterName", "details");
+
+              this.validator.message("Cluster", value, "required");
+              this.checkIfAllValid();
+            }}
           />
           <br />
           <Button

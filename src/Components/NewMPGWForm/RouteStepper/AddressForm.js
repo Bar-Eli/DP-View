@@ -48,6 +48,8 @@ class AddressForm extends Component {
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
       checkedValues: { POST: false, PUT: false, GET: false }
+      // showMethodError: false,
+      // wasMethodListTouched: false
       // ,
       // showNetworkValidText: true
     };
@@ -64,11 +66,23 @@ class AddressForm extends Component {
       "required"
     );
     this.validator.message("Network", this.props.currRule.network, "required");
+    // this.validator.message("Method", this.props.currRule.network, "required");
 
     this.checkIfAllValid();
 
     this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
   }
+
+  // checkIfCheckedValuesValid = () => {
+  //   const obj = this.state.checkedValues;
+  //   Object.keys(obj).forEach(function(key) {
+  //     if (obj[key] === true) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   });
+  // };
 
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
@@ -246,10 +260,22 @@ class AddressForm extends Component {
                   control={<Checkbox />}
                   label={method}
                   checked={this.state.checkedValues[method]}
-                  onChange={() => this.handleCheckMethod(method)}
+                  onChange={() => {
+                    this.handleCheckMethod(method);
+                    this.setState({ wasMethodListTouched: true });
+                  }}
+                  required={true}
                 />
               </div>
             ))}
+            <FormHelperText
+            // error={
+            //   this.state.wasMethodListTouched &&
+            //   this.checkIfCheckedValuesValid === false
+            // }
+            >
+              the method field is required.
+            </FormHelperText>
           </div>
         </form>
         <br />

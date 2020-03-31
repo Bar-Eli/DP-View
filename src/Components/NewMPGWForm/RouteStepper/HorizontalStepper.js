@@ -42,6 +42,8 @@ function getSteps() {
   return ["Rule Name", "Source", "Filter", "Destination"];
 }
 
+const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
+
 class HorizontalStepper extends Component {
   constructor(props) {
     super(props);
@@ -117,24 +119,21 @@ class HorizontalStepper extends Component {
     }
   };
 
-  initForm = () => {
-    console.log(this.state.rule.srcAddr.network);
+  initForm = form => {
     this.setState(prevState => {
       const newState = prevState;
-      if (newState.rule.name === null) {
+      if (form === "name") {
         newState.rule.name = "";
-      } else if (newState.rule.srcAddr.primaryAddress === null) {
-        newState.rule.srcAddr.primaryAddress = "";
-      } else if (newState.rule.srcAddr.secondaryAddress === null) {
-        newState.rule.srcAddr.primaryAddress = "";
-      } else if (newState.rule.destAddr.secondaryAddress === null) {
-        newState.rule.srcAddr.primaryAddress = "";
-      } else if (newState.rule.destAddr.primaryAddress === null) {
-        newState.rule.srcAddr.primaryAddress = "";
-      } else if (newState.rule.srcAddr.network === null) {
-        newState.rule.srcAddr.network = "";
-      } else if (newState.rule.destAddr.network === null) {
-        newState.rule.destAddr.network = "";
+      } else {
+        // console.log(newState.rule[form]);
+        const keys = Object.keys(newState.rule[form]);
+        for (let i = 0; i < keys.length; i++) {
+          const currVal = newState.rule[form][keys[i]];
+          // console.log(currVal);
+          if (currVal === null) {
+            newState.rule[form][keys[i]] = "";
+          }
+        }
       }
       return newState;
     });
@@ -144,7 +143,7 @@ class HorizontalStepper extends Component {
     this.setState({
       step: newStep,
       // stepIsValid: false
-      stepIsValid: true // DEBUG
+      stepIsValid: false // DEBUG
     });
   };
 
@@ -220,8 +219,8 @@ class HorizontalStepper extends Component {
   };
 
   handleComplete = () => {
+    const currForm = stepsMap[this.state.step];
     const isValid = this.state.stepIsValid;
-    console.log(isValid);
     if (isValid === true) {
       let newCompleted = this.state.completed;
       newCompleted.push(this.state.step);
@@ -235,13 +234,15 @@ class HorizontalStepper extends Component {
         this.handleFinish();
       }
     } else {
-      this.initForm();
+      this.initForm(currForm);
     }
   };
 
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
+    console.log("Im in the right place!");
     this.props.addRule(rule);
+    this.props.validationHandler(true);
   };
 
   ruleReset = () => {

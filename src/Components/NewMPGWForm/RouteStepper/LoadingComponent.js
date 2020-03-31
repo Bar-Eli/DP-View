@@ -72,7 +72,9 @@ class CircularIntegration extends Component{
     this.setState({ 
       loading: true,
     });
+    // Create new MPGW and get the status response of the cluster
 
+    // Set the current state of the cluster
     const timer = setTimeout(() => {
         const clusterResponseStatus = {
             "DataPower2": true,

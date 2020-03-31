@@ -99,7 +99,7 @@ class NewRoutePage extends Component {
                         onClick={this.createMPGW}>Create</Button>
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
-                clicked={this.createMPGW}
+                createMPGW={this.createMPGW}
                 clusterNodesHostName={this.state.clusterNodesHostName}
                 />
             </div>

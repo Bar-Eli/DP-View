@@ -57,6 +57,7 @@ class CircularIntegration extends Component{
     constructor(props) {
         super(props);
         this.state = {
+          clusterNodesHostName: this.props.clusterNodesHostName,
           loading: false,
           success: false,
           buttonClass: "",
@@ -90,10 +91,9 @@ class CircularIntegration extends Component{
   }
 
   componentWillMount = () => {
-    let arr = ["DataPower2", "DataPower4", "DataPower6"];
     let clusterResponseStatus = {};
-    for (let index = 0; index < arr.length; index++) {
-      let hostname = arr[index];
+    for (let index = 0; index < this.props.clusterNodesHostName.length; index++) {
+      let hostname = this.props.clusterNodesHostName[index];
       clusterResponseStatus[hostname] = false;
     };
     this.setState({
@@ -103,9 +103,8 @@ class CircularIntegration extends Component{
 
   render(){
     const { classes } = this.props;
-    let arr = ["DataPower2", "DataPower4", "DataPower6"];
     console.log(this.state)
-
+    console.log(this.props.clusterNodesHostName)
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -124,7 +123,7 @@ class CircularIntegration extends Component{
 
       <div> 
         <ul className={classes.ul}>
-        {arr.map(item => 
+         {this.props.clusterNodesHostName.map(item => 
         <li key={item} value={item}>
             <MachineButton 
             style={this.props.style}

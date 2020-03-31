@@ -44,10 +44,7 @@ class NewRoutePage extends Component {
             showCreate: 'none',
             // showCreate: 'block', // DEBUG
             inputParams: {},
-            cluster:{
-                    "dp1": true,
-                    "dp2": false
-            }
+            clusterNodesHostName: [],
         };
         this.inputParams = {};
     }
@@ -63,13 +60,22 @@ class NewRoutePage extends Component {
     setInput = (inputJson) => {
         this.setState({showCreate: 'block'});
         this.inputParams = inputJson;
+        this.setclusterNodesHostName();
     };
+
+    setclusterNodesHostName = () => {
+        // Get array of nodes from the API
+        let clusterNodes = ["DataPower2", "DataPower4", "DataPower6"];
+        // Set the array as the state of clusterNodesHostName
+        this.setState({ clusterNodesHostName: clusterNodes})
+    }
 
     hideCreate = () => {
         this.setState({showCreate: 'none'})
     };
 
     render() {
+        console.log(this.inputParams)
         const {classes} = this.props; // how to assign UseStyleS
         return (
             <div className={classes.root}>
@@ -94,6 +100,7 @@ class NewRoutePage extends Component {
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 clicked={this.createMPGW}
+                clusterNodesHostName={this.state.clusterNodesHostName}
                 />
             </div>
         );

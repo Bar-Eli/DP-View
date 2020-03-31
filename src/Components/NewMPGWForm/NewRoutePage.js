@@ -7,6 +7,7 @@ import Navbar from "../Navbar";
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import LoadingComponent from './RouteStepper/LoadingComponent';
+import GetArray from "../../BackendHandlers/ArrayOfNodesFunc.js";
 
 const useStyles = theme => ({
     root: {
@@ -54,20 +55,21 @@ class NewRoutePage extends Component {
     };
 
     createMPGW = () => {
-        BackendRequests.createNewMpgw(this.inputParams);
+        GetArray.createNewMpgw(this.inputParams);
     };
 
     setInput = (inputJson) => {
         this.setState({showCreate: 'block'});
         this.inputParams = inputJson;
-        this.setclusterNodesHostName();
+        this.setClusterNodesHostNameArr(inputJson);
     };
 
-    setclusterNodesHostName = () => {
+    
+    async setClusterNodesHostNameArr(input) {
         // Get array of nodes from the API
-        let clusterNodes = ["DataPower2", "DataPower4", "DataPower6"];
+        let clusterNodesHostname = await GetArray.getClusterNodesHostname(input);
         // Set the array as the state of clusterNodesHostName
-        this.setState({ clusterNodesHostName: clusterNodes})
+        this.setState({ clusterNodesHostName: clusterNodesHostname})
     }
 
     hideCreate = () => {

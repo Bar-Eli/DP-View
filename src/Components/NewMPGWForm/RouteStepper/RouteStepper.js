@@ -50,7 +50,7 @@ class RouteStepper extends Component {
                     projectNameValue: "",
                     projectMadorValue: "",
                     projectTeamValue: "",
-                    clusterName: "",
+                    clusterName: "ZadokCluster",
                     testOrProd: "test"
                 },
                 rules: [],

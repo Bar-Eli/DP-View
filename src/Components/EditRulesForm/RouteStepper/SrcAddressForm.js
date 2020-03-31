@@ -52,12 +52,12 @@ class AddressForm extends Component {
     this.validator = new SimpleReactValidator();
     this.validator.message(
       "Primary Address",
-      this.state.primaryAddress,
+      this.props.currSrcAddrRules.primaryAddress,
       "required"
     );
     this.validator.message(
       "Secondary Address",
-      this.state.secondaryAddress,
+      this.props.currSrcAddrRules.secondaryAddress,
       "required"
     );
 

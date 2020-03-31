@@ -178,7 +178,6 @@ class AddressForm extends Component {
 
                 this.validator.message("Network", e.target.value, "required");
                 this.checkIfAllValid();
-                this.setState({ showNetworkValidText: false });
               }}
             >
               <MenuItem value={"Salim"}>Salim</MenuItem>

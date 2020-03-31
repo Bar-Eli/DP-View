@@ -82,22 +82,6 @@ class CircularIntegration extends Component{
       buttonClass: classes.buttonSuccess,
       clusterResponseStatus
     });
-
-    // const timer = setTimeout(() => {
-    //     const clusterResponseStatus = {
-    //         "DataPower2": true,
-    //         "DataPower4": false,
-    //         "DataPower6": false
-    //     }
-    //     this.setState({ 
-    //         loading: false,
-    //         loaded: true,
-    //         success: true,
-    //         buttonClass: classes.buttonSuccess,
-    //         clusterResponseStatus
-    //     });
-    //   }, 1000);
-    // return () => clearTimeout(timer);
   }
 
   componentWillMount = () => {
@@ -113,8 +97,6 @@ class CircularIntegration extends Component{
 
   render(){
     const { classes } = this.props;
-    console.log(this.state)
-    console.log(this.props.clusterNodesHostName)
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>

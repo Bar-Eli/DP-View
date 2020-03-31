@@ -80,7 +80,6 @@ class MachineButton extends Component{
 
   render(){
     const { classes } = this.props;
-    console.log(this.state)
     this.checkStatus();
   return (
     <div className={classes.root}>

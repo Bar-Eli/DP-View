@@ -20,13 +20,19 @@ export default class BackendRequests {
     }
 
 
+    static async getClusterDetailsByClusterName(clusterName, testOrProd) {
+        const url = this.BACKEND_URL + "/api/status/cluster/" + clusterName + "/" + testOrProd;
+        const response = await fetch(url);
+        return await response.json();  // return cluster details
+    }
+
     /**
      * Get nodes hostname for the given cluster from input.
-     * @param input -- User input params for MPGW creation.
+     * @param clusterName -- User input params for MPGW creation.
      * @returns {Promise<any>}
      */
-    static async getClusterNodesHostname(input) {
-        const clusterDetails = await this.getClusterDetails(input);
+    static async getClusterNodesHostname(clusterName, testOrProd) {
+        const clusterDetails = await this.getClusterDetailsByClusterName(clusterName, testOrProd);
         const nodes = clusterDetails["nodes"];
         let clusterNodesHostname = new Array(nodes.length);
         for (let i = 0; i < nodes.length; i++) {

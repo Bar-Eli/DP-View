@@ -46,6 +46,7 @@ class NewRoutePage extends Component {
             // showCreate: 'block', // DEBUG
             inputParams: {},
             clusterNodesHostName: [],
+            clusterName: "",
         };
         this.inputParams = {};
     }
@@ -62,13 +63,13 @@ class NewRoutePage extends Component {
     setInput = (inputJson) => {
         this.setState({showCreate: 'block'});
         this.inputParams = inputJson;
-        this.setClusterNodesHostNameArr(inputJson);
+        this.setClusterNodesHostNameArr(this.state.clusterName);
     };
 
     
-    async setClusterNodesHostNameArr(input) {
+    async setClusterNodesHostNameArr(clusterName, testOrProd) {
         // Get array of nodes from the API
-        let clusterNodesHostname = await GetArray.getClusterNodesHostname(input);
+        let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
         // Set the array as the state of clusterNodesHostName
         this.setState({ clusterNodesHostName: clusterNodesHostname})
     }
@@ -94,7 +95,7 @@ class NewRoutePage extends Component {
                     </Typography>
                 </Button>
 
-                <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate}/>
+                <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr.bind(this)}/>
 
                 <br/>
                 <LoadingComponent 

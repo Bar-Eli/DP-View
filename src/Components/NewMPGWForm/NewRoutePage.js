@@ -91,7 +91,10 @@ class NewRoutePage extends Component {
                 <Button className={classes.createBtn} variant="contained" color="secondary"
                         style={{display: this.state.showCreate}}
                         onClick={this.createMPGW}>Create</Button>
-                <LoadingComponent />
+                <LoadingComponent 
+                style={{display: this.state.showCreate}} 
+                clicked={this.createMPGW}
+                />
             </div>
         );
     }

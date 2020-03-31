@@ -11,7 +11,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import { render } from '@testing-library/react';
 import CreateIcon from '@material-ui/icons/Create';
 import MachineButton from './MachineButtonComponent';
-import BackendRequests from "../../../BackendHandlers/BackendRequests.js";
 
 const useStyles = theme => ({
     root: {
@@ -113,6 +112,7 @@ class CircularIntegration extends Component{
         <Button
           variant="contained"
           color="primary"
+          style={this.props.style}
           className={this.state.buttonClass}
           disabled={this.state.success}
           onClick={this.handleButtonClick}
@@ -127,6 +127,7 @@ class CircularIntegration extends Component{
         {arr.map(item => 
         <li key={item} value={item}>
             <MachineButton 
+            style={this.props.style}
             loading={this.state.loading}
             success={this.state.clusterResponseStatus[item]}
             hostname={item}

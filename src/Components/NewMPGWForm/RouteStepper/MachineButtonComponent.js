@@ -84,11 +84,12 @@ class MachineButton extends Component{
     this.checkStatus();
   return (
     <div className={classes.root}>
-        <p>{this.state.hostname}</p>
+        <p style={this.props.style}>{this.state.hostname}</p>
       <div className={classes.wrapper}>
         <Fab
           aria-label="create route"
           color="primary"
+          style={this.props.style}
           className={this.state.buttonClass}
         >
           {this.props.success ? <CheckIcon /> : (this.props.loaded ? <ErrorIcon fontSize='large'/> : <CreateIcon fontSize='large' />)}

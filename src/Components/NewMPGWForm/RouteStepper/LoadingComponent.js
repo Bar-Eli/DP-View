@@ -11,6 +11,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import { render } from '@testing-library/react';
 import CreateIcon from '@material-ui/icons/Create';
 import MachineButton from './MachineButtonComponent';
+import BackendRequests from "../../../BackendHandlers/BackendRequests.js";
 
 const useStyles = theme => ({
     root: {

@@ -5,7 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import BackendRequests from "../../BackendHandlers/BackendRequests.js"
+import BackendRequests from "../../BackendHandlers/BackendRequests.js";
+import LoadingComponent from './RouteStepper/LoadingComponent';
 
 const useStyles = theme => ({
     root: {
@@ -90,6 +91,7 @@ class NewRoutePage extends Component {
                 <Button className={classes.createBtn} variant="contained" color="secondary"
                         style={{display: this.state.showCreate}}
                         onClick={this.createMPGW}>Create</Button>
+                <LoadingComponent />
             </div>
         );
     }

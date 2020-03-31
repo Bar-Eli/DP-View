@@ -97,9 +97,6 @@ class NewRoutePage extends Component {
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate}/>
 
                 <br/>
-                <Button className={classes.createBtn} variant="contained" color="secondary"
-                        style={{display: this.state.showCreate}}
-                        onClick={this.createMPGW}>Create</Button>
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 createMPGW={this.createMPGW.bind(this)}

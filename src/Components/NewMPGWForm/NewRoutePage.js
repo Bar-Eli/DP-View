@@ -54,8 +54,9 @@ class NewRoutePage extends Component {
         window.location.reload(false);
     };
 
-    createMPGW = () => {
-        GetArray.createNewMpgw(this.inputParams);
+    async createMPGW(){
+        const response = await GetArray.createNewMpgw(this.inputParams);
+        return response;
     };
 
     setInput = (inputJson) => {
@@ -101,7 +102,7 @@ class NewRoutePage extends Component {
                         onClick={this.createMPGW}>Create</Button>
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
-                createMPGW={this.createMPGW}
+                createMPGW={this.createMPGW.bind(this)}
                 clusterNodesHostName={this.state.clusterNodesHostName}
                 />
             </div>

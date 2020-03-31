@@ -67,29 +67,37 @@ class CircularIntegration extends Component{
         
       }
 
-  handleButtonClick = () => {
+  async handleButtonClick(){
     const { classes } = this.props;
     this.setState({ 
       loading: true,
     });
     // Create new MPGW and get the status response of the cluster
-
+    const clusterResponseStatus = await this.props.createMPGW();
     // Set the current state of the cluster
-    const timer = setTimeout(() => {
-        const clusterResponseStatus = {
-            "DataPower2": true,
-            "DataPower4": false,
-            "DataPower6": false
-        }
-        this.setState({ 
-            loading: false,
-            loaded: true,
-            success: true,
-            buttonClass: classes.buttonSuccess,
-            clusterResponseStatus
-        });
-      }, 1000);
-    return () => clearTimeout(timer);
+    this.setState({ 
+      loading: false,
+      loaded: true,
+      success: true,
+      buttonClass: classes.buttonSuccess,
+      clusterResponseStatus
+    });
+
+    // const timer = setTimeout(() => {
+    //     const clusterResponseStatus = {
+    //         "DataPower2": true,
+    //         "DataPower4": false,
+    //         "DataPower6": false
+    //     }
+    //     this.setState({ 
+    //         loading: false,
+    //         loaded: true,
+    //         success: true,
+    //         buttonClass: classes.buttonSuccess,
+    //         clusterResponseStatus
+    //     });
+    //   }, 1000);
+    // return () => clearTimeout(timer);
   }
 
   componentWillMount = () => {
@@ -116,7 +124,7 @@ class CircularIntegration extends Component{
           style={this.props.style}
           className={this.state.buttonClass}
           disabled={this.state.success}
-          onClick={this.handleButtonClick}
+          onClick={this.handleButtonClick.bind(this)}
         >
          Create
         </Button>

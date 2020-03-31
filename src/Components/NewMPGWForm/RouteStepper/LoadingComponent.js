@@ -60,25 +60,30 @@ class CircularIntegration extends Component{
           loading: false,
           success: false,
           buttonClass: "",
-          clusterSize: 3  
+          clusterSize: 3,
+          loaded: false,  
         };
         
       }
 
   handleButtonClick = () => {
     const { classes } = this.props;
-    this.setState({ loading: true});
+    this.setState({ 
+      loading: true,
+    });
 
     const timer = setTimeout(() => {
-        const successResponse = {
+        const clusterResponseStatus = {
             "DataPower2": true,
             "DataPower4": false,
-            "DataPower6": true
+            "DataPower6": false
         }
         this.setState({ 
             loading: false,
+            loaded: true,
             success: true,
-            buttonClass: classes.buttonSuccess
+            buttonClass: classes.buttonSuccess,
+            clusterResponseStatus
         });
       }, 1000);
     return () => clearTimeout(timer);
@@ -86,13 +91,13 @@ class CircularIntegration extends Component{
 
   componentWillMount = () => {
     let arr = ["DataPower2", "DataPower4", "DataPower6"];
-    let hostnameStatus = {};
+    let clusterResponseStatus = {};
     for (let index = 0; index < arr.length; index++) {
       let hostname = arr[index];
-      hostnameStatus[hostname] = false;
+      clusterResponseStatus[hostname] = false;
     };
     this.setState({
-      hostnameStatus
+      clusterResponseStatus
   });
   }
 
@@ -122,10 +127,9 @@ class CircularIntegration extends Component{
         <li key={item} value={item}>
             <MachineButton 
             loading={this.state.loading}
-            success={this.state.success}
-            buttonClass={this.state.buttonClass}
+            success={this.state.clusterResponseStatus[item]}
             hostname={item}
-            failed={false}
+            loaded={this.state.loaded}
             />
         </li>
         )}

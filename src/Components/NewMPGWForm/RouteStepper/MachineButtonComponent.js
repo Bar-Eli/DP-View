@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { createStyles, makeStyles, Theme, withStyles  } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
@@ -24,6 +25,12 @@ const useStyles = theme => ({
         backgroundColor: green[500],
         '&:hover': {
           backgroundColor: green[700],
+        },
+      },
+      buttonFailed: {
+        backgroundColor: red[500],
+        '&:hover': {
+          backgroundColor: red[700],
         },
       },
       fabProgress: {
@@ -50,15 +57,31 @@ class MachineButton extends Component{
           hostname: this.props.hostname,
           loading: this.props.loading,
           success: this.props.success,
-          buttonClass: this.props.buttonClass, 
-          failed: this.props.failed
+          loaded: this.props.loaded,
+          checkStatus: true, 
         };
-        
+      }
+
+      checkStatus = () => {
+        const { classes } = this.props;
+        if(this.props.loaded && this.state.checkStatus){
+          if(this.props.success === true)
+            this.setState({
+              buttonClass: classes.buttonSuccess,
+              checkStatus: false
+            });
+          else
+            this.setState({
+              buttonClass: classes.buttonFailed,
+              checkStatus: false
+            });
+          }
       }
 
   render(){
     const { classes } = this.props;
-
+    console.log(this.state)
+    this.checkStatus();
   return (
     <div className={classes.root}>
         <p>{this.state.hostname}</p>
@@ -66,9 +89,9 @@ class MachineButton extends Component{
         <Fab
           aria-label="create route"
           color="primary"
-          className={this.props.buttonClass}
+          className={this.state.buttonClass}
         >
-          {this.props.success ? <CheckIcon /> : (this.props.failed ? <ErrorIcon /> : <CreateIcon fontSize='large' />)}
+          {this.props.success ? <CheckIcon /> : (this.props.loaded ? <ErrorIcon fontSize='large'/> : <CreateIcon fontSize='large' />)}
         </Fab>
         {this.props.loading && <CircularProgress size={68} className={classes.fabProgress} />}
       </div>

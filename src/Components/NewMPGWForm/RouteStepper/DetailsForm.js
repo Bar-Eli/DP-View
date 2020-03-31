@@ -71,6 +71,7 @@ class DetailsForm extends Component {
         return (
             <div>
                 <form className={classes.root} noValidate autoComplete="off">
+                    <LoadingComponent />
                     <TextField
                         id="project-name"
                         label="Project Name"

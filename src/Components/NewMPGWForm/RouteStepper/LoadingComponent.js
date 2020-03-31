@@ -67,7 +67,7 @@ class CircularIntegration extends Component{
         
       }
 
-  async handleButtonClick(){
+  handleButtonClick = async () => {
     const { classes } = this.props;
     this.setState({ 
       loading: true,
@@ -106,7 +106,7 @@ class CircularIntegration extends Component{
           style={this.props.style}
           className={this.state.buttonClass}
           disabled={this.state.success}
-          onClick={this.handleButtonClick.bind(this)}
+          onClick={this.handleButtonClick}
         >
          Create
         </Button>

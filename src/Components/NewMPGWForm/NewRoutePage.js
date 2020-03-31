@@ -55,7 +55,7 @@ class NewRoutePage extends Component {
         window.location.reload(false);
     };
 
-    async createMPGW(){
+    createMPGW = async () => {
         const response = await GetArray.createNewMpgw(this.inputParams);
         return response;
     };
@@ -67,7 +67,7 @@ class NewRoutePage extends Component {
     };
 
     
-    async setClusterNodesHostNameArr(clusterName, testOrProd) {
+    setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
         // Get array of nodes from the API
         let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
         // Set the array as the state of clusterNodesHostName
@@ -95,12 +95,12 @@ class NewRoutePage extends Component {
                     </Typography>
                 </Button>
 
-                <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr.bind(this)}/>
+                <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
 
                 <br/>
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
-                createMPGW={this.createMPGW.bind(this)}
+                createMPGW={this.createMPGW}
                 clusterNodesHostName={this.state.clusterNodesHostName}
                 />
             </div>

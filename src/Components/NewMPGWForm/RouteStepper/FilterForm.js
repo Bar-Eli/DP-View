@@ -45,6 +45,7 @@ class FilterFormForm extends Component {
     // this.validator.message();
 
     // this.checkIfAllValid();
+    this.props.validationHandler(true);
   }
 
   checkIfAllValid = () => {

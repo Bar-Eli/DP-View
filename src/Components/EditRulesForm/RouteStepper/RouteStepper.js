@@ -94,7 +94,12 @@ class RouteStepper extends Component {
           />
         );
       case 1:
-        return <HorizontalStepper addRule={this.addRule} />;
+        return (
+          <HorizontalStepper
+            addRule={this.addRule}
+            validationHandler={this.handleStepValidation}
+          />
+        );
       case 2:
         return (
           //<Overview/>

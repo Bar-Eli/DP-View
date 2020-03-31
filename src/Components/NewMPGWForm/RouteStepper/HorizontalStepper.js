@@ -240,7 +240,6 @@ class HorizontalStepper extends Component {
 
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
-    console.log("Im in the right place!");
     this.props.addRule(rule);
     this.props.validationHandler(true);
   };

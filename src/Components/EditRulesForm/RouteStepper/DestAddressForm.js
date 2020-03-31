@@ -61,6 +61,8 @@ class DestAddressForm extends Component {
       "required"
     );
 
+    this.props.validationHandler(false);
+
     this.checkIfAllValid();
   }
 

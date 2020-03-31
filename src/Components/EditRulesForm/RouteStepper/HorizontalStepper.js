@@ -43,7 +43,7 @@ function getSteps() {
   return ["Rule Name", "Source", "Filter", "Destination"];
 }
 
-const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
+// const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
 
 class HorizontalStepper extends Component {
   constructor(props) {
@@ -241,6 +241,7 @@ class HorizontalStepper extends Component {
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
     this.props.addRule(rule);
+    this.props.validationHandler(true);
   };
 
   ruleReset = () => {

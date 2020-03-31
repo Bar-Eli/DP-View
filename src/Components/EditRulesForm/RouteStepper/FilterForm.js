@@ -40,6 +40,8 @@ class FilterFormForm extends Component {
       showDpas: "none",
       showUpload: "none"
     };
+
+    this.props.validationHandler(true);
   }
 
   schemaBtnClick = () => {

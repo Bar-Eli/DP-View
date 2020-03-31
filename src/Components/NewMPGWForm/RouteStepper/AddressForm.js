@@ -70,6 +70,10 @@ class AddressForm extends Component {
 
     this.checkIfAllValid();
 
+    if (this.props.whichForm === "destAddr") {
+      this.props.validationHandler(false);
+    }
+
     this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
   }
 

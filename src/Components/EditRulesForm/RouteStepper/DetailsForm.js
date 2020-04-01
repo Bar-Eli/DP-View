@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 // import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import SimpleReactValidator from "simple-react-validator";
 
 const useStyles = theme => ({
   root: {
@@ -20,7 +21,7 @@ class DetailsForm extends Component {
     super(props);
     // add environment as variable?
     this.state = {
-      testBtnColor: "default",
+      testBtnColor: "primary",
       prodBtnColor: "default",
       mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
       environmentsList: ["Tzadok", "Salim", "Zeus"],
@@ -28,7 +29,28 @@ class DetailsForm extends Component {
       displayButtons: "none"
       // verify if form is complete somehow
     };
+
+    this.validator = new SimpleReactValidator();
+    this.validator.message(
+      "Environment",
+      this.props.details.environment,
+      "required"
+    );
+    this.validator.message(
+      "Cluster",
+      this.props.details.clusterName,
+      "required"
+    );
+
+    this.checkIfAllValid();
   }
+
+  checkIfAllValid = () => {
+    //Check if the validators were initialized, if so update valid props to true
+    if (this.validator.allValid()) {
+      this.props.validationHandler(true);
+    } else this.props.validationHandler(false);
+  };
 
   testBtnClick = () => {
     this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
@@ -51,11 +73,24 @@ class DetailsForm extends Component {
             getOptionLabel={environmentsList => environmentsList}
             style={{ width: 300, marginBottom: "50px" }}
             renderInput={params => (
-              <TextField {...params} label="Environment" variant="outlined" />
+              <TextField
+                {...params}
+                label="Environment"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("Environment") &&
+                  this.props.details.environment != null
+                }
+                helperText={this.validator.getErrorMessages()["Environment"]}
+              />
             )}
             onChange={(e, value) => {
               this.setState({ displayMpgwSelection: "block" });
               this.setState({ displayButtons: "inline-block" });
+              this.props.updateParams(value, "environment", "details");
+
+              this.validator.message("Environment", value, "required");
+              this.checkIfAllValid();
             }}
           />
           <Autocomplete
@@ -67,8 +102,23 @@ class DetailsForm extends Component {
               display: `${this.state.displayMpgwSelection}`
             }}
             renderInput={params => (
-              <TextField {...params} label="Mpgw Name" variant="outlined" />
+              <TextField
+                {...params}
+                label="Mpgw Name"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("Cluster") &&
+                  this.props.details.clusterName != null
+                }
+                helperText={this.validator.getErrorMessages()["Cluster"]}
+              />
             )}
+            onChange={(e, value) => {
+              this.props.updateParams(value, "clusterName", "details");
+
+              this.validator.message("Cluster", value, "required");
+              this.checkIfAllValid();
+            }}
           />
           <br />
           <Button

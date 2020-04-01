@@ -43,11 +43,14 @@ function getSteps() {
   return ["Rule Name", "Source", "Filter", "Destination"];
 }
 
+// const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
+
 class HorizontalStepper extends Component {
   constructor(props) {
     super(props);
     this.steps = getSteps();
     this.state = {
+      stepIsValid: false,
       step: 0,
       completed: [],
       skipped: [],
@@ -84,6 +87,7 @@ class HorizontalStepper extends Component {
           <NameForm
             updateRuleName={this.handleRuleNameChange}
             ruleName={this.state.rule.name}
+            validationHandler={this.handleStepValidation}
           />
         );
       case 1:
@@ -91,6 +95,7 @@ class HorizontalStepper extends Component {
           <AddressForm
             currSrcAddrRules={this.state.rule.srcAddr}
             setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
           />
         );
       case 2:
@@ -98,6 +103,7 @@ class HorizontalStepper extends Component {
           <FilterFormForm
             setParams={this.handleRuleChange}
             currFilterRules={this.state.rule.filter}
+            validationHandler={this.handleStepValidation}
           />
         );
       case 3:
@@ -106,6 +112,7 @@ class HorizontalStepper extends Component {
             whichForm="destAddr"
             currDestAddrRules={this.state.rule.destAddr}
             setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
           />
         );
       default:
@@ -119,6 +126,11 @@ class HorizontalStepper extends Component {
       // stepIsValid: false
       stepIsValid: true // DEBUG
     });
+  };
+
+  handleStepValidation = flag => {
+    // Set current step status, valid or not
+    this.setState({ stepIsValid: flag });
   };
 
   handleRuleChange = (value, field, form) => {
@@ -188,23 +200,48 @@ class HorizontalStepper extends Component {
   };
 
   handleComplete = () => {
-    let newCompleted = this.state.completed;
-    newCompleted.push(this.state.step);
-    this.setState({ completed: newCompleted });
+    // const currForm = stepsMap[this.state.step];
+    const isValid = this.state.stepIsValid;
+    if (isValid === true) {
+      let newCompleted = this.state.completed;
+      newCompleted.push(this.state.step);
+      this.setState({ completed: newCompleted });
 
-    if (
-      this.state.completed.length !==
-      this.totalSteps() - this.skippedSteps()
-    ) {
-      this.handleNext();
-    } else if (this.completedSteps() === this.totalSteps()) {
-      this.handleFinish();
+      if (
+        this.state.completed.length !==
+        this.totalSteps() - this.skippedSteps()
+      ) {
+        this.handleNext();
+      } else if (this.completedSteps() === this.totalSteps()) {
+        this.handleFinish();
+      }
     }
   };
+
+  // initForm = form => {
+  //   this.setState(prevState => {
+  //     const newState = prevState;
+  //     if (form === "name") {
+  //       newState.rule.name = "";
+  //     } else {
+  //       // console.log(newState.rule[form]);
+  //       const keys = Object.keys(newState.rule[form]);
+  //       for (let i = 0; i < keys.length; i++) {
+  //         const currVal = newState.rule[form][keys[i]];
+  //         // console.log(currVal);
+  //         if (currVal === null) {
+  //           newState.rule[form][keys[i]] = "";
+  //         }
+  //       }
+  //     }
+  //     return newState;
+  //   });
+  // };
 
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
     this.props.addRule(rule);
+    this.props.validationHandler(true);
   };
 
   ruleReset = () => {

@@ -9,6 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 // import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import SimpleReactValidator from "simple-react-validator";
 
 const useStyles = theme => ({
   root: {
@@ -39,19 +40,36 @@ class AddressForm extends Component {
     this.state = {
       httpBtnColor: "default",
       mqBtnColor: "default",
-      network: "",
-      protocol: "",
+      // network: ""
+      // protocol: ""
       primaryAddress: "IP / URL",
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false },
-      primaryAddressValue: "",
-      secondaryAddressValue: ""
+      checkedValues: { POST: false, PUT: false, GET: false }
     };
 
-    this.props.setParams("http", "protocol", "srcAddr"); // Default protocol
+    this.validator = new SimpleReactValidator();
+    this.validator.message(
+      "Primary Address",
+      this.props.currSrcAddrRules.primaryAddress,
+      "required"
+    );
+    this.validator.message(
+      "Secondary Address",
+      this.props.currSrcAddrRules.secondaryAddress,
+      "required"
+    );
+
+    this.checkIfAllValid();
   }
+
+  checkIfAllValid = () => {
+    //Check if the validators were initialized, if so update valid props to true
+    if (this.validator.allValid()) {
+      this.props.validationHandler(true);
+    } else this.props.validationHandler(false);
+  };
 
   httpBtnClick = () => {
     this.setState({
@@ -59,10 +77,7 @@ class AddressForm extends Component {
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port",
-      network: "",
-      secondaryAddressValue: "",
-      primaryAddressValue: ""
+      secondaryAddress: "Port"
     });
     this.props.setParams("http", "protocol", "srcAddr");
   };
@@ -73,10 +88,7 @@ class AddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name",
-      network: "",
-      secondaryAddressValue: "",
-      primaryAddressValue: ""
+      secondaryAddress: "Queue name"
     });
     this.props.setParams("mq", "protocol", "srcAddr");
   };
@@ -111,10 +123,10 @@ class AddressForm extends Component {
     this.props.currSrcAddrRules.protocol === "http"
       ? this.setState(prevState => {
           const newState = prevState;
-          newState.protocol = "http";
-          newState.network = this.props.currSrcAddrRules.network;
-          newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
-          newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
+          // newState.protocol = "http";
+          // newState.network = this.props.currSrcAddrRules.network;
+          // newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
+          // newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
           newState.httpBtnColor = "primary";
           newState.mqBtnColor = "default";
           newState.showMethods = "block";
@@ -130,10 +142,10 @@ class AddressForm extends Component {
         })
       : this.setState(prevState => {
           const newState = prevState;
-          newState.protocol = "mq";
-          newState.network = this.props.currSrcAddrRules.network;
-          newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
-          newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
+          // newState.protocol = "mq";
+          // newState.network = this.props.currSrcAddrRules.network;
+          // newState.primaryAddressValue = this.props.currSrcAddrRules.primaryAddress;
+          // newState.secondaryAddressValue = this.props.currSrcAddrRules.secondaryAddress;
           newState.mqBtnColor = "primary";
           newState.httpBtnColor = "default";
           newState.showMethods = "none";
@@ -172,7 +184,7 @@ class AddressForm extends Component {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={this.state.network}
+              value={this.props.currSrcAddrRules.network}
               onChange={this.handleChangeNetwork}
             >
               <MenuItem value={"Salim"}>Salim</MenuItem>
@@ -184,22 +196,44 @@ class AddressForm extends Component {
           <TextField
             id="primary-address"
             label={this.state.primaryAddress}
-            value={this.state.primaryAddressValue}
+            value={this.props.currSrcAddrRules.primaryAddress}
             onChange={e => {
               this.props.setParams(e.target.value, "primaryAddress", "srcAddr");
+              this.validator.message(
+                "Primary Address",
+                e.target.value,
+                "required"
+              );
+              this.checkIfAllValid();
             }}
+            error={
+              !this.validator.fieldValid("Primary Address") &&
+              this.props.currSrcAddrRules.primaryAddress === ""
+            }
+            helperText={this.validator.getErrorMessages()["Primary Address"]}
           />
           <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
-            value={this.state.secondaryAddressValue}
+            value={this.props.currSrcAddrRules.secondaryAddress}
             onChange={e => {
               this.props.setParams(
                 e.target.value,
                 "secondaryAddress",
                 "srcAddr"
               );
+              this.validator.message(
+                "Secondary Address",
+                e.target.value,
+                "required"
+              );
+              this.checkIfAllValid();
             }}
+            error={
+              !this.validator.fieldValid("Secondary Address") &&
+              this.props.currSrcAddrRules.secondaryAddress === ""
+            }
+            helperText={this.validator.getErrorMessages()["Secondary Address"]}
           />
           <br />
           <br />

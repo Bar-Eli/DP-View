@@ -115,7 +115,11 @@ class DetailsForm extends Component {
                 "projectMadorValue",
                 "details"
               );
-              this.validator.message("Mador", e.target.value, "required");
+              this.validator.message(
+                "Mador",
+                e.target.value,
+                "required|integer"
+              );
               this.checkIfAllValid();
             }}
             error={

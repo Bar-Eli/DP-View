@@ -214,11 +214,19 @@ class AddressForm extends Component {
                 "primaryAddress",
                 this.props.whichForm
               );
-              this.validator.message(
-                "Primary Address",
-                e.target.value,
-                "required"
-              );
+              if (this.state.httpBtnColor === "primary") {
+                this.validator.message(
+                  "Primary Address",
+                  e.target.value,
+                  "required|url"
+                );
+              } else if (this.state.mqBtnColor === "primary") {
+                this.validator.message(
+                  "Primary Address",
+                  e.target.value,
+                  "required"
+                );
+              }
               this.checkIfAllValid();
             }}
             error={
@@ -236,11 +244,19 @@ class AddressForm extends Component {
                 "secondaryAddress",
                 this.props.whichForm
               );
-              this.validator.message(
-                "Secondary Address",
-                e.target.value,
-                "required"
-              );
+              if (this.state.httpBtnColor === "primary") {
+                this.validator.message(
+                  "Secondary Address",
+                  e.target.value,
+                  "required|integer"
+                );
+              } else if (this.state.mqBtnColor === "primary") {
+                this.validator.message(
+                  "Secondary Address",
+                  e.target.value,
+                  "required"
+                );
+              }
               this.checkIfAllValid();
             }}
             error={

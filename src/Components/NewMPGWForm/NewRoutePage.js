@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
+import Alert from '@material-ui/lab/Alert';
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import LoadingComponent from './RouteStepper/LoadingComponent';
@@ -98,11 +99,20 @@ class NewRoutePage extends Component {
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
 
                 <br/>
+                {this.state.clusterNodesHostName.length != 0 && this.state.showCreate != 'none' ? 
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 createMPGW={this.createMPGW}
                 clusterNodesHostName={this.state.clusterNodesHostName}
-                />
+                /> 
+                : 
+                <Alert
+                 variant="filled" 
+                 severity="error" 
+                 style={{display: this.state.showCreate}}>
+                This is an error alert — Something happend!
+                </Alert>}
+                
             </div>
         );
     }

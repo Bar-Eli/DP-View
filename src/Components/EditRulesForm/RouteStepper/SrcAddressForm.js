@@ -199,16 +199,25 @@ class AddressForm extends Component {
             value={this.props.currSrcAddrRules.primaryAddress}
             onChange={e => {
               this.props.setParams(e.target.value, "primaryAddress", "srcAddr");
-              this.validator.message(
-                "Primary Address",
-                e.target.value,
-                "required"
-              );
+              if (this.state.httpBtnColor === "primary") {
+                this.validator.message(
+                  "Primary Address",
+                  e.target.value,
+                  "required|url"
+                );
+              } else if (this.state.mqBtnColor === "primary") {
+                this.validator.message(
+                  "Primary Address",
+                  e.target.value,
+                  "required"
+                );
+              }
               this.checkIfAllValid();
             }}
             error={
-              !this.validator.fieldValid("Primary Address") &&
-              this.props.currSrcAddrRules.primaryAddress === ""
+              !this.validator.fieldValid("Primary Address")
+              // &&
+              // this.props.currSrcAddrRules.primaryAddress === ""
             }
             helperText={this.validator.getErrorMessages()["Primary Address"]}
           />
@@ -222,16 +231,25 @@ class AddressForm extends Component {
                 "secondaryAddress",
                 "srcAddr"
               );
-              this.validator.message(
-                "Secondary Address",
-                e.target.value,
-                "required"
-              );
+              if (this.state.httpBtnColor === "primary") {
+                this.validator.message(
+                  "Secondary Address",
+                  e.target.value,
+                  "required|integer"
+                );
+              } else if (this.state.mqBtnColor === "primary") {
+                this.validator.message(
+                  "Secondary Address",
+                  e.target.value,
+                  "required"
+                );
+              }
               this.checkIfAllValid();
             }}
             error={
-              !this.validator.fieldValid("Secondary Address") &&
-              this.props.currSrcAddrRules.secondaryAddress === ""
+              !this.validator.fieldValid("Secondary Address")
+              // &&
+              // this.props.currSrcAddrRules.secondaryAddress === ""
             }
             helperText={this.validator.getErrorMessages()["Secondary Address"]}
           />

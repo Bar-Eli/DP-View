@@ -239,10 +239,14 @@ class HorizontalStepper extends Component {
     }
   };
 
-  handleFinish = () => {
-    const rule = JSON.parse(JSON.stringify(this.state.rule));
-    this.props.addRule(rule);
-    this.props.validationHandler(true);
+  handleFinish = currForm => {
+    if (this.state.stepIsValid) {
+      const rule = JSON.parse(JSON.stringify(this.state.rule));
+      this.props.addRule(rule);
+      this.props.validationHandler(true);
+    } else {
+      this.initForm(currForm);
+    }
   };
 
   ruleReset = () => {

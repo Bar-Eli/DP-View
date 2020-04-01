@@ -26,7 +26,7 @@ class DetailsForm extends Component {
         this.props.details.testOrProd === "test" ? "primary" : "default",
       prodBtnColor:
         this.props.details.testOrProd === "prod" ? "primary" : "default",
-      clusters: []
+      clusters: ["TestCluster"]
     };
     this.getClusters(); // Assign clusters to select form.
     this.validator = new SimpleReactValidator();

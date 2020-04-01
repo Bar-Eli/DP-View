@@ -4,6 +4,7 @@
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -161,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585395246985</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added creation indication">
+      <created>1585400824727</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585400824727</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +221,14 @@
     <MESSAGE value="Pre Merge DP Credentials" />
     <MESSAGE value="Completed merge" />
     <MESSAGE value="Working POC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working POC" />
+    <MESSAGE value="Added creation indication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added creation indication" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JavascriptDebugType">
+        <watch expression="file" language="JavaScript" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

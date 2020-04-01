@@ -3,8 +3,8 @@ import BackendConfigInput from './BackendConfigInput.js'
 export default class BackendRequests {
 
     // CONSTANTS
-    static BACKEND_URL = "http://10.0.3.8:4000";
-    // static BACKEND_URL = "http://localhost:4000";
+    // static BACKEND_URL = "http://10.0.3.8:4000";
+    static BACKEND_URL = "http://localhost:4000";
 
     /**
      * Get list of clusters for input choosing
@@ -107,8 +107,6 @@ export default class BackendRequests {
      */
     static async createNewMpgw(input) {
 
-        // this.getFileContent();
-
         const clusterDetails = await this.getClusterDetails(input);
         const urlParamsList = BackendConfigInput.generateClusterUrlParams(input, clusterDetails);
         const rules = input["rules"];
@@ -116,6 +114,8 @@ export default class BackendRequests {
         // Create FSHs
         this.createNewFshs(rules, urlParamsList);
 
+        // Upload files Test
+        this.uploadFiles(rules);
 
         const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
         const data = JSON.stringify(payload);
@@ -132,26 +132,40 @@ export default class BackendRequests {
             alert(responseData["message"]);
         }
 
-
-
     }
 
-    static async getFileContent() {
 
-        const path = "C:\\Users\\Alon\\Desktop\\someFile.json";
-        // const config_file = require(path);
-        // console.log(config_file);
+    /**
+     * Upload files required for MPGW creation.
+     * @param rules -- Rules in user input format.
+     */
+    static uploadFiles(rules) {
+        for (let i = 0; i < rules.length; i++) {
+            if (rules[i]["filter"]["filterType"] === "schema") {
+                this.uploadFile(rules[i]["filter"]["schemaPath"]);
+            }
+        }
+    }
 
+    /**
+     * Upload file to DP using backend request to git.
+     * @param file -- JSON representing schema file from user input
+     * @returns {Promise<void>}
+     */
+    static async uploadFile(file) {
 
-        const fs = require('fs');
+        const url = this.BACKEND_URL + "/api/misc/uploadfile";
+        const options = {
+            method: 'POST',
+            body: file["content"],
+            headers: {
+                filename: file["name"]
+            }
+        };
+        let response = await fetch(url, options);
+        let responseData = await response.json();
 
-        fs.readFile(path, (err, data) => {
-            if (err) throw err;
-
-            console.log(data.toString());
-        })
-
-
+        alert(responseData);
     }
 
 

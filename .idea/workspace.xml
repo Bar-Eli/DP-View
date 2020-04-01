@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="uploadSchema" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -79,8 +80,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.BackendConfigInput.js" />
-        <item itemvalue="Node.js.BackendConfigInput.js" />
         <item itemvalue="Node.js.BackendConfigInput.js" />
       </list>
     </recent_temporary>
@@ -224,5 +223,12 @@
     <MESSAGE value="Working POC" />
     <MESSAGE value="Added creation indication" />
     <option name="LAST_COMMIT_MESSAGE" value="Added creation indication" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JavascriptDebugType">
+        <watch expression="file" language="JavaScript" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

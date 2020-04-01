@@ -5,6 +5,7 @@ import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import MachineButton from './MachineButtonComponent';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = theme => ({
     root: {
@@ -93,6 +94,7 @@ class CircularIntegration extends Component{
 
   render(){
     const { classes } = this.props;
+    console.log(this.state);
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -116,10 +118,18 @@ class CircularIntegration extends Component{
             <MachineButton 
             style={this.props.style}
             loading={this.state.loading}
-            success={this.state.clusterResponseStatus[item]}
+            success={this.state.clusterResponseStatus[item]['status']}
             hostname={item}
             loaded={this.state.loaded}
             />
+            {(this.state.clusterResponseStatus[item]['status'] === false) ?
+            <Alert severity="error">
+            {this.state.clusterResponseStatus[item]['message']}
+          </Alert>
+            :
+            console.log('Success')
+            
+         }
         </li>
         )}
         </ul>

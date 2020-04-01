@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import clsx from 'clsx';
-import { createStyles, makeStyles, Theme, withStyles  } from '@material-ui/core/styles';
+import { withStyles  } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
-import { render } from '@testing-library/react';
 import CreateIcon from '@material-ui/icons/Create';
 import ErrorIcon from '@material-ui/icons/Error';
 
@@ -63,6 +59,7 @@ class MachineButton extends Component{
       }
 
       checkStatus = () => {
+        // Check if the create process has done
         const { classes } = this.props;
         if(this.props.loaded && this.state.checkStatus){
           if(this.props.success === true)

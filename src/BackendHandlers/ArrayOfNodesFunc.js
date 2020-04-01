@@ -19,7 +19,12 @@ export default class BackendRequests {
         return await response.json();  // return cluster details
     }
 
-
+    /**
+     * Get details (domain / IPs / rest ports) for the given cluster and test / prod environment.
+     * @param clusterName -- The cluster name.
+     * @param testOrProd -- The environment.
+     * @returns {Promise<any>}
+     */
     static async getClusterDetailsByClusterName(clusterName, testOrProd) {
         const url = this.BACKEND_URL + "/api/status/cluster/" + clusterName + "/" + testOrProd;
         const response = await fetch(url);
@@ -29,7 +34,7 @@ export default class BackendRequests {
     /**
      * Get nodes hostname for the given cluster from input.
      * @param clusterName -- User input params for MPGW creation.
-     * @returns {Promise<any>}
+     * @returns {Array}
      */
     static async getClusterNodesHostname(clusterName, testOrProd) {
         const clusterDetails = await this.getClusterDetailsByClusterName(clusterName, testOrProd);
@@ -102,22 +107,17 @@ export default class BackendRequests {
     static async createNewMpgw(input) {
 
         // this.getFileContent();
-
         const clusterDetails = await this.getClusterDetails(input);
         const urlParamsList = BackendConfigInput.generateClusterUrlParams(input, clusterDetails);
         const rules = input["rules"];
-
         // Create FSHs
         this.createNewFshs(rules, urlParamsList);
-
-
         const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
         const data = JSON.stringify(payload);
         const options = {
             method: 'POST',
             body: data,
         };
-
         let clusterResponseStatus = {};
         for (let i = 0; i < urlParamsList.length; i++) {
             let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
@@ -132,11 +132,6 @@ export default class BackendRequests {
                 clusterResponseStatus[hostname] = false
             }
         }
-        // clusterResponseStatus = {
-        //             "10.0.3.4": true,
-        //             "10.0.3.7": false
-        // }
-
         return clusterResponseStatus;
 
 

@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import clsx from 'clsx';
 import { createStyles, makeStyles, Theme, withStyles  } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
-import { render } from '@testing-library/react';
-import CreateIcon from '@material-ui/icons/Create';
 import MachineButton from './MachineButtonComponent';
 
 const useStyles = theme => ({
@@ -85,6 +79,7 @@ class CircularIntegration extends Component{
   }
 
   componentWillMount = () => {
+    // Create a state for the nodes of the cluster that passed by props
     let clusterResponseStatus = {};
     for (let index = 0; index < this.props.clusterNodesHostName.length; index++) {
       let hostname = this.props.clusterNodesHostName[index];

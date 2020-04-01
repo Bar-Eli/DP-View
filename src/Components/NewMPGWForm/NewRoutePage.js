@@ -72,7 +72,7 @@ class NewRoutePage extends Component {
         let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
         // Set the array as the state of clusterNodesHostName
         this.setState({ clusterNodesHostName: clusterNodesHostname})
-    }
+    };
 
     hideCreate = () => {
         this.setState({showCreate: 'none'})

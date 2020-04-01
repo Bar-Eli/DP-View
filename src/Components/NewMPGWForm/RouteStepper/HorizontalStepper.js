@@ -50,6 +50,7 @@ class HorizontalStepper extends Component {
     this.steps = getSteps();
     this.state = {
       stepIsValid: false,
+      // stepIsValid: true, // DEBUG
       step: 0,
       completed: [],
       skipped: [],
@@ -142,8 +143,8 @@ class HorizontalStepper extends Component {
   setActiveStep = newStep => {
     this.setState({
       step: newStep,
-      // stepIsValid: false
-      stepIsValid: false // DEBUG
+      stepIsValid: false
+      // stepIsValid: true // DEBUG
     });
   };
 

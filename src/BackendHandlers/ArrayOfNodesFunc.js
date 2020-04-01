@@ -19,6 +19,7 @@ export default class BackendRequests {
         return await response.json();  // return cluster details
     }
 
+    // HADAR
     /**
      * Get details (domain / IPs / rest ports) for the given cluster and test / prod environment.
      * @param clusterName -- The cluster name.
@@ -45,7 +46,7 @@ export default class BackendRequests {
         }
         return clusterNodesHostname;
     }
-
+    // END
 
     /**
      * Create New FSH on DP, using http requests to backend
@@ -99,6 +100,7 @@ export default class BackendRequests {
     }
 
 
+    // UPDATE
     /**
      * Create New MPGW on DP, using http requests to backend
      * @param input -- User input params for MPGW creation.

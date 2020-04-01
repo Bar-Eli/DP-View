@@ -112,7 +112,7 @@ class HorizontalStepper extends Component {
             whichForm="destAddr"
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
-            currRule={this.state.rule.srcAddr}
+            currRule={this.state.rule.destAddr}
           />
         );
       default:

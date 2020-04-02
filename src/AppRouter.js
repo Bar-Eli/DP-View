@@ -4,6 +4,7 @@ import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 // import EditRuleStepper from "./Components/EditRuleForm/EditRules";
 import EditRulesForm from "./Components/EditRulesForm/EditRulePage";
 import RuleTable from "./Components/RuleTable";
+import SlmForm from "./Components/NewMPGWForm/RouteStepper/SlmForm";
 
 function AppRouter() {
   return (
@@ -12,6 +13,7 @@ function AppRouter() {
         <Route path="/" exact component={NewRoutePage} />
         {/* <Route path="/addRule" component={NewRulePage} /> */}
         <Route path="/editRule" component={EditRulesForm} />
+        <Route path="/slm" component={SlmForm} />
         <Route
           path="/rule"
           component={() => (

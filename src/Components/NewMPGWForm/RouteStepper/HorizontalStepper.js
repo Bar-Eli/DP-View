@@ -40,7 +40,7 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Rule Name", "Source", "Filter", "Destination", "Slm"];
+  return ["Rule Name", "Source", "Filter", "Destination", "SLM"];
 }
 
 const stepsMap = {

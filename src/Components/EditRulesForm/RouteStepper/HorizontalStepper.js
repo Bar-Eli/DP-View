@@ -197,29 +197,9 @@ class HorizontalStepper extends Component {
     }
   };
 
-  // initForm = form => {
-  //   this.setState(prevState => {
-  //     const newState = prevState;
-  //     if (form === "name") {
-  //       newState.rule.name = "";
-  //     } else {
-  //       // console.log(newState.rule[form]);
-  //       const keys = Object.keys(newState.rule[form]);
-  //       for (let i = 0; i < keys.length; i++) {
-  //         const currVal = newState.rule[form][keys[i]];
-  //         // console.log(currVal);
-  //         if (currVal === null) {
-  //           newState.rule[form][keys[i]] = "";
-  //         }
-  //       }
-  //     }
-  //     return newState;
-  //   });
-  // };
-
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
-    this.props.addRule(rule);
+    this.props.updateRule(rule);
     this.props.validationHandler(true);
   };
 

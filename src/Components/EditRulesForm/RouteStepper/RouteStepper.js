@@ -40,7 +40,6 @@ class RouteStepper extends Component {
     super(props);
     this.state = {
       currentRuleToEditIndex: -1,
-      showHorizontalStepper: false,
       popUpStatus: false,
       stepIsValid: false, // DEBUG
       // stepIsValid: false,
@@ -94,10 +93,13 @@ class RouteStepper extends Component {
     }
   };
 
-  addRule = rule => {
+  updateRule = rule => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
-    newParams["rules"].push(rule);
-    this.setState({ params: newParams });
+    newParams["rules"][this.state.currentRuleToEditIndex] = rule;
+    this.setState({ 
+      params: newParams,
+      currentRuleToEditIndex: -1
+    });
   };
 
   removeRule = index => {
@@ -123,7 +125,7 @@ class RouteStepper extends Component {
       case 1:
         return (
         <div>
-          {!this.state.showHorizontalStepper && this.state.currentRuleToEditIndex === -1? 
+          {this.state.currentRuleToEditIndex === -1? 
           <RuleTable 
           data={this.state.params} 
           editRule={this.editRule}
@@ -131,7 +133,7 @@ class RouteStepper extends Component {
           :
           <HorizontalStepper
             rule={this.state.params.rules[this.state.currentRuleToEditIndex]}
-            addRule={this.addRule}
+            updateRule={this.updateRule}
             validationHandler={this.handleStepValidation}
           />
           }

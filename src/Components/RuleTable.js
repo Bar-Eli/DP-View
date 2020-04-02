@@ -131,7 +131,7 @@ export class RuleTable extends Component {
     return (
       <div>
         <MaterialTable
-          title={this.props.title}
+          title={this.props.data.details.mpgwName}
           columns={this.state.columns}
           //style={{width: 1200}}
           style={{ width: "100%" }}

@@ -32,7 +32,7 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Route details", "Rules", "Overview"];
+  return ["Route details", "View Rules", "Edit Rule"];
 }
 
 class RouteStepper extends Component {
@@ -46,11 +46,32 @@ class RouteStepper extends Component {
       // step: 2, // DEBUG
       params: {
         details: {
-          environment: null,
           clusterName: null,
+          mpgwName: null,
           testOrProd: "test"
         },
-        rules: [],
+        rules: [
+        {name: "TestRule",
+          srcAddr: {
+            network: "Salim",
+            protocol: "http",
+            primaryAddress: "http://zibi.com",
+            secondaryAddress: "80",
+            methods: ["PUT", "GET"]
+          },
+          destAddr: {
+            network: "Tzadok",
+            protocol: "mq",
+            primaryAddress: "queue_manager",
+            secondaryAddress: "queue",
+            methods: []
+          },
+          filter: {
+            filterType: "dpass",
+            dpasFilter: "Nimbus",
+            schemaPath: ""
+          }}
+        ],
         dpCredentials: {
           username: "",
           password: ""
@@ -95,15 +116,14 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
+          <RuleTable data={this.state.params} removeRule={this.removeRule} />
+        );
+      case 2:
+        return (
           <HorizontalStepper
             addRule={this.addRule}
             validationHandler={this.handleStepValidation}
           />
-        );
-      case 2:
-        return (
-          //<Overview/>
-          <RuleTable data={this.state.params} removeRule={this.removeRule} />
         );
       default:
         return "Unknown step";

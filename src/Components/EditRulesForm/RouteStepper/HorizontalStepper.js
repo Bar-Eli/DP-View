@@ -56,26 +56,7 @@ class HorizontalStepper extends Component {
       skipped: [],
       // manually inserted for testing, should come as props from above
       rule: {
-        name: "TestRule",
-        srcAddr: {
-          network: "Salim",
-          protocol: "http",
-          primaryAddress: "http://zibi.com",
-          secondaryAddress: "80",
-          methods: ["PUT", "GET"]
-        },
-        destAddr: {
-          network: "Tzadok",
-          protocol: "mq",
-          primaryAddress: "queue_manager",
-          secondaryAddress: "queue",
-          methods: []
-        },
-        filter: {
-          filterType: "dpass",
-          dpasFilter: "Nimbus",
-          schemaPath: ""
-        }
+        
       }
     };
   }

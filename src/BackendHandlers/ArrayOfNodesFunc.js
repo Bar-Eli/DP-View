@@ -129,7 +129,7 @@ export default class BackendRequests {
                 let obj = {}
                 let hostname = clusterDetails["nodes"][i].host;
                 obj['status'] = true;
-                obj['message'] = "Success";
+                obj['message'] = responseData.message;
                 clusterResponseStatus[hostname] = obj
                 console.log(clusterResponseStatus)
             }
@@ -137,7 +137,7 @@ export default class BackendRequests {
                 let obj = {}
                 let hostname = clusterDetails["nodes"][i].host;
                 obj['status'] = false;
-                obj['message'] = response.message;
+                obj['message'] = responseData.message;
                 clusterResponseStatus[hostname] = obj
                 console.log(clusterResponseStatus)
             }

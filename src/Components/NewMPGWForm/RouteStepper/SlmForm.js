@@ -121,7 +121,7 @@ class SlmForm extends Component {
                 Time Unit
               </InputLabel>
               <Select
-                style={{ width: "200%", paddingBottom: "20px" }}
+                style={{ paddingBottom: "20px" }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={e => {
@@ -173,11 +173,10 @@ class SlmForm extends Component {
               }
               helperText={this.validator.getErrorMessages()["File Size"]}
             ></TextField>
-            <FormControl style={{ paddingRight: "250px" }}>
+            <FormControl style={{ paddingRight: "100px" }}>
               <InputLabel id="demo-simple-select-label2">Size Unit</InputLabel>
               <Select
                 style={{
-                  width: "200%",
                   paddingBottom: "20px"
                 }}
                 labelId="demo-simple-select-labe2"
@@ -209,7 +208,7 @@ class SlmForm extends Component {
             <FormControl>
               <InputLabel id="demo-simple-select-label">Time Unit</InputLabel>
               <Select
-                style={{ width: "200%", paddingBottom: "20px" }}
+                style={{ paddingBottom: "20px" }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={e => {

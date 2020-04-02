@@ -24,7 +24,7 @@ class DetailsForm extends Component {
       testBtnColor: "primary",
       prodBtnColor: "default",
       mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
-      environmentsList: ["Tzadok", "Salim", "Zeus"],
+      environmentsList: ["ZadokCluster", "Salim", "Zeus"],
       displayMpgwSelection: "none",
       displayButtons: "none"
       // verify if form is complete somehow

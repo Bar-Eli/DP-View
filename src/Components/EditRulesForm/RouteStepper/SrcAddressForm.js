@@ -203,12 +203,14 @@ class AddressForm extends Component {
                 this.validator.message(
                   "Primary Address",
                   e.target.value,
-                  "required|url"
+                  "required"
                 );
               } else if (this.state.mqBtnColor === "primary") {
+                // const regexPattern = new RegExp("[A-Z/\\_/]+", "g");
                 this.validator.message(
                   "Primary Address",
                   e.target.value,
+                  // `required|regex:${regexPattern}`
                   "required"
                 );
               }

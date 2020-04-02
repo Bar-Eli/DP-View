@@ -55,9 +55,7 @@ class HorizontalStepper extends Component {
       completed: [],
       skipped: [],
       // manually inserted for testing, should come as props from above
-      rule: {
-        
-      }
+      rule: this.props.rule
     };
   }
 
@@ -270,7 +268,6 @@ class HorizontalStepper extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <Paper

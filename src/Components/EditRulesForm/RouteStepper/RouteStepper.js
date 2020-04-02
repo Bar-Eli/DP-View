@@ -32,13 +32,15 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Route details", "View Rules", "Edit Rule"];
+  return ["Route details", "View Rules"];
 }
 
 class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentRuleToEditIndex: -1,
+      showHorizontalStepper: false,
       popUpStatus: false,
       stepIsValid: false, // DEBUG
       // stepIsValid: false,
@@ -104,6 +106,10 @@ class RouteStepper extends Component {
     this.setState({ params: newParams });
   };
 
+  editRule = index => {
+    this.setState({ currentRuleToEditIndex: index});
+  };
+
   getStepContent = step => {
     switch (step) {
       case 0:
@@ -116,14 +122,20 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
-          <RuleTable data={this.state.params} removeRule={this.removeRule} />
-        );
-      case 2:
-        return (
+        <div>
+          {!this.state.showHorizontalStepper && this.state.currentRuleToEditIndex === -1? 
+          <RuleTable 
+          data={this.state.params} 
+          editRule={this.editRule}
+          removeRule={this.removeRule} /> 
+          :
           <HorizontalStepper
+            rule={this.state.params.rules[this.state.currentRuleToEditIndex]}
             addRule={this.addRule}
             validationHandler={this.handleStepValidation}
           />
+          }
+        </div>
         );
       default:
         return "Unknown step";

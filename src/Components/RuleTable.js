@@ -144,6 +144,23 @@ export class RuleTable extends Component {
           }}
           actions={[
             {
+              icon: "edit",
+              tooltip: "Edit",
+              onClick: (event, rowData) => {
+                let tableData = this.state.tableData;
+                this.setState({
+                  tableData: tableData.filter(
+                    element => element.ruleName !== rowData.ruleName
+                  )
+                });
+                this.props.editRule(
+                  this.props.data.rules.findIndex(
+                    rule => rule.name === rowData.ruleName
+                  )
+                );
+              }
+            },
+            {
               icon: "delete",
               tooltip: "Delete",
               onClick: (event, rowData) => {

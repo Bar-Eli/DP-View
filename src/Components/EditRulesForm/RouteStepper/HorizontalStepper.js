@@ -13,31 +13,31 @@ import NameForm from "./NameForm";
 
 import { Paper } from "@material-ui/core";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   backButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   completed: {
-    display: "inline-block"
+    display: "inline-block",
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   center: {
-    textAlign: "center"
+    textAlign: "center",
   },
   navBtns: {
     textAlign: "center",
     paddingTop: "30px",
-    paddingBottom: "10px"
-  }
+    paddingBottom: "10px",
+  },
 });
 
 function getSteps() {
@@ -55,11 +55,11 @@ class HorizontalStepper extends Component {
       step: 0,
       completed: [],
       skipped: [],
-      rule: this.props.rule
+      rule: this.props.rule,
     };
   }
 
-  getStepContent = step => {
+  getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
@@ -107,15 +107,15 @@ class HorizontalStepper extends Component {
     }
   };
 
-  setActiveStep = newStep => {
+  setActiveStep = (newStep) => {
     this.setState({
       step: newStep,
       // stepIsValid: false
-      stepIsValid: true // DEBUG
+      stepIsValid: true, // DEBUG
     });
   };
 
-  handleStepValidation = flag => {
+  handleStepValidation = (flag) => {
     // Set current step status, valid or not
     this.setState({ stepIsValid: flag });
   };
@@ -136,19 +136,19 @@ class HorizontalStepper extends Component {
     return getSteps().length;
   };
 
-  isStepOptional = step => {
-    return step === 2;
-  };
+  // isStepOptional = step => {
+  //   return step === 2;
+  // };
 
-  handleSkip = () => {
-    if (!this.isStepOptional(this.state.step)) {
-      // You probably want to guard against something like this
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
+  // handleSkip = () => {
+  //   if (!this.isStepOptional(this.state.step)) {
+  //     // You probably want to guard against something like this
+  //     // it should never occur unless someone's actively trying to break something.
+  //     throw new Error("You can't skip a step that isn't optional.");
+  //   }
 
-    this.setActiveStep(this.state.step + 1);
-  };
+  //   this.setActiveStep(this.state.step + 1);
+  // };
 
   skippedSteps = () => {
     return this.state.skipped.length;
@@ -182,7 +182,7 @@ class HorizontalStepper extends Component {
     this.setActiveStep(this.state.step - 1);
   };
 
-  handleStep = step => () => {
+  handleStep = (step) => () => {
     this.setActiveStep(step);
   };
 
@@ -221,28 +221,28 @@ class HorizontalStepper extends Component {
           protocol: "",
           primaryAddress: "",
           secondaryAddress: "",
-          methods: ["", ""]
+          methods: ["", ""],
         },
         destAddr: {
           network: "",
           protocol: "",
           primaryAddress: "",
           secondaryAddress: "",
-          methods: [""]
+          methods: [""],
         },
         filter: {
           filterType: "",
           dpasFilter: "",
-          schemaPath: ""
+          schemaPath: "",
         },
         slm: {
           maxFileCount: "",
           fileCountTimeUnit: "",
           maxFileSize: "",
           fileSizeUnit: "",
-          fileSizeTimeUnit: ""
-        }
-      }
+          fileSizeTimeUnit: "",
+        },
+      },
     });
   };
 
@@ -253,11 +253,11 @@ class HorizontalStepper extends Component {
     this.ruleReset();
   };
 
-  isStepSkipped = step => {
+  isStepSkipped = (step) => {
     return this.state.skipped.includes(step);
   };
 
-  isStepComplete = step => {
+  isStepComplete = (step) => {
     return this.state.completed.includes(step);
   };
 
@@ -273,11 +273,11 @@ class HorizontalStepper extends Component {
             {this.steps.map((label, index) => {
               const stepProps = {};
               const buttonProps = {};
-              if (this.isStepOptional(index)) {
-                buttonProps.optional = (
-                  <Typography variant="caption">Optional</Typography>
-                );
-              }
+              // if (this.isStepOptional(index)) {
+              //   buttonProps.optional = (
+              //     <Typography variant="caption">Optional</Typography>
+              //   );
+              // }
               if (this.isStepSkipped(index)) {
                 stepProps.completed = false;
               }
@@ -327,7 +327,7 @@ class HorizontalStepper extends Component {
                     >
                       Next
                     </Button>
-                    {this.isStepOptional(this.state.step) &&
+                    {/* {this.isStepOptional(this.state.step) &&
                       !this.state.completed.includes(this.state.step) && (
                         <Button
                           variant="contained"
@@ -337,7 +337,7 @@ class HorizontalStepper extends Component {
                         >
                           Skip
                         </Button>
-                      )}
+                      )} */}
 
                     {this.state.step !== this.steps.length &&
                       (this.state.completed.includes(this.state.step) ? (
@@ -353,7 +353,7 @@ class HorizontalStepper extends Component {
                           color="primary"
                           onClick={this.handleComplete}
                         >
-                          {this.completedSteps() === this.totalSteps() - 1
+                          {this.completedSteps() === this.totalSteps()
                             ? "Finish"
                             : "Complete Step"}
                         </Button>

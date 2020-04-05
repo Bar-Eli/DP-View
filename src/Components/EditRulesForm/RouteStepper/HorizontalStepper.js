@@ -55,36 +55,7 @@ class HorizontalStepper extends Component {
       step: 0,
       completed: [],
       skipped: [],
-      // manually inserted for testing, should come as props from above
-      rule: {
-        name: "TestRule",
-        srcAddr: {
-          network: "Salim",
-          protocol: "http",
-          primaryAddress: "http://zibi.com",
-          secondaryAddress: "80",
-          methods: ["PUT", "GET"]
-        },
-        destAddr: {
-          network: "Tzadok",
-          protocol: "mq",
-          primaryAddress: "queue_manager",
-          secondaryAddress: "queue",
-          methods: []
-        },
-        filter: {
-          filterType: "dpass",
-          dpasFilter: "Nimbus",
-          schemaPath: ""
-        },
-        slm: {
-          maxFileCount: 80,
-          fileCountTimeUnit: "hour",
-          maxFileSize: 40,
-          fileSizeUnit: "mb",
-          fileSizeTimeUnit: "minute"
-        }
-      }
+      rule: this.props.rule
     };
   }
 
@@ -236,7 +207,7 @@ class HorizontalStepper extends Component {
 
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
-    this.props.addRule(rule);
+    this.props.updateRule(rule);
     this.props.validationHandler(true);
   };
 
@@ -292,7 +263,6 @@ class HorizontalStepper extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <Paper

@@ -6,6 +6,8 @@ import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 // import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
+import LoadingComponent from "../NewMPGWForm/RouteStepper/LoadingComponent";
+import GetArray from "../../BackendHandlers/ArrayOfNodesFunc.js";
 
 const useStyles = theme => ({
   root: {
@@ -41,7 +43,9 @@ class EditRulesForm extends Component {
     this.state = {
       showCreate: "none",
       // showCreate: 'block', // DEBUG
-      inputParams: {}
+      inputParams: {},
+      clusterNodesHostName: [],
+      clusterName: "",
     };
     this.inputParams = {};
   }
@@ -51,12 +55,20 @@ class EditRulesForm extends Component {
   };
 
   createMPGW = () => {
-    BackendRequests.createNewMpgw(this.inputParams);
+    return GetArray.createNewMpgw(this.inputParams);
   };
 
-  setInput = inputJson => {
-    this.setState({ showCreate: "block" });
+  setInput = (inputJson) => {
+    this.setState({showCreate: 'block'});
     this.inputParams = inputJson;
+    this.setClusterNodesHostNameArr(this.state.clusterName);
+  };
+
+  setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
+      // Get array of nodes from the API
+      let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
+      // Set the array as the state of clusterNodesHostName
+      this.setState({ clusterNodesHostName: clusterNodesHostname})
   };
 
   hideCreate = () => {
@@ -79,18 +91,14 @@ class EditRulesForm extends Component {
           </Typography>
         </Button>
 
-        <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} />
-
+        <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
+        
         <br />
-        <Button
-          className={classes.createBtn}
-          variant="contained"
-          color="secondary"
-          style={{ display: this.state.showCreate }}
-          onClick={this.createMPGW}
-        >
-          Create
-        </Button>
+        <LoadingComponent 
+                style={{display: this.state.showCreate}} 
+                createMPGW={this.createMPGW}
+                clusterNodesHostName={this.state.clusterNodesHostName}
+        />
       </div>
     );
   }

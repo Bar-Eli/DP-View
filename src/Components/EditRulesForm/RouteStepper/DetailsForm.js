@@ -19,12 +19,12 @@ const useStyles = theme => ({
 class DetailsForm extends Component {
   constructor(props) {
     super(props);
-    // add environment as variable?
+    // add cluster as variable?
     this.state = {
       testBtnColor: "primary",
       prodBtnColor: "default",
       mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
-      environmentsList: ["Tzadok", "Salim", "Zeus"],
+      environmentsList: ["ZadokCluster", "Salim", "Zeus"],
       displayMpgwSelection: "none",
       displayButtons: "none"
       // verify if form is complete somehow
@@ -32,13 +32,13 @@ class DetailsForm extends Component {
 
     this.validator = new SimpleReactValidator();
     this.validator.message(
-      "Environment",
-      this.props.details.environment,
+      "cluster",
+      this.props.details.clusterName,
       "required"
     );
     this.validator.message(
-      "Cluster",
-      this.props.details.clusterName,
+      "mpgw",
+      this.props.details.mpgwName,
       "required"
     );
 
@@ -68,28 +68,28 @@ class DetailsForm extends Component {
       <div>
         <form className={classes.root} noValidate autoComplete="off">
           <Autocomplete
-            id="environment"
+            id="cluster"
             options={this.state.environmentsList}
             getOptionLabel={environmentsList => environmentsList}
             style={{ width: 300, marginBottom: "50px" }}
             renderInput={params => (
               <TextField
                 {...params}
-                label="Environment"
+                label="cluster"
                 variant="outlined"
                 error={
-                  !this.validator.fieldValid("Environment") &&
-                  this.props.details.environment != null
+                  !this.validator.fieldValid("cluster") &&
+                  this.props.details.cluster != null
                 }
-                helperText={this.validator.getErrorMessages()["Environment"]}
+                helperText={this.validator.getErrorMessages()["cluster"]}
               />
             )}
             onChange={(e, value) => {
               this.setState({ displayMpgwSelection: "block" });
               this.setState({ displayButtons: "inline-block" });
-              this.props.updateParams(value, "environment", "details");
+              this.props.updateParams(value, "clusterName", "details");
 
-              this.validator.message("Environment", value, "required");
+              this.validator.message("cluster", value, "required");
               this.checkIfAllValid();
             }}
           />
@@ -107,16 +107,16 @@ class DetailsForm extends Component {
                 label="Mpgw Name"
                 variant="outlined"
                 error={
-                  !this.validator.fieldValid("Cluster") &&
-                  this.props.details.clusterName != null
+                  !this.validator.fieldValid("mpgw") &&
+                  this.props.details.mpgwName != null
                 }
-                helperText={this.validator.getErrorMessages()["Cluster"]}
+                helperText={this.validator.getErrorMessages()["mpgw"]}
               />
             )}
             onChange={(e, value) => {
-              this.props.updateParams(value, "clusterName", "details");
+              this.props.updateParams(value, "mpgwName", "details");
 
-              this.validator.message("Cluster", value, "required");
+              this.validator.message("mpgw", value, "required");
               this.checkIfAllValid();
             }}
           />

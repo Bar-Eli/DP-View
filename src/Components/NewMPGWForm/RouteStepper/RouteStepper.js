@@ -36,30 +36,30 @@ function getSteps() {
 }
 
 class RouteStepper extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      popUpStatus: false,
-      stepIsValid: false, // DEBUG
-      // stepIsValid: false,
-      step: 0,
-      // step: 2, // DEBUG
-      params: {
-        details: {
-          projectNameValue: null,
-          projectMadorValue: null,
-          projectTeamValue: null,
-          clusterName: null,
-          testOrProd: "test",
-        },
-        rules: [],
-        dpCredentials: {
-          username: "",
-          password: "",
-        },
-      },
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            popUpStatus: false,
+            // stepIsValid: false,
+            stepIsValid: true, // DEBUG
+            step: 0,
+            // step: 2, // DEBUG
+            params: {
+                details: {
+                    projectNameValue: null,
+                    projectMadorValue: null,
+                    projectTeamValue: null,
+                    clusterName: null,
+                    testOrProd: "test"
+                },
+                rules: [],
+                dpCredentials: {
+                    username: "",
+                    password: ""
+                }
+            }
+        };
+    }
 
   updateParamState = (value, paramName, form) => {
     let object = this.state.params[form];
@@ -112,13 +112,13 @@ class RouteStepper extends Component {
     }
   };
 
-  setActiveStep = (newStep) => {
-    this.setState({
-      step: newStep,
-      // stepIsValid: false
-      stepIsValid: false, // DEBUG
-    });
-  };
+    setActiveStep = newStep => {
+        this.setState({
+            step: newStep,
+            // stepIsValid: false
+            stepIsValid: true // DEBUG
+        });
+    };
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
@@ -150,22 +150,19 @@ class RouteStepper extends Component {
     });
   };
 
-  handleNext = () => {
-    // Handle a press on the next button
-    // const valid = false; // DEBUG
-    if (this.state.step === 1) {
-      this.props.setClusterName(
-        this.state.params.details.clusterName,
-        this.state.params.details.testOrProd
-      );
-    }
-    const valid = this.state.stepIsValid;
-    if (valid) {
-      this.setActiveStep(this.state.step + 1);
-    } else {
-      this.initDetailsForm();
-    }
-  };
+    handleNext = () => {
+        // Handle a press on the next button
+        if (this.state.step === 1) {
+            this.props.setClusterName(this.state.params.details.clusterName, this.state.params.details.testOrProd);
+        }
+        // const valid = this.state.stepIsValid;
+        const valid = true; // DEBUG
+        if (valid) {
+            this.setActiveStep(this.state.step + 1);
+        } else {
+            this.initDetailsForm();
+        }
+    };
 
   handleBack = () => {
     // Handle a press on the back button

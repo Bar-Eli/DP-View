@@ -144,9 +144,6 @@ class DetailsForm extends Component {
           color="primary"
           onClick={this.handleCreds}
           className={classes.button}
-          style={{
-            marginBottom: "30px"
-          }}
         >
           Enter credentials
         </Button>

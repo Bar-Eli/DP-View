@@ -71,7 +71,15 @@ class RouteStepper extends Component {
             filterType: "dpass",
             dpasFilter: "Nimbus",
             schemaPath: ""
-          }}
+          },
+          slm: {
+            maxFileCount: 100,
+            maxFileSize: 10,
+            fileSizeUnit: "mb",
+            fileSizeTimeUnit: "minute",
+            fileCountTimeUnit: "minute"
+          }
+        }
         ],
         dpCredentials: {
           username: "",

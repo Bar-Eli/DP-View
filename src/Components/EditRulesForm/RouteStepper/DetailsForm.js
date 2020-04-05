@@ -25,8 +25,6 @@ class DetailsForm extends Component {
       prodBtnColor: "default",
       mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
       environmentsList: ["ZadokCluster", "Salim", "Zeus"],
-      displayMpgwSelection: "none",
-      displayButtons: "none"
       // verify if form is complete somehow
     };
 
@@ -93,6 +91,20 @@ class DetailsForm extends Component {
               this.checkIfAllValid();
             }}
           />
+          <Button
+            variant="contained"
+            color={this.state.testBtnColor}
+            onClick={this.testBtnClick}
+          >
+            Test
+          </Button>
+          <Button
+            variant="contained"
+            color={this.state.prodBtnColor}
+            onClick={this.prodBtnClick}
+          >
+            Prod
+          </Button>
           <Autocomplete
             id="mpgw-name"
             options={this.state.mpgwList}
@@ -121,22 +133,6 @@ class DetailsForm extends Component {
             }}
           />
           <br />
-          <Button
-            variant="contained"
-            color={this.state.testBtnColor}
-            onClick={this.testBtnClick}
-            style={{ display: `${this.state.displayButtons}` }}
-          >
-            Test
-          </Button>
-          <Button
-            variant="contained"
-            color={this.state.prodBtnColor}
-            onClick={this.prodBtnClick}
-            style={{ display: `${this.state.displayButtons}` }}
-          >
-            Prod
-          </Button>
         </form>
         <br />
         <br />

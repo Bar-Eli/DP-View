@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Alert from '@material-ui/lab/Alert';
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -93,12 +94,19 @@ class EditRulesForm extends Component {
 
         <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
         
-        <br />
-        <LoadingComponent 
+        {this.state.clusterNodesHostName.length != 0 && this.state.showCreate != 'none' ? 
+                <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 createMPGW={this.createMPGW}
                 clusterNodesHostName={this.state.clusterNodesHostName}
-        />
+                /> 
+                : 
+                <Alert
+                 variant="filled" 
+                 severity="error" 
+                 style={{display: this.state.showCreate}}>
+                This is an error alert — Something happend!
+                </Alert>}
       </div>
     );
   }

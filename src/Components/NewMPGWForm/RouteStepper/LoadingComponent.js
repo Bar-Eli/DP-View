@@ -68,8 +68,11 @@ class CircularIntegration extends Component{
     // Create an array of the cluster status
     let clusterResponseStatus = {};
     for (let index = 0; index < clusterNodesHostName.length; index++) {
+      let obj = {}
       let hostname = clusterNodesHostName[index];
-      clusterResponseStatus[hostname] = false;
+      obj['status'] = false;
+      obj['message'] = '';
+      clusterResponseStatus[hostname] = obj
     };
     return clusterResponseStatus;
   }
@@ -94,7 +97,6 @@ class CircularIntegration extends Component{
 
   render(){
     const { classes } = this.props;
-    console.log(this.state);
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -122,7 +124,7 @@ class CircularIntegration extends Component{
             hostname={item}
             loaded={this.state.loaded}
             />
-            {(this.state.clusterResponseStatus[item]['status'] === false) ?
+            {(this.state.loaded && !this.state.clusterResponseStatus[item]['status']) ?
             <Alert severity="error">
             {this.state.clusterResponseStatus[item]['message']}
           </Alert>

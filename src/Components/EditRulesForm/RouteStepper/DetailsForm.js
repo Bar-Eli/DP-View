@@ -23,10 +23,8 @@ class DetailsForm extends Component {
     this.state = {
       testBtnColor: "primary",
       prodBtnColor: "default",
-      mpgwList: ["Incognito", "Outcognito", "IceCube", "Spotify"],
+      mpgwList: [],
       environmentsList: ["ZadokCluster", "Salim", "Zeus"],
-      displayMpgwSelection: "none",
-      displayButtons: "none"
       // verify if form is complete somehow
     };
 
@@ -45,6 +43,13 @@ class DetailsForm extends Component {
     this.checkIfAllValid();
   }
 
+  setMpgwArray = (clusterName, testOrProd) => {
+    // Wait for a resopnse from the backend for mpgw names for the given cluster and environment
+    // let mpgwList = await this.props.getArray(clusterName, testOrProd);
+    let mpgwList = ["Incognito", "Outcognito", "IceCube", "Spotify"];
+    this.setState({ mpgwList: mpgwList })
+  }
+
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
     if (this.validator.allValid()) {
@@ -52,12 +57,19 @@ class DetailsForm extends Component {
     } else this.props.validationHandler(false);
   };
 
-  testBtnClick = () => {
-    this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
+  testBtnClick = () => {this.setState({ });
+    this.setState({ 
+      testBtnColor: "primary", 
+      prodBtnColor: "default",
+      mpgwList: []
+    });
   };
 
   prodBtnClick = () => {
-    this.setState({ prodBtnColor: "primary", testBtnColor: "default" });
+    this.setState({ prodBtnColor: "primary", 
+    testBtnColor: "default",
+    mpgwList: []
+   });
   };
 
   render() {
@@ -71,7 +83,7 @@ class DetailsForm extends Component {
             id="cluster"
             options={this.state.environmentsList}
             getOptionLabel={environmentsList => environmentsList}
-            style={{ width: 300, marginBottom: "50px" }}
+            style={{ width: 300 }}
             renderInput={params => (
               <TextField
                 {...params}
@@ -85,21 +97,33 @@ class DetailsForm extends Component {
               />
             )}
             onChange={(e, value) => {
-              this.setState({ displayMpgwSelection: "block" });
+              this.setState({ mpgwList: []});
               this.setState({ displayButtons: "inline-block" });
               this.props.updateParams(value, "clusterName", "details");
-
               this.validator.message("cluster", value, "required");
               this.checkIfAllValid();
             }}
           />
+          <Button
+            variant="contained"
+            color={this.state.testBtnColor}
+            onClick={this.testBtnClick}
+          >
+            Test
+          </Button>
+          <Button
+            variant="contained"
+            color={this.state.prodBtnColor}
+            onClick={this.prodBtnClick}
+          >
+            Prod
+          </Button>
           <Autocomplete
             id="mpgw-name"
             options={this.state.mpgwList}
             getOptionLabel={mpgwName => mpgwName}
             style={{
-              width: 300,
-              display: `${this.state.displayMpgwSelection}`
+              width: 300
             }}
             renderInput={params => (
               <TextField
@@ -111,32 +135,18 @@ class DetailsForm extends Component {
                   this.props.details.mpgwName != null
                 }
                 helperText={this.validator.getErrorMessages()["mpgw"]}
+                onChange={(e, value) => {    
+                  this.setMpgwArray(this.props.details.clusterName, this.props.details.testOrProd);
+                }}
               />
             )}
             onChange={(e, value) => {
               this.props.updateParams(value, "mpgwName", "details");
-
               this.validator.message("mpgw", value, "required");
               this.checkIfAllValid();
             }}
           />
           <br />
-          <Button
-            variant="contained"
-            color={this.state.testBtnColor}
-            onClick={this.testBtnClick}
-            style={{ display: `${this.state.displayButtons}` }}
-          >
-            Test
-          </Button>
-          <Button
-            variant="contained"
-            color={this.state.prodBtnColor}
-            onClick={this.prodBtnClick}
-            style={{ display: `${this.state.displayButtons}` }}
-          >
-            Prod
-          </Button>
         </form>
         <br />
         <br />

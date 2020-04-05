@@ -12,23 +12,23 @@ import HorizontalStepper from "./HorizontalStepper";
 import DpCredsPopup from "./DpCredsPopup";
 import RuleTable from "../../RuleTable";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   button: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   resetContainer: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   stepLabel: {
-    fontSize: "large"
-  }
+    fontSize: "large",
+  },
 });
 
 function getSteps() {
@@ -50,14 +50,14 @@ class RouteStepper extends Component {
           projectMadorValue: null,
           projectTeamValue: null,
           clusterName: null,
-          testOrProd: "test"
+          testOrProd: "test",
         },
         rules: [],
         dpCredentials: {
           username: "",
-          password: ""
-        }
-      }
+          password: "",
+        },
+      },
     };
   }
 
@@ -73,19 +73,19 @@ class RouteStepper extends Component {
     }
   };
 
-  addRule = rule => {
+  addRule = (rule) => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
     newParams["rules"].push(rule);
     this.setState({ params: newParams });
   };
 
-  removeRule = index => {
+  removeRule = (index) => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
     newParams["rules"].splice(index, 1);
     this.setState({ params: newParams });
   };
 
-  getStepContent = step => {
+  getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
@@ -112,15 +112,15 @@ class RouteStepper extends Component {
     }
   };
 
-  setActiveStep = newStep => {
+  setActiveStep = (newStep) => {
     this.setState({
       step: newStep,
       // stepIsValid: false
-      stepIsValid: false // DEBUG
+      stepIsValid: false, // DEBUG
     });
   };
 
-  handleStepValidation = flag => {
+  handleStepValidation = (flag) => {
     // Set current step status, valid or not
     this.setState({ stepIsValid: flag });
   };
@@ -144,9 +144,9 @@ class RouteStepper extends Component {
             this.state.params.details.projectTeamValue === null
               ? ""
               : this.state.params.details.projectTeamValue,
-          testOrProd: "test"
-        }
-      }
+          testOrProd: "test",
+        },
+      },
     });
   };
 

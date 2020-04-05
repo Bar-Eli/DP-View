@@ -10,6 +10,7 @@ import FilterFormForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import NameForm from "./NameForm";
 import { Paper } from "@material-ui/core";
+import SlmForm from "./SlmForm";
 
 const useStyles = theme => ({
   root: {
@@ -39,10 +40,16 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Rule Name", "Source", "Filter", "Destination"];
+  return ["Rule Name", "Source", "Filter", "Destination", "SLM"];
 }
 
-const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
+const stepsMap = {
+  0: "name",
+  1: "srcAddr",
+  2: "filter",
+  3: "destAddr",
+  4: "slm"
+};
 
 class HorizontalStepper extends Component {
   constructor(props) {
@@ -74,6 +81,13 @@ class HorizontalStepper extends Component {
           filterType: "",
           dpasFilter: "",
           schemaPath: ""
+        },
+        slm: {
+          maxFileCount: null,
+          fileCountTimeUnit: null,
+          maxFileSize: null,
+          fileSizeUnit: null,
+          fileSizeTimeUnit: null
         }
       }
     };
@@ -112,7 +126,15 @@ class HorizontalStepper extends Component {
             whichForm="destAddr"
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
-            currRule={this.state.rule.srcAddr}
+            currRule={this.state.rule.destAddr}
+          />
+        );
+      case 4:
+        return (
+          <SlmForm
+            currSlm={this.state.rule.slm}
+            setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
           />
         );
       default:
@@ -268,6 +290,13 @@ class HorizontalStepper extends Component {
           filterType: "",
           dpasFilter: "",
           schemaPath: ""
+        },
+        slm: {
+          maxFileCount: null,
+          fileCountTimeUnit: null,
+          maxFileSize: null,
+          fileSizeUnit: null,
+          fileSizeTimeUnit: null
         }
       }
     });

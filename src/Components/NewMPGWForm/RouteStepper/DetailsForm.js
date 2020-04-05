@@ -45,6 +45,11 @@ class DetailsForm extends Component {
       this.props.details.projectTeamValue,
       "required"
     );
+    this.validator.message(
+      "Cluster",
+      this.props.details.projectTeamValue,
+      "required"
+    );
     this.validator.message("btn", "test", "required");
     this.checkIfAllValid();
   }

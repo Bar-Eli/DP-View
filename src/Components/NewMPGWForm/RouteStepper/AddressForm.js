@@ -221,6 +221,11 @@ class AddressForm extends Component {
                   "required|url"
                 );
               } else if (this.state.mqBtnColor === "primary") {
+                // let regexPattern = "[A-Z\\_]+";
+                // function escapeRegExp(string) {
+                //   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+                // }
+                // regexPattern = escapeRegExp(regexPattern);
                 this.validator.message(
                   "Primary Address",
                   e.target.value,

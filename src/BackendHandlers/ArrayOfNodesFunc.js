@@ -126,12 +126,20 @@ export default class BackendRequests {
             let response = await fetch(url, options);
             let responseData = await response.json();
             if(response.status === 200){
+                let obj = {}
                 let hostname = clusterDetails["nodes"][i].host;
-                clusterResponseStatus[hostname] = true
+                obj['status'] = true;
+                obj['message'] = responseData.message;
+                clusterResponseStatus[hostname] = obj
+                console.log(clusterResponseStatus)
             }
             else{
+                let obj = {}
                 let hostname = clusterDetails["nodes"][i].host;
-                clusterResponseStatus[hostname] = false
+                obj['status'] = false;
+                obj['message'] = responseData.message;
+                clusterResponseStatus[hostname] = obj
+                console.log(clusterResponseStatus)
             }
         }
         return clusterResponseStatus;

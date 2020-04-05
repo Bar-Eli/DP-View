@@ -3,13 +3,14 @@ import { withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
-// import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FilterFormForm from "./FilterForm";
 import AddressForm from "./SrcAddressForm";
 import DestAddressForm from "./DestAddressForm";
+import SlmForm from "./SlmForm";
 import NameForm from "./NameForm";
+
 import { Paper } from "@material-ui/core";
 
 const useStyles = theme => ({
@@ -40,7 +41,7 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Rule Name", "Source", "Filter", "Destination"];
+  return ["Rule Name", "Source", "Filter", "Destination", "SLM"];
 }
 
 // const stepsMap = { 0: "name", 1: "srcAddr", 2: "filter", 3: "destAddr" };
@@ -54,29 +55,7 @@ class HorizontalStepper extends Component {
       step: 0,
       completed: [],
       skipped: [],
-      // manually inserted for testing, should come as props from above
-      rule: {
-        name: "TestRule",
-        srcAddr: {
-          network: "Salim",
-          protocol: "http",
-          primaryAddress: "http://zibi.com",
-          secondaryAddress: "80",
-          methods: ["PUT", "GET"]
-        },
-        destAddr: {
-          network: "Tzadok",
-          protocol: "mq",
-          primaryAddress: "queue_manager",
-          secondaryAddress: "queue",
-          methods: []
-        },
-        filter: {
-          filterType: "dpass",
-          dpasFilter: "Nimbus",
-          schemaPath: ""
-        }
-      }
+      rule: this.props.rule
     };
   }
 
@@ -111,6 +90,14 @@ class HorizontalStepper extends Component {
           <DestAddressForm
             whichForm="destAddr"
             currDestAddrRules={this.state.rule.destAddr}
+            setParams={this.handleRuleChange}
+            validationHandler={this.handleStepValidation}
+          />
+        );
+      case 4:
+        return (
+          <SlmForm
+            currSlm={this.state.rule.slm}
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
           />
@@ -218,29 +205,9 @@ class HorizontalStepper extends Component {
     }
   };
 
-  // initForm = form => {
-  //   this.setState(prevState => {
-  //     const newState = prevState;
-  //     if (form === "name") {
-  //       newState.rule.name = "";
-  //     } else {
-  //       // console.log(newState.rule[form]);
-  //       const keys = Object.keys(newState.rule[form]);
-  //       for (let i = 0; i < keys.length; i++) {
-  //         const currVal = newState.rule[form][keys[i]];
-  //         // console.log(currVal);
-  //         if (currVal === null) {
-  //           newState.rule[form][keys[i]] = "";
-  //         }
-  //       }
-  //     }
-  //     return newState;
-  //   });
-  // };
-
   handleFinish = () => {
     const rule = JSON.parse(JSON.stringify(this.state.rule));
-    this.props.addRule(rule);
+    this.props.updateRule(rule);
     this.props.validationHandler(true);
   };
 
@@ -267,6 +234,13 @@ class HorizontalStepper extends Component {
           filterType: "",
           dpasFilter: "",
           schemaPath: ""
+        },
+        slm: {
+          maxFileCount: "",
+          fileCountTimeUnit: "",
+          maxFileSize: "",
+          fileSizeUnit: "",
+          fileSizeTimeUnit: ""
         }
       }
     });
@@ -289,7 +263,6 @@ class HorizontalStepper extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <Paper

@@ -131,7 +131,7 @@ export class RuleTable extends Component {
     return (
       <div>
         <MaterialTable
-          title={this.props.title}
+          title={this.props.data.details.mpgwName}
           columns={this.state.columns}
           //style={{width: 1200}}
           style={{ width: "100%" }}
@@ -143,6 +143,23 @@ export class RuleTable extends Component {
             actionsColumnIndex: -1
           }}
           actions={[
+            {
+              icon: "edit",
+              tooltip: "Edit",
+              onClick: (event, rowData) => {
+                let tableData = this.state.tableData;
+                this.setState({
+                  tableData: tableData.filter(
+                    element => element.ruleName !== rowData.ruleName
+                  )
+                });
+                this.props.editRule(
+                  this.props.data.rules.findIndex(
+                    rule => rule.name === rowData.ruleName
+                  )
+                );
+              }
+            },
             {
               icon: "delete",
               tooltip: "Delete",

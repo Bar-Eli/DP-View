@@ -32,13 +32,14 @@ const useStyles = theme => ({
 });
 
 function getSteps() {
-  return ["Route details", "Rules", "Overview"];
+  return ["Route details", "View Rules"];
 }
 
 class RouteStepper extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentRuleToEditIndex: -1,
       popUpStatus: false,
       stepIsValid: false, // DEBUG
       // stepIsValid: false,
@@ -46,11 +47,32 @@ class RouteStepper extends Component {
       // step: 2, // DEBUG
       params: {
         details: {
-          environment: null,
           clusterName: null,
+          mpgwName: null,
           testOrProd: "test"
         },
-        rules: [],
+        rules: [
+        {name: "TestRule",
+          srcAddr: {
+            network: "Salim",
+            protocol: "http",
+            primaryAddress: "http://zibi.com",
+            secondaryAddress: "80",
+            methods: ["PUT", "GET"]
+          },
+          destAddr: {
+            network: "Tzadok",
+            protocol: "mq",
+            primaryAddress: "queue_manager",
+            secondaryAddress: "queue",
+            methods: []
+          },
+          filter: {
+            filterType: "dpass",
+            dpasFilter: "Nimbus",
+            schemaPath: ""
+          }}
+        ],
         dpCredentials: {
           username: "",
           password: ""
@@ -71,16 +93,23 @@ class RouteStepper extends Component {
     }
   };
 
-  addRule = rule => {
+  updateRule = rule => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
-    newParams["rules"].push(rule);
-    this.setState({ params: newParams });
+    newParams["rules"][this.state.currentRuleToEditIndex] = rule;
+    this.setState({ 
+      params: newParams,
+      currentRuleToEditIndex: -1
+    });
   };
 
   removeRule = index => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
     newParams["rules"].splice(index, 1);
     this.setState({ params: newParams });
+  };
+
+  editRule = index => {
+    this.setState({ currentRuleToEditIndex: index});
   };
 
   getStepContent = step => {
@@ -95,15 +124,20 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
+        <div>
+          {this.state.currentRuleToEditIndex === -1? 
+          <RuleTable 
+          data={this.state.params} 
+          editRule={this.editRule}
+          removeRule={this.removeRule} /> 
+          :
           <HorizontalStepper
-            addRule={this.addRule}
+            rule={this.state.params.rules[this.state.currentRuleToEditIndex]}
+            updateRule={this.updateRule}
             validationHandler={this.handleStepValidation}
           />
-        );
-      case 2:
-        return (
-          //<Overview/>
-          <RuleTable data={this.state.params} removeRule={this.removeRule} />
+          }
+        </div>
         );
       default:
         return "Unknown step";
@@ -151,6 +185,12 @@ class RouteStepper extends Component {
   handleNext = () => {
     // Handle a press on the next button
     // const valid = this.state.stepIsValid;
+    if (this.state.params.details.clusterName != null) {
+      this.props.setClusterName(
+        this.state.params.details.clusterName,
+        this.state.params.details.testOrProd
+      );
+    }
     const valid = this.state.stepIsValid; // DEBUG
     if (valid) {
       this.setActiveStep(this.state.step + 1);

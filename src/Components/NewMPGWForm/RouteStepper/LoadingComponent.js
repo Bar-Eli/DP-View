@@ -5,6 +5,7 @@ import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import MachineButton from './MachineButtonComponent';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = theme => ({
     root: {
@@ -50,16 +51,28 @@ const useStyles = theme => ({
 class CircularIntegration extends Component{
     constructor(props) {
         super(props);
+        let clusterResponseStatus = this.createArrayOfClusterStatus(this.props.clusterNodesHostName);
         this.state = {
           clusterNodesHostName: this.props.clusterNodesHostName,
           loading: false,
           success: false,
           buttonClass: "",
           clusterSize: 3,
-          loaded: false,  
+          loaded: false, 
+          clusterResponseStatus, 
         };
         
       }
+
+  createArrayOfClusterStatus = (clusterNodesHostName) => {
+    // Create an array of the cluster status
+    let clusterResponseStatus = {};
+    for (let index = 0; index < clusterNodesHostName.length; index++) {
+      let hostname = clusterNodesHostName[index];
+      clusterResponseStatus[hostname] = false;
+    };
+    return clusterResponseStatus;
+  }
 
   handleButtonClick = async () => {
     const { classes } = this.props;
@@ -78,20 +91,10 @@ class CircularIntegration extends Component{
     });
   }
 
-  componentWillMount = () => {
-    // Create a state for the nodes of the cluster that passed by props
-    let clusterResponseStatus = {};
-    for (let index = 0; index < this.props.clusterNodesHostName.length; index++) {
-      let hostname = this.props.clusterNodesHostName[index];
-      clusterResponseStatus[hostname] = false;
-    };
-    this.setState({
-      clusterResponseStatus
-  });
-  }
 
   render(){
     const { classes } = this.props;
+    console.log(this.state);
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -115,10 +118,18 @@ class CircularIntegration extends Component{
             <MachineButton 
             style={this.props.style}
             loading={this.state.loading}
-            success={this.state.clusterResponseStatus[item]}
+            success={this.state.clusterResponseStatus[item]['status']}
             hostname={item}
             loaded={this.state.loaded}
             />
+            {(this.state.clusterResponseStatus[item]['status'] === false) ?
+            <Alert severity="error">
+            {this.state.clusterResponseStatus[item]['message']}
+          </Alert>
+            :
+            console.log('Success')
+            
+         }
         </li>
         )}
         </ul>

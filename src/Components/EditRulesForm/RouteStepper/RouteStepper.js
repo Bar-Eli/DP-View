@@ -128,6 +128,7 @@ class RouteStepper extends Component {
             details={this.state.params.details}
             updateParams={this.updateParamState}
             validationHandler={this.handleStepValidation}
+            dpCredentials={this.state.params.dpCredentials}
           />
         );
       case 1:

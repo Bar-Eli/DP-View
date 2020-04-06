@@ -45,7 +45,6 @@ class FilterForm extends Component {
       fileName: "",
     };
 
-    this.greenBtnClick();
     this.props.validationHandler(true);
   }
 
@@ -97,6 +96,10 @@ class FilterForm extends Component {
     let schemaFile = { name: fileName, content: fileContent };
     this.props.setParams(schemaFile, "schemaPath", "filter");
   };
+
+  componentDidMount() {
+    this.greenBtnClick();
+  }
 
   render() {
     const { classes } = this.props;

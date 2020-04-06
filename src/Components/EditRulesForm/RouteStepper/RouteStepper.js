@@ -12,23 +12,23 @@ import HorizontalStepper from "./HorizontalStepper";
 import DpCredsPopup from "./DpCredsPopup";
 import RuleTable from "../../RuleTable";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   button: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   resetContainer: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   stepLabel: {
-    fontSize: "large"
-  }
+    fontSize: "large",
+  },
 });
 
 function getSteps() {
@@ -43,41 +43,43 @@ class RouteStepper extends Component {
       popUpStatus: false,
       stepIsValid: false, // DEBUG
       // stepIsValid: false,
-      step: 0,
+      step: 1,
       // step: 2, // DEBUG
       params: {
         details: {
           clusterName: null,
           mpgwName: null,
-          testOrProd: "test"
+          testOrProd: "test",
         },
         rules: [
-        {name: "TestRule",
-          srcAddr: {
-            network: "Salim",
-            protocol: "http",
-            primaryAddress: "http://zibi.com",
-            secondaryAddress: "80",
-            methods: ["PUT", "GET"]
+          {
+            name: "TestRule",
+            srcAddr: {
+              network: "Salim",
+              protocol: "http",
+              primaryAddress: "http://zibi.com",
+              secondaryAddress: "80",
+              methods: ["PUT", "GET"],
+            },
+            destAddr: {
+              network: "Tzadok",
+              protocol: "mq",
+              primaryAddress: "queue_manager",
+              secondaryAddress: "queue",
+              methods: [],
+            },
+            filter: {
+              filterType: "dpass",
+              dpasFilter: "Nimbus",
+              schemaPath: "",
+            },
           },
-          destAddr: {
-            network: "Tzadok",
-            protocol: "mq",
-            primaryAddress: "queue_manager",
-            secondaryAddress: "queue",
-            methods: []
-          },
-          filter: {
-            filterType: "dpass",
-            dpasFilter: "Nimbus",
-            schemaPath: ""
-          }}
         ],
         dpCredentials: {
           username: "",
-          password: ""
-        }
-      }
+          password: "",
+        },
+      },
     };
   }
 
@@ -93,26 +95,26 @@ class RouteStepper extends Component {
     }
   };
 
-  updateRule = rule => {
+  updateRule = (rule) => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
     newParams["rules"][this.state.currentRuleToEditIndex] = rule;
-    this.setState({ 
+    this.setState({
       params: newParams,
-      currentRuleToEditIndex: -1
+      currentRuleToEditIndex: -1,
     });
   };
 
-  removeRule = index => {
+  removeRule = (index) => {
     let newParams = JSON.parse(JSON.stringify(this.state.params));
     newParams["rules"].splice(index, 1);
     this.setState({ params: newParams });
   };
 
-  editRule = index => {
-    this.setState({ currentRuleToEditIndex: index});
+  editRule = (index) => {
+    this.setState({ currentRuleToEditIndex: index });
   };
 
-  getStepContent = step => {
+  getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
@@ -124,35 +126,38 @@ class RouteStepper extends Component {
         );
       case 1:
         return (
-        <div>
-          {this.state.currentRuleToEditIndex === -1? 
-          <RuleTable 
-          data={this.state.params} 
-          editRule={this.editRule}
-          removeRule={this.removeRule} /> 
-          :
-          <HorizontalStepper
-            rule={this.state.params.rules[this.state.currentRuleToEditIndex]}
-            updateRule={this.updateRule}
-            validationHandler={this.handleStepValidation}
-          />
-          }
-        </div>
+          <div>
+            {this.state.currentRuleToEditIndex === -1 ? (
+              <RuleTable
+                data={this.state.params}
+                editRule={this.editRule}
+                removeRule={this.removeRule}
+              />
+            ) : (
+              <HorizontalStepper
+                rule={
+                  this.state.params.rules[this.state.currentRuleToEditIndex]
+                }
+                updateRule={this.updateRule}
+                validationHandler={this.handleStepValidation}
+              />
+            )}
+          </div>
         );
       default:
         return "Unknown step";
     }
   };
 
-  setActiveStep = newStep => {
+  setActiveStep = (newStep) => {
     this.setState({
       step: newStep,
       // stepIsValid: false
-      stepIsValid: true // DEBUG
+      stepIsValid: true, // DEBUG
     });
   };
 
-  handleStepValidation = flag => {
+  handleStepValidation = (flag) => {
     // Set current step status, valid or not
     this.setState({ stepIsValid: flag });
   };
@@ -176,9 +181,9 @@ class RouteStepper extends Component {
           //   this.state.params.details.projectTeamValue === null
           //     ? ""
           //     : this.state.params.details.projectTeamValue,
-          testOrProd: "test"
-        }
-      }
+          testOrProd: "test",
+        },
+      },
     });
   };
 

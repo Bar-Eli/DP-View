@@ -88,7 +88,6 @@ class HorizontalStepper extends Component {
       case 3:
         return (
           <DestAddressForm
-            whichForm="destAddr"
             currDestAddrRules={this.state.rule.destAddr}
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}

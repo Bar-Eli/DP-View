@@ -74,6 +74,10 @@ class DetailsForm extends Component {
     });
   };
 
+  updateParams = (value, paramName, form) => {
+    this.props.updateParams(value, paramName, form);
+  }
+
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
     if (this.validator.allValid()) {
@@ -98,7 +102,6 @@ class DetailsForm extends Component {
   render() {
     const { classes } = this.props;
     // In the future the route list should come from the server
-
     return (
       <div>
         <form className={classes.root} noValidate autoComplete="off">
@@ -154,7 +157,7 @@ class DetailsForm extends Component {
           <DpCredsPopup
             status={this.state.popUpStatus}
             handleClose={this.handlePopUpClose}
-            updateParams={this.props.updateParams}
+            updateParams={this.updateParams}
             credentials={this.props.dpCredentials}
             nextStep={this.handleCredsFinish}
           />

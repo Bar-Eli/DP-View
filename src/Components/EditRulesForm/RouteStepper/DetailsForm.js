@@ -22,8 +22,9 @@ class DetailsForm extends Component {
     super(props);
     // add cluster as variable?
     this.state = {
-      showOnlyMpgw: false,
       popUpStatus: false,
+      showMpgw: "none",
+      showRestOfForm: "block",
       testBtnColor:
         this.props.details.testOrProd === "test" ? "primary" : "default",
       prodBtnColor:
@@ -58,6 +59,10 @@ class DetailsForm extends Component {
       this.props.details.clusterName,
       this.props.details.testOrProd
     );
+    this.setState({
+      showMpgw: "block",
+      showRestOfForm: "none"
+    })
   };
 
   setMpgwArray = (clusterName, testOrProd) => {
@@ -65,8 +70,7 @@ class DetailsForm extends Component {
     // let mpgwList = await this.props.getArray(clusterName, testOrProd);
     let mpgwList = ["Incognito", "Outcognito", "IceCube", "Spotify"];
     this.setState({
-      mpgwList: mpgwList,
-      showOnlyMpgw: true,
+      mpgwList: mpgwList
     });
   };
 
@@ -102,7 +106,7 @@ class DetailsForm extends Component {
             id="cluster"
             options={this.state.environmentsList}
             getOptionLabel={(environmentsList) => environmentsList}
-            style={{ width: 300 }}
+            style={{ width: 300, display: this.state.showRestOfForm }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -123,6 +127,7 @@ class DetailsForm extends Component {
             }}
           />
           <Button
+            style={{ display: this.state.showRestOfForm }}
             variant="contained"
             color={this.state.testBtnColor}
             onClick={this.testBtnClick}
@@ -130,6 +135,7 @@ class DetailsForm extends Component {
             Test
           </Button>
           <Button
+            style={{ display: this.state.showRestOfForm }}
             variant="contained"
             color={this.state.prodBtnColor}
             onClick={this.prodBtnClick}
@@ -138,6 +144,7 @@ class DetailsForm extends Component {
           </Button>
           <br />
           <Button
+            style={{ display: this.state.showRestOfForm }}
             variant="contained"
             color="primary"
             onClick={this.handleCreds}
@@ -158,6 +165,7 @@ class DetailsForm extends Component {
             getOptionLabel={(mpgwName) => mpgwName}
             style={{
               width: 300,
+              display: this.state.showMpgw
             }}
             renderInput={(params) => (
               <TextField

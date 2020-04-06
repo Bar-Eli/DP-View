@@ -5,10 +5,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
-// import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import LoadingComponent from "../NewMPGWForm/RouteStepper/LoadingComponent";
-import GetArray from "../../BackendHandlers/ArrayOfNodesFunc.js";
 
 const useStyles = theme => ({
   root: {
@@ -56,7 +54,7 @@ class EditRulesForm extends Component {
   };
 
   createMPGW = () => {
-    return GetArray.createNewMpgw(this.inputParams);
+    return BackendRequests.createNewMpgw(this.inputParams);
   };
 
   setInput = (inputJson) => {
@@ -67,7 +65,7 @@ class EditRulesForm extends Component {
 
   setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
       // Get array of nodes from the API
-      let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
+      let clusterNodesHostname = await BackendRequests.getClusterNodesHostname(clusterName, testOrProd);
       // Set the array as the state of clusterNodesHostName
       this.setState({ clusterNodesHostName: clusterNodesHostname})
   };

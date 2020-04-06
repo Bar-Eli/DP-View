@@ -5,10 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
-// import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import LoadingComponent from './RouteStepper/LoadingComponent';
-import GetArray from "../../BackendHandlers/ArrayOfNodesFunc.js";
 
 const useStyles = theme => ({
     root: {
@@ -57,7 +55,7 @@ class NewRoutePage extends Component {
     };
 
     createMPGW = async () => {
-        const response = await GetArray.createNewMpgw(this.inputParams);
+        const response = await BackendRequests.createNewMpgw(this.inputParams);
         return response;
     };
 
@@ -70,7 +68,7 @@ class NewRoutePage extends Component {
     
     setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
         // Get array of nodes from the API
-        let clusterNodesHostname = await GetArray.getClusterNodesHostname(clusterName, testOrProd);
+        let clusterNodesHostname = await BackendRequests.getClusterNodesHostname(clusterName, testOrProd);
         // Set the array as the state of clusterNodesHostName
         this.setState({ clusterNodesHostName: clusterNodesHostname})
     };

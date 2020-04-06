@@ -215,10 +215,6 @@ class RouteStepper extends Component {
 
   handleFinish = () => {
     // Handle a press on the finish button
-    this.setState({ popUpStatus: true });
-  };
-
-  handleNextStepForFinish = () => {
     this.setActiveStep(this.state.step + 1);
     const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
     this.props.setInput(newMpgwParams);
@@ -273,13 +269,6 @@ class RouteStepper extends Component {
                     >
                       {activeStep === steps.length - 1 ? "Finish" : "Next"}
                     </Button>
-                    <DpCredsPopup
-                      status={this.state.popUpStatus}
-                      handleClose={this.handlePopUpClose}
-                      updateParams={this.updateParamState}
-                      credentials={this.state.params.dpCredentials}
-                      nextStep={this.handleNextStepForFinish}
-                    />
                   </div>
                 </div>
               </StepContent>

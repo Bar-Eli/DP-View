@@ -24,8 +24,10 @@ class DetailsForm extends Component {
     this.state = {
       showOnlyMpgw: false,
       popUpStatus: false,
-      testBtnColor: "primary",
-      prodBtnColor: "default",
+      testBtnColor:
+        this.props.details.testOrProd === "test" ? "primary" : "default",
+      prodBtnColor:
+        this.props.details.testOrProd === "prod" ? "primary" : "default",
       mpgwList: [],
       environmentsList: ["ZadokCluster", "Salim", "Zeus"],
       // verify if form is complete somehow
@@ -76,20 +78,18 @@ class DetailsForm extends Component {
   };
 
   testBtnClick = () => {
-    this.setState({});
-    this.setState({
-      testBtnColor: "primary",
-      prodBtnColor: "default",
-      mpgwList: [],
-    });
+    this.setState({ testBtnColor: "primary", prodBtnColor: "default" });
+    this.props.updateParams("test", "testOrProd", "details");
+    this.validator.message("btn", "test", "required");
+    this.checkIfAllValid();
+
   };
 
   prodBtnClick = () => {
-    this.setState({
-      prodBtnColor: "primary",
-      testBtnColor: "default",
-      mpgwList: [],
-    });
+    this.setState({ prodBtnColor: "primary", testBtnColor: "default" });
+    this.props.updateParams("prod", "testOrProd", "details");
+    this.validator.message("btn", "prod", "required");
+    this.checkIfAllValid();
   };
 
   render() {
@@ -117,7 +117,6 @@ class DetailsForm extends Component {
               />
             )}
             onChange={(e, value) => {
-              this.setState({ mpgwList: [] });
               this.setState({ displayButtons: "inline-block" });
               this.props.updateParams(value, "clusterName", "details");
               this.validator.message("cluster", value, "required");

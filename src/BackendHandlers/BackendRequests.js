@@ -161,21 +161,12 @@ export default class BackendRequests {
       let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
       let response = await fetch(url, options);
       let responseData = await response.json();
-      if (response.status === 200) {
-        let obj = {};
-        let hostname = clusterDetails["nodes"][i].host;
-        obj["status"] = true;
-        obj["message"] = responseData.message;
-        clusterResponseStatus[hostname] = obj;
-        console.log(clusterResponseStatus);
-      } else {
-        let obj = {};
-        let hostname = clusterDetails["nodes"][i].host;
-        obj["status"] = false;
-        obj["message"] = responseData.message;
-        clusterResponseStatus[hostname] = obj;
-        console.log(clusterResponseStatus);
-      }
+      let obj = {};
+      let hostname = clusterDetails["nodes"][i].host;
+      obj["message"] = responseData.message;
+      if (response.status === 200) obj["status"] = true;
+      else obj["status"] = false;
+      clusterResponseStatus[hostname] = obj;
     }
     return clusterResponseStatus;
   }

@@ -16,6 +16,41 @@ export default class BackendRequests {
   }
 
   /**
+   * Get details (domain / IPs / rest ports) for the given cluster and test / prod environment.
+   * @param clusterName -- The cluster name.
+   * @param testOrProd -- The environment.
+   * @returns {Promise<any>}
+   */
+  static async getClusterDetailsByClusterName(clusterName, testOrProd) {
+    const url =
+      this.BACKEND_URL +
+      "/api/status/cluster/" +
+      clusterName +
+      "/" +
+      testOrProd;
+    const response = await fetch(url);
+    return await response.json(); // return cluster details
+  }
+
+  /**
+   * Get nodes hostname for the given cluster from input.
+   * @param clusterName -- User input params for MPGW creation.
+   * @returns {Array}
+   */
+  static async getClusterNodesHostname(clusterName, testOrProd) {
+    const clusterDetails = await this.getClusterDetailsByClusterName(
+      clusterName,
+      testOrProd
+    );
+    const nodes = clusterDetails["nodes"];
+    let clusterNodesHostname = new Array(nodes.length);
+    for (let i = 0; i < nodes.length; i++) {
+      clusterNodesHostname[i] = nodes[i].host;
+    }
+    return clusterNodesHostname;
+  }
+
+  /**
    * Get details (domain / IPs / rest ports) for the given cluster from input.
    * @param input -- User input params for MPGW creation.
    * @returns {Promise<any>}
@@ -106,33 +141,34 @@ export default class BackendRequests {
    * @returns {Promise<void>}
    */
   static async createNewMpgw(input) {
+    // this.getFileContent();
     const clusterDetails = await this.getClusterDetails(input);
     const urlParamsList = BackendConfigInput.generateClusterUrlParams(
       input,
       clusterDetails
     );
     const rules = input["rules"];
-
     // Create FSHs
     this.createNewFshs(rules, urlParamsList);
-
-    // Upload files Test
-    this.uploadFiles(rules);
-
-    const payload = BackendConfigInput.generateMpgwReq(input, "new"); // Create backend configuration form input.
+    const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
     const data = JSON.stringify(payload);
     const options = {
       method: "POST",
       body: data,
     };
-
+    let clusterResponseStatus = {};
     for (let i = 0; i < urlParamsList.length; i++) {
       let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
       let response = await fetch(url, options);
       let responseData = await response.json();
-      console.log(responseData);
-      alert(responseData["message"]);
+      let obj = {};
+      let hostname = clusterDetails["nodes"][i].host;
+      obj["message"] = responseData.message;
+      if (response.status === 200) obj["status"] = true;
+      else obj["status"] = false;
+      clusterResponseStatus[hostname] = obj;
     }
+    return clusterResponseStatus;
   }
 
   /**

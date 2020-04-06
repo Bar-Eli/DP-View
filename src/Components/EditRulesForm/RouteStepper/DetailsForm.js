@@ -8,13 +8,13 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import SimpleReactValidator from "simple-react-validator";
 import DpCredsPopup from "../../NewMPGWForm/RouteStepper/DpCredsPopup";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 200
-    }
-  }
+      width: 200,
+    },
+  },
 });
 
 class DetailsForm extends Component {
@@ -37,11 +37,7 @@ class DetailsForm extends Component {
       this.props.details.clusterName,
       "required"
     );
-    this.validator.message(
-      "mpgw",
-      this.props.details.mpgwName,
-      "required"
-    );
+    this.validator.message("mpgw", this.props.details.mpgwName, "required");
 
     this.checkIfAllValid();
   }
@@ -56,18 +52,21 @@ class DetailsForm extends Component {
   };
 
   handleCredsFinish = () => {
-    this.setMpgwArray(this.props.details.clusterName, this.props.details.testOrProd);
-  }
+    this.setMpgwArray(
+      this.props.details.clusterName,
+      this.props.details.testOrProd
+    );
+  };
 
   setMpgwArray = (clusterName, testOrProd) => {
     // Wait for a resopnse from the backend for mpgw names for the given cluster and environment
     // let mpgwList = await this.props.getArray(clusterName, testOrProd);
     let mpgwList = ["Incognito", "Outcognito", "IceCube", "Spotify"];
-    this.setState({ 
+    this.setState({
       mpgwList: mpgwList,
-      showOnlyMpgw: true
-     })
-  }
+      showOnlyMpgw: true,
+    });
+  };
 
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
@@ -76,19 +75,21 @@ class DetailsForm extends Component {
     } else this.props.validationHandler(false);
   };
 
-  testBtnClick = () => {this.setState({ });
-    this.setState({ 
-      testBtnColor: "primary", 
+  testBtnClick = () => {
+    this.setState({});
+    this.setState({
+      testBtnColor: "primary",
       prodBtnColor: "default",
-      mpgwList: []
+      mpgwList: [],
     });
   };
 
   prodBtnClick = () => {
-    this.setState({ prodBtnColor: "primary", 
-    testBtnColor: "default",
-    mpgwList: []
-   });
+    this.setState({
+      prodBtnColor: "primary",
+      testBtnColor: "default",
+      mpgwList: [],
+    });
   };
 
   render() {
@@ -97,69 +98,70 @@ class DetailsForm extends Component {
 
     return (
       <div>
-          <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root} noValidate autoComplete="off">
           <Autocomplete
-          id="cluster"
-          options={this.state.environmentsList}
-          getOptionLabel={environmentsList => environmentsList}
-          style={{ width: 300 }}
-          renderInput={params => (<TextField
-              {...params}
-              label="cluster"
-              variant="outlined"
-              error={
-                !this.validator.fieldValid("cluster") &&
-                this.props.details.cluster != null
-              }
-              helperText={this.validator.getErrorMessages()["cluster"]}
-            />
-          )}
-          onChange={(e, value) => {
-            this.setState({ mpgwList: []});
-            this.setState({ displayButtons: "inline-block" });
-            this.props.updateParams(value, "clusterName", "details");
-            this.validator.message("cluster", value, "required");
-            this.checkIfAllValid();
-          }}
-        />
-        <Button
-          variant="contained"
-          color={this.state.testBtnColor}
-          onClick={this.testBtnClick}
-        >
-          Test
-        </Button>
-        <Button
-          variant="contained"
-          color={this.state.prodBtnColor}
-          onClick={this.prodBtnClick}
-        >
-          Prod
-        </Button>
-        <br /> 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={this.handleCreds}
-          className={classes.button}
-        >
-          Enter credentials
-        </Button>
-        <DpCredsPopup
-          status={this.state.popUpStatus}
-          handleClose={this.handlePopUpClose}
-          updateParams={this.props.updateParams}
-          credentials={this.props.dpCredentials}
-          nextStep={this.handleCredsFinish}
-        />
+            id="cluster"
+            options={this.state.environmentsList}
+            getOptionLabel={(environmentsList) => environmentsList}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="cluster"
+                variant="outlined"
+                error={
+                  !this.validator.fieldValid("cluster") &&
+                  this.props.details.cluster != null
+                }
+                helperText={this.validator.getErrorMessages()["cluster"]}
+              />
+            )}
+            onChange={(e, value) => {
+              this.setState({ mpgwList: [] });
+              this.setState({ displayButtons: "inline-block" });
+              this.props.updateParams(value, "clusterName", "details");
+              this.validator.message("cluster", value, "required");
+              this.checkIfAllValid();
+            }}
+          />
+          <Button
+            variant="contained"
+            color={this.state.testBtnColor}
+            onClick={this.testBtnClick}
+          >
+            Test
+          </Button>
+          <Button
+            variant="contained"
+            color={this.state.prodBtnColor}
+            onClick={this.prodBtnClick}
+          >
+            Prod
+          </Button>
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleCreds}
+            className={classes.button}
+          >
+            Enter credentials
+          </Button>
+          <DpCredsPopup
+            status={this.state.popUpStatus}
+            handleClose={this.handlePopUpClose}
+            updateParams={this.props.updateParams}
+            credentials={this.props.dpCredentials}
+            nextStep={this.handleCredsFinish}
+          />
           <Autocomplete
             id="mpgw-name"
             options={this.state.mpgwList}
-            getOptionLabel={mpgwName => mpgwName}
+            getOptionLabel={(mpgwName) => mpgwName}
             style={{
-              width: 300
+              width: 300,
             }}
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField
                 {...params}
                 label="Mpgw Name"
@@ -177,7 +179,7 @@ class DetailsForm extends Component {
               this.checkIfAllValid();
             }}
           />
-          </form>
+        </form>
         <br />
         <br />
       </div>

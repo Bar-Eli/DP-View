@@ -40,8 +40,7 @@ class RouteStepper extends Component {
     super(props);
     this.state = {
       popUpStatus: false,
-      // stepIsValid: false,
-      stepIsValid: true, // DEBUG
+      stepIsValid: false,
       step: 0,
       // step: 2, // DEBUG
       params: {
@@ -122,7 +121,8 @@ class RouteStepper extends Component {
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    this.setState({ stepIsValid: flag });
+    // this.setState({ stepIsValid: flag });
+    this.setState({ stepIsValid: true });
   };
 
   initDetailsForm = () => {
@@ -175,8 +175,7 @@ class RouteStepper extends Component {
         this.state.params.details.testOrProd
       );
     }
-    // const valid = this.state.stepIsValid;
-    const valid = true; // DEBUG
+    const valid = this.state.stepIsValid;
     if (valid) {
       this.setActiveStep(this.state.step + 1);
     } else {

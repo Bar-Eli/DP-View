@@ -6,7 +6,7 @@ import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import LoadingComponent from './RouteStepper/LoadingComponent';
+import LoadingComponent from '../LoadingComponent';
 
 const useStyles = theme => ({
     root: {

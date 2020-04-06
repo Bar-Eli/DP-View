@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-// import SupervisedUserCircle from "@material-ui/icons/SupervisedUserCircle";
-// import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import SimpleReactValidator from "simple-react-validator";
-import DpCredsPopup from "../../NewMPGWForm/RouteStepper/DpCredsPopup";
+import DpCredsPopup from "../../DpCredsPopup";
 
 const useStyles = (theme) => ({
   root: {

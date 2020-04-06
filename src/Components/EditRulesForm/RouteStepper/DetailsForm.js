@@ -61,8 +61,8 @@ class DetailsForm extends Component {
     );
     this.setState({
       showMpgw: "block",
-      showRestOfForm: "none"
-    })
+      showRestOfForm: "none",
+    });
   };
 
   setMpgwArray = (clusterName, testOrProd) => {
@@ -70,7 +70,7 @@ class DetailsForm extends Component {
     // let mpgwList = await this.props.getArray(clusterName, testOrProd);
     let mpgwList = ["Incognito", "Outcognito", "IceCube", "Spotify"];
     this.setState({
-      mpgwList: mpgwList
+      mpgwList: mpgwList,
     });
   };
 
@@ -148,7 +148,6 @@ class DetailsForm extends Component {
             variant="contained"
             color="primary"
             onClick={this.handleCreds}
-            className={classes.button}
           >
             Enter credentials
           </Button>
@@ -165,7 +164,7 @@ class DetailsForm extends Component {
             getOptionLabel={(mpgwName) => mpgwName}
             style={{
               width: 300,
-              display: this.state.showMpgw
+              display: this.state.showMpgw,
             }}
             renderInput={(params) => (
               <TextField

@@ -73,6 +73,13 @@ class RouteStepper extends Component {
               dpasFilter: "Nimbus",
               schemaPath: "",
             },
+            slm: {
+              maxFileCount: 100,
+              maxFileSize: 10,
+              fileSizeUnit: "mb",
+              fileSizeTimeUnit: "minute",
+              fileCountTimeUnit: "minute",
+            },
           },
         ],
         dpCredentials: {
@@ -122,6 +129,7 @@ class RouteStepper extends Component {
             details={this.state.params.details}
             updateParams={this.updateParamState}
             validationHandler={this.handleStepValidation}
+            dpCredentials={this.state.params.dpCredentials}
           />
         );
       case 1:
@@ -211,10 +219,6 @@ class RouteStepper extends Component {
 
   handleFinish = () => {
     // Handle a press on the finish button
-    this.setState({ popUpStatus: true });
-  };
-
-  handleNextStepForFinish = () => {
     this.setActiveStep(this.state.step + 1);
     const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
     this.props.setInput(newMpgwParams);
@@ -269,13 +273,6 @@ class RouteStepper extends Component {
                     >
                       {activeStep === steps.length - 1 ? "Finish" : "Next"}
                     </Button>
-                    <DpCredsPopup
-                      status={this.state.popUpStatus}
-                      handleClose={this.handlePopUpClose}
-                      updateParams={this.updateParamState}
-                      credentials={this.state.params.dpCredentials}
-                      nextStep={this.handleNextStepForFinish}
-                    />
                   </div>
                 </div>
               </StepContent>

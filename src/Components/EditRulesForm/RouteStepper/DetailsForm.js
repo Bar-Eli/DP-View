@@ -97,15 +97,13 @@ class DetailsForm extends Component {
 
     return (
       <div>
-          {this.state.showOnlyMpgw === false ? 
           <form className={classes.root} noValidate autoComplete="off">
           <Autocomplete
           id="cluster"
           options={this.state.environmentsList}
           getOptionLabel={environmentsList => environmentsList}
           style={{ width: 300 }}
-          renderInput={params => (
-            <TextField
+          renderInput={params => (<TextField
               {...params}
               label="cluster"
               variant="outlined"
@@ -154,9 +152,6 @@ class DetailsForm extends Component {
           credentials={this.props.dpCredentials}
           nextStep={this.handleCredsFinish}
         />
-        </form>
-            :
-          <form className={classes.root} noValidate autoComplete="off">
           <Autocomplete
             id="mpgw-name"
             options={this.state.mpgwList}
@@ -183,8 +178,6 @@ class DetailsForm extends Component {
             }}
           />
           </form>
-          }
-    
         <br />
         <br />
       </div>

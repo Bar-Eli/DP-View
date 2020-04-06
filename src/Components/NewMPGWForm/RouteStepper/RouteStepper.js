@@ -121,8 +121,8 @@ class RouteStepper extends Component {
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    // this.setState({ stepIsValid: flag }); // DEBUG
-    this.setState({ stepIsValid: true });
+    // this.setState({ stepIsValid: flag }); 
+    this.setState({ stepIsValid: true }); // DEBUG
   };
 
   initDetailsForm = () => {

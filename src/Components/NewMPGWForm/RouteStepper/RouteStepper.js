@@ -121,7 +121,7 @@ class RouteStepper extends Component {
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    // this.setState({ stepIsValid: flag });
+    // this.setState({ stepIsValid: flag }); // DEBUG
     this.setState({ stepIsValid: true });
   };
 
@@ -152,8 +152,6 @@ class RouteStepper extends Component {
 
   handleNext = () => {
     // Handle a press on the next button
-    // const valid = false; // DEBUG
-    //   if (this.state.step === 1) {
     if (this.state.params.details.clusterName != null) {
       this.props.setClusterName(
         this.state.params.details.clusterName,

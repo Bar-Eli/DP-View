@@ -42,7 +42,7 @@ class RouteStepper extends Component {
       popUpStatus: false,
       // stepIsValid: false,
       stepIsValid: true, // DEBUG
-      step: 0,
+      step: 1,
       // step: 2, // DEBUG
       params: {
         details: {

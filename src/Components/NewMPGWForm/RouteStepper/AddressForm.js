@@ -12,26 +12,26 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import SimpleReactValidator from "simple-react-validator";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 200
-    }
+      width: 200,
+    },
   },
   center: {
-    width: "auto"
+    width: "auto",
   },
   centerMargin: {
     margin: "auto",
     marginBlockEnd: "auto",
     display: "block",
-    textAlign: "left"
+    textAlign: "left",
   },
   methodLabel: {
     marginBottom: "5px",
-    marginTop: "0"
-  }
+    marginTop: "0",
+  },
 });
 
 class AddressForm extends Component {
@@ -47,7 +47,8 @@ class AddressForm extends Component {
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false }
+      checkedValues: { POST: false, PUT: false, GET: false },
+      isCheckboxValid: false,
       // showMethodError: false,
       // wasMethodListTouched: false
       // ,
@@ -66,7 +67,6 @@ class AddressForm extends Component {
       "required"
     );
     this.validator.message("Network", this.props.currRule.network, "required");
-    // this.validator.message("Method", this.props.currRule.network, "required");
 
     this.checkIfAllValid();
 
@@ -77,31 +77,26 @@ class AddressForm extends Component {
     this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
   }
 
-  // checkIfCheckedValuesValid = () => {
-  //   const obj = this.state.checkedValues;
-  //   Object.keys(obj).forEach(function(key) {
-  //     if (obj[key] === true) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
-  // };
-
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
-    if (this.validator.allValid()) {
+    console.log("the checkbox is: " + this.state.isCheckboxValid);
+    if (this.validator.allValid() && this.state.isCheckboxValid === true) {
       this.props.validationHandler(true);
     } else this.props.validationHandler(false);
   };
 
   httpBtnClick = () => {
+    if (this.props.currRule.methods.length === 0) {
+      this.setState({
+        isCheckboxValid: false,
+      });
+    }
     this.setState({
       httpBtnColor: "primary",
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port"
+      secondaryAddress: "Port",
     });
     this.props.setParams("http", "protocol", this.props.whichForm);
   };
@@ -112,24 +107,18 @@ class AddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name"
+      secondaryAddress: "Queue name",
+      isCheckboxValid: true,
     });
     this.props.setParams("mq", "protocol", this.props.whichForm);
   };
 
-  handleChangeNetwork = event => {
+  handleChangeNetwork = (event) => {
     // setAge(event.target.value);
     this.props.setParams(event.target.value, "network", this.props.whichForm);
   };
 
-  handleCheckMethod(method) {
-    /*
-        this.setState(state => ({
-          checkedValues: state.checkedValues.includes(method)
-            ? state.checkedValues.filter(c => c !== method)
-            : [...state.checkedValues, method]
-        }));
-        */
+  async handleCheckMethod(method) {
     let newChecked = JSON.parse(JSON.stringify(this.state.checkedValues));
     newChecked[method] = !newChecked[method];
     // newChecked[method] = true;
@@ -140,8 +129,30 @@ class AddressForm extends Component {
         newMethods.push(method);
       }
     }
-    this.props.setParams(newMethods.slice(), "methods", this.props.whichForm);
+    await this.props.setParams(
+      newMethods.slice(),
+      "methods",
+      this.props.whichForm
+    );
+    console.log("initial check state is: " + this.state.isCheckboxValid);
+    this.setState((prevState) => {
+      const newState = prevState;
+      newState["isCheckboxValid"] = this.checkCheckboxValidation();
+      return newState;
+    });
+    console.log("After change, check state is: " + this.state.isCheckboxValid);
   }
+
+  checkCheckboxValidation = () => {
+    if (
+      this.props.currRule.methods.length === 0 &&
+      this.props.currRule.protocol === "http"
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   render() {
     const { classes } = this.props;
@@ -177,7 +188,7 @@ class AddressForm extends Component {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={this.state.age}
-              onChange={e => {
+              onChange={(e) => {
                 this.handleChangeNetwork(e);
 
                 this.validator.message("Network", e.target.value, "required");
@@ -208,7 +219,7 @@ class AddressForm extends Component {
           <TextField
             id="primary-address"
             label={this.state.primaryAddress}
-            onChange={e => {
+            onChange={(e) => {
               this.props.setParams(
                 e.target.value,
                 "primaryAddress",
@@ -243,7 +254,7 @@ class AddressForm extends Component {
           <TextField
             id="secondary-address"
             label={this.state.secondaryAddress}
-            onChange={e => {
+            onChange={(e) => {
               this.props.setParams(
                 e.target.value,
                 "secondaryAddress",
@@ -277,7 +288,7 @@ class AddressForm extends Component {
             style={{ display: this.state.showMethods }}
           >
             <h5 className={classes.methodLabel}>Method</h5>
-            {this.state.methodList.map(method => (
+            {this.state.methodList.map((method) => (
               <div>
                 <FormControlLabel
                   value={method}
@@ -286,18 +297,14 @@ class AddressForm extends Component {
                   checked={this.state.checkedValues[method]}
                   onChange={() => {
                     this.handleCheckMethod(method);
-                    this.setState({ wasMethodListTouched: true });
+
+                    this.checkIfAllValid();
                   }}
                   required={true}
                 />
               </div>
             ))}
-            <FormHelperText
-            // error={
-            //   this.state.wasMethodListTouched &&
-            //   this.checkIfCheckedValuesValid === false
-            // }
-            >
+            <FormHelperText error={this.state.isCheckboxValid === false}>
               the method field is required.
             </FormHelperText>
           </div>

@@ -82,7 +82,6 @@ class DetailsForm extends Component {
     this.props.updateParams("test", "testOrProd", "details");
     this.validator.message("btn", "test", "required");
     this.checkIfAllValid();
-
   };
 
   prodBtnClick = () => {

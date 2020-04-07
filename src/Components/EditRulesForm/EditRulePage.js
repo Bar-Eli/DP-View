@@ -92,7 +92,7 @@ class EditRulesForm extends Component {
 
         <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
         
-        {this.state.clusterNodesHostName.length != 0 && this.state.showCreate != 'none' ? 
+        {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ? 
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 createMPGW={this.createMPGW}

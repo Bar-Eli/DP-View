@@ -8,13 +8,13 @@ import SimpleReactValidator from "simple-react-validator";
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import BackendRequests from "../../../BackendHandlers/BackendRequests";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 200
-    }
-  }
+      width: 200,
+    },
+  },
 });
 
 class DetailsForm extends Component {
@@ -26,7 +26,11 @@ class DetailsForm extends Component {
         this.props.details.testOrProd === "test" ? "primary" : "default",
       prodBtnColor:
         this.props.details.testOrProd === "prod" ? "primary" : "default",
-      clusters: ["TestCluster"]
+      clusters: ["TestCluster"],
+      projectNameTouched: false,
+      projectMadorTouched: false,
+      projectTeamTouched: false,
+      projectClusterNameTouched: false,
     };
     this.getClusters(); // Assign clusters to select form.
     this.validator = new SimpleReactValidator();
@@ -91,7 +95,7 @@ class DetailsForm extends Component {
             id="project-name"
             label="Project Name"
             value={this.props.details.projectNameValue}
-            onChange={e => {
+            onChange={(e) => {
               this.props.updateParams(
                 e.target.value,
                 "projectNameValue",
@@ -102,11 +106,12 @@ class DetailsForm extends Component {
                 e.target.value,
                 "required"
               );
+              this.setState({ projectNameTouched: true });
               this.checkIfAllValid();
             }}
             error={
               !this.validator.fieldValid("Project Name") &&
-              this.props.details.projectNameValue != null
+              (this.state.projectNameTouched || this.props.detailsFormTouched)
             }
             helperText={this.validator.getErrorMessages()["Project Name"]}
           />
@@ -114,7 +119,7 @@ class DetailsForm extends Component {
             id="project-mador"
             label="Mador"
             value={this.props.details.projectMadorValue}
-            onChange={e => {
+            onChange={(e) => {
               this.props.updateParams(
                 e.target.value,
                 "projectMadorValue",
@@ -125,11 +130,12 @@ class DetailsForm extends Component {
                 e.target.value,
                 "required|integer"
               );
+              this.setState({ projectMadorTouched: true });
               this.checkIfAllValid();
             }}
             error={
               !this.validator.fieldValid("Mador") &&
-              this.props.details.projectMadorValue != null
+              (this.state.projectMadorTouched || this.props.detailsFormTouched)
             }
             helperText={this.validator.getErrorMessages()["Mador"]}
           />
@@ -137,18 +143,19 @@ class DetailsForm extends Component {
             id="project-team"
             label="Team"
             value={this.props.details.projectTeamValue}
-            onChange={e => {
+            onChange={(e) => {
               this.props.updateParams(
                 e.target.value,
                 "projectTeamValue",
                 "details"
               );
               this.validator.message("Team", e.target.value, "required");
+              this.setState({ projectTeamTouched: true });
               this.checkIfAllValid();
             }}
             error={
               !this.validator.fieldValid("Team") &&
-              this.props.details.projectTeamValue != null
+              (this.state.projectTeamTouched || this.props.detailsFormTouched)
             }
             helperText={this.validator.getErrorMessages()["Team"]}
             InputProps={{
@@ -156,7 +163,7 @@ class DetailsForm extends Component {
                 <InputAdornment position="start">
                   <SupervisedUserCircle />
                 </InputAdornment>
-              )
+              ),
             }}
           />
           <br />
@@ -176,29 +183,31 @@ class DetailsForm extends Component {
             Prod
           </Button>
           <br />
-
           <Autocomplete
             id="environment"
+            value={this.props.details.clusterName}
             options={this.state.clusters}
-            getOptionLabel={clustersList => clustersList}
-            // style={{width: 300}}
-            renderInput={params => (
+            getOptionLabel={(clustersList) => clustersList}
+            renderInput={(params) => (
               <TextField
                 {...params}
                 label="Cluster"
                 variant="outlined"
                 error={
                   !this.validator.fieldValid("Cluster") &&
-                  this.props.details.projectTeamValue != null
+                  (this.state.projectClusterNameTouched ||
+                    this.props.detailsFormTouched)
                 }
                 helperText={this.validator.getErrorMessages()["Cluster"]}
               />
             )}
             onChange={(e, value) => {
-              this.setState({ displayMpgwSelection: "inline-flex" });
-              this.setState({ displayButtons: "inline-block" });
+              this.setState({
+                projectClusterNameTouched: true,
+                displayMpgwSelection: "inline-flex",
+                displayButtons: "inline-block",
+              });
               this.props.updateParams(value, "clusterName", "details");
-
               this.validator.message("Cluster", e.target.value, "required");
               this.checkIfAllValid();
             }}

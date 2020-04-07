@@ -192,7 +192,6 @@ class DetailsForm extends Component {
               <TextField
                 {...params}
                 label="Cluster"
-                // defaultValue={}
                 variant="outlined"
                 error={
                   !this.validator.fieldValid("Cluster") &&

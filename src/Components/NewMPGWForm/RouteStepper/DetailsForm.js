@@ -183,20 +183,21 @@ class DetailsForm extends Component {
             Prod
           </Button>
           <br />
-
           <Autocomplete
             id="environment"
+            value={this.props.details.clusterName}
             options={this.state.clusters}
             getOptionLabel={(clustersList) => clustersList}
-            // style={{width: 300}}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Cluster"
+                // defaultValue={}
                 variant="outlined"
                 error={
                   !this.validator.fieldValid("Cluster") &&
-                  (this.state.projectClusterNameTouched || this.props.detailsFormTouched)
+                  (this.state.projectClusterNameTouched ||
+                    this.props.detailsFormTouched)
                 }
                 helperText={this.validator.getErrorMessages()["Cluster"]}
               />

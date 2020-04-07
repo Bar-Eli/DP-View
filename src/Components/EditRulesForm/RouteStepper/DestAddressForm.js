@@ -10,27 +10,28 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import SimpleReactValidator from "simple-react-validator";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 200
-    }
+      width: 200,
+    },
   },
   center: {
-    width: "auto"
+    width: "auto",
   },
   centerMargin: {
     margin: "auto",
     marginBlockEnd: "auto",
     display: "block",
-    textAlign: "left"
+    textAlign: "left",
   },
   methodLabel: {
     marginBottom: "5px",
-    marginTop: "0"
-  }
+    marginTop: "0",
+  },
 });
 
 class DestAddressForm extends Component {
@@ -46,7 +47,7 @@ class DestAddressForm extends Component {
       secondaryAddress: "Port",
       showMethods: "block",
       methodList: ["POST", "PUT", "GET"],
-      checkedValues: { POST: false, PUT: false, GET: false }
+      checkedValues: { POST: false, PUT: false, GET: false },
     };
 
     this.validator = new SimpleReactValidator();
@@ -60,6 +61,21 @@ class DestAddressForm extends Component {
       this.props.currDestAddrRules.secondaryAddress,
       "required"
     );
+
+    if (this.props.currDestAddrRules.protocol === "http") {
+      this.validator.message(
+        "Method",
+        this.props.currDestAddrRules.methods,
+        "required"
+      );
+    } else if (this.props.currDestAddrRules.protocol === "mq") {
+      //cancel the checkbox validation
+      this.validator.message(
+        "Method",
+        this.props.currDestAddrRules.methods,
+        ""
+      );
+    }
 
     this.props.validationHandler(false);
 
@@ -79,9 +95,15 @@ class DestAddressForm extends Component {
       mqBtnColor: "default",
       showMethods: "block",
       primaryAddress: "IP / URL",
-      secondaryAddress: "Port"
+      secondaryAddress: "Port",
     });
     this.props.setParams("http", "protocol", "destAddr");
+
+    this.validator.message(
+      "Method",
+      this.props.currDestAddrRules.methods,
+      "required"
+    );
   };
 
   mqBtnClick = () => {
@@ -90,12 +112,14 @@ class DestAddressForm extends Component {
       httpBtnColor: "default",
       showMethods: "none",
       primaryAddress: "Queue manager",
-      secondaryAddress: "Queue name"
+      secondaryAddress: "Queue name",
     });
     this.props.setParams("mq", "protocol", "destAddr");
+
+    this.validator.message("Method", this.props.currDestAddrRules.methods, "");
   };
 
-  handleChangeNetwork = event => {
+  handleChangeNetwork = (event) => {
     // setAge(event.target.value);
     this.props.setParams(event.target.value, "network", "destAddr");
   };
@@ -118,12 +142,15 @@ class DestAddressForm extends Component {
         newMethods.push(method);
       }
     }
+
+    this.validator.message("Method", newMethods, "required");
+
     this.props.setParams(newMethods.slice(), "methods", "destAddr");
   }
 
   componentDidMount() {
     this.props.currDestAddrRules.protocol === "http"
-      ? this.setState(prevState => {
+      ? this.setState((prevState) => {
           const newState = prevState;
           // newState.protocol = "http";
           // newState.network = this.props.currDestAddrRules.network;
@@ -136,13 +163,13 @@ class DestAddressForm extends Component {
           newState.secondaryAddress = "Port";
           //mark checkboxes of methods
           const currMethods = this.props.currDestAddrRules.methods;
-          currMethods.forEach(method => {
+          currMethods.forEach((method) => {
             newState.checkedValues[method] = true;
           });
 
           return newState;
         })
-      : this.setState(prevState => {
+      : this.setState((prevState) => {
           const newState = prevState;
           // newState.protocol = "mq";
           // newState.network = this.props.currDestAddrRules.network;
@@ -199,7 +226,7 @@ class DestAddressForm extends Component {
             id="primary-address"
             label={this.state.primaryAddress}
             value={this.props.currDestAddrRules.primaryAddress}
-            onChange={e => {
+            onChange={(e) => {
               this.props.setParams(
                 e.target.value,
                 "primaryAddress",
@@ -231,7 +258,7 @@ class DestAddressForm extends Component {
             id="secondary-address"
             label={this.state.secondaryAddress}
             value={this.props.currDestAddrRules.secondaryAddress}
-            onChange={e => {
+            onChange={(e) => {
               this.props.setParams(
                 e.target.value,
                 "secondaryAddress",
@@ -266,17 +293,26 @@ class DestAddressForm extends Component {
             style={{ display: this.state.showMethods }}
           >
             <h5 className={classes.methodLabel}>Method</h5>
-            {this.state.methodList.map(method => (
+            {this.state.methodList.map((method) => (
               <div>
                 <FormControlLabel
                   value={method}
                   control={<Checkbox />}
                   label={method}
                   checked={this.state.checkedValues[method]}
-                  onChange={() => this.handleCheckMethod(method)}
+                  onChange={() => {
+                    this.handleCheckMethod(method);
+
+                    this.checkIfAllValid();
+                  }}
                 />
               </div>
             ))}
+            <FormHelperText
+              error={this.props.currDestAddrRules.methods.length === 0}
+            >
+              the method field is required.
+            </FormHelperText>
           </div>
         </form>
         <br />

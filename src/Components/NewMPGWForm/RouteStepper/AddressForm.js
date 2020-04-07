@@ -79,7 +79,11 @@ class AddressForm extends Component {
 
   checkIfAllValid = () => {
     //Check if the validators were initialized, if so update valid props to true
-    console.log("the checkbox is: " + this.state.isCheckboxValid);
+    if (this.state.isCheckboxValid === false) {
+      console.log("Its checked!");
+    } else if (this.state.isCheckboxValid === true) {
+      console.log("It is not checked!");
+    }
     if (this.validator.allValid() && this.state.isCheckboxValid === true) {
       this.props.validationHandler(true);
     } else this.props.validationHandler(false);

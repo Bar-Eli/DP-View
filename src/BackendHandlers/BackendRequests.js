@@ -151,6 +151,7 @@ export default class BackendRequests {
     // Create FSHs
     this.createNewFshs(rules, urlParamsList);
     const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
+    console.log(payload)
     const data = JSON.stringify(payload);
     const options = {
       method: "POST",

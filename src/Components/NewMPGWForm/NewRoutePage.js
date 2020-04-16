@@ -62,7 +62,6 @@ class NewRoutePage extends Component {
     setInput = (inputJson) => {
         this.setState({showCreate: 'block'});
         this.inputParams = inputJson;
-        this.setClusterNodesHostNameArr(this.state.clusterName);
     };
 
     

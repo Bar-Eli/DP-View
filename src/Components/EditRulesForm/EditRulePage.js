@@ -60,14 +60,13 @@ class EditRulesForm extends Component {
   setInput = (inputJson) => {
     this.setState({showCreate: 'block'});
     this.inputParams = inputJson;
-    this.setClusterNodesHostNameArr(this.state.clusterName);
   };
 
   setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
       // Get array of nodes from the API
       let clusterNodesHostname = await BackendRequests.getClusterNodesHostname(clusterName, testOrProd);
       // Set the array as the state of clusterNodesHostName
-      this.setState({ clusterNodesHostName: clusterNodesHostname})
+      this.setState({ clusterNodesHostName: clusterNodesHostname});
   };
 
   hideCreate = () => {

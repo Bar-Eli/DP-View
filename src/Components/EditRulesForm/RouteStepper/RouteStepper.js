@@ -197,7 +197,7 @@ class RouteStepper extends Component {
   handleNext = () => {
     // Handle a press on the next button
     // const valid = this.state.stepIsValid;
-    if (this.state.params.details.clusterName != null) {
+    if (this.state.params.details.clusterName != null && this.state.step === 0) {
       this.props.setClusterName(
         this.state.params.details.clusterName,
         this.state.params.details.testOrProd

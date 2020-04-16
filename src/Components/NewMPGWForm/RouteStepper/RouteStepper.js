@@ -161,8 +161,6 @@ class RouteStepper extends Component {
     this.setActiveStep(this.state.step + 1);
     const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
     // This is the json with the params that should be sent to the backend
-    console.log("PARAMS");
-    console.log(newMpgwParams);
     this.props.setInput(newMpgwParams);
   };
 

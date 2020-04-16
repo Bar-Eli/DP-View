@@ -129,7 +129,7 @@ class CircularIntegration extends Component{
             {this.state.clusterResponseStatus[item]['message']}
           </Alert>
             :
-            console.log('Success')
+            console.log()
             
          }
         </li>

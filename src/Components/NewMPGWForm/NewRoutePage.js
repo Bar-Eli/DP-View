@@ -77,7 +77,6 @@ class NewRoutePage extends Component {
     };
 
     render() {
-        console.log(this.inputParams)
         const {classes} = this.props; // how to assign UseStyleS
         return (
             <div className={classes.root}>

@@ -141,35 +141,15 @@ export default class BackendRequests {
    * @returns {Promise<void>}
    */
   static async createNewMpgw(input) {
-    // this.getFileContent();
-    const clusterDetails = await this.getClusterDetails(input);
-    const urlParamsList = BackendConfigInput.generateClusterUrlParams(
-      input,
-      clusterDetails
-    );
-    const rules = input["rules"];
-    // Create FSHs
-    this.createNewFshs(rules, urlParamsList);
-    const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
-    console.log(payload)
-    const data = JSON.stringify(payload);
     const options = {
       method: "POST",
-      body: data,
+      body: input,
     };
-    let clusterResponseStatus = {};
-    for (let i = 0; i < urlParamsList.length; i++) {
-      let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
-      let response = await fetch(url, options);
-      let responseData = await response.json();
-      let obj = {};
-      let hostname = clusterDetails["nodes"][i].host;
-      obj["message"] = responseData.message;
-      if (response.status === 200) obj["status"] = true;
-      else obj["status"] = false;
-      clusterResponseStatus[hostname] = obj;
-    }
-    return clusterResponseStatus;
+    let url = this.BACKEND_URL + "/api/mpgw";
+    let response = await fetch(url, options);
+    let responseData = await response.json();
+    console.log(input);
+    return responseData;
   }
 
   /**

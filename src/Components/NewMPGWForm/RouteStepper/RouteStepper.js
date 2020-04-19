@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DetailsForm from "./DetailsForm";
 import HorizontalStepper from "./HorizontalStepper";
-import DpCredsPopup from "./DpCredsPopup";
+import DpCredsPopup from "../../DpCredsPopup";
 import RuleTable from "../../RuleTable";
 
 const useStyles = (theme) => ({

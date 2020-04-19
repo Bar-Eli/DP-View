@@ -1,12 +1,10 @@
 export default class BackendConfigInput {
-
     /**
      * @param input -- DP MPGW information in user input style.
      * @returns JSON Configuration (body) for backend request to create a DP HTTP FSH.
      */
     static generateMqFshReq(input) {
-
-        const config_file = require('./Configuraions/newMqFsh');
+        const config_file = require("./Configuraions/newMqFsh");
         let config = JSON.parse(JSON.stringify(config_file));
 
         // Acquire input from user
@@ -27,8 +25,7 @@ export default class BackendConfigInput {
      * @returns JSON Configuration (body) for backend request to create a DP HTTP FSH.
      */
     static generateHttpFshReq(input) {
-
-        const config_file = require('./Configuraions/newHttpFsh');
+        const config_file = require("./Configuraions/newHttpFsh");
         let config = JSON.parse(JSON.stringify(config_file));
 
         // Acquire input from user
@@ -46,7 +43,6 @@ export default class BackendConfigInput {
         }
 
         return config;
-
     }
 
     /**
@@ -55,8 +51,7 @@ export default class BackendConfigInput {
      * @returns JSON Configuration (body) for backend request to create a DP rule.
      */
     static generateRuleReq(input, num) {
-
-        const config_file = require('./Configuraions/newRule');
+        const config_file = require("./Configuraions/newRule");
         // let config = JSON.parse(JSON.stringify(config_file))["rules"][0]; // Configuration JSON for one rule.
         let config = JSON.parse(JSON.stringify(config_file)); // Configuration JSON for one rule.
 
@@ -102,14 +97,21 @@ export default class BackendConfigInput {
      * @param input -- DP MPGW information in user input style.
      * @returns JSON Configuration (body) for backend request to create a MPGW.
      */
-    static generateMpgwReq(input) {
-
+    static generateMpgwReq(input, whichReq) {
         // Get basic backend configuration
-        const config_file = require('./Configuraions/newMpgw');
+        const config_file = require("./Configuraions/newMpgw");
         let config = JSON.parse(JSON.stringify(config_file));
 
-        // Acquire input from user
-        const mpgwName = input["details"]["projectNameValue"];
+        let mpgwName = "";
+        // Acquire input from user based on the type of request to the backend
+        if (whichReq === "new") {
+            mpgwName = input["details"]["projectNameValue"];
+        } else if (whichReq === "update") {
+            mpgwName = input["details"]["mpgwName"];
+        } else {
+            console.error("Error! This request type is not supported...");
+        }
+        console.log("The mpgw name is: " + mpgwName);
 
         config["name"] = mpgwName; // Set MPGW name
 
@@ -122,18 +124,18 @@ export default class BackendConfigInput {
         }
         config["rules"] = configRules;
 
-        // Add FSHs to MPGW's handlers
-        let handlers = [];
-        for (let i = 0; i < rules.length; i++) {
-            let fshName = rules[i]["name"] + "_FSH";
-            handlers.push(JSON.parse(JSON.stringify(fshName)));
-
+        // Add FSHs to MPGW's handlers if its a newMpgw request
+        if (whichReq === "new") {
+            let handlers = [];
+            for (let i = 0; i < rules.length; i++) {
+                let fshName = rules[i]["name"] + "_FSH";
+                handlers.push(JSON.parse(JSON.stringify(fshName)));
+            }
+            config["handlers"] = handlers;
         }
-        config["handlers"] = handlers;
 
         console.log(config);
         return config;
-
     }
 
     /**
@@ -142,7 +144,6 @@ export default class BackendConfigInput {
      * @param clusterDetails -- cluster details as returned from backend.
      */
     static generateClusterUrlParams(input, clusterDetails) {
-
         let urlParamsList = [];
         const dpCredentials = input["dpCredentials"];
         const nodes = clusterDetails["nodes"];
@@ -155,4 +156,18 @@ export default class BackendConfigInput {
         return urlParamsList;
     }
 
+    /**
+     * Retrieve names of FSHs used in mpgw
+     * @param mpgw -- JSON representing mpgw as returned from backend
+     */
+    static getFshsFromMpgw(mpgw) {
+        return mpgw["handlers"]
+    }
+
+    static generateConfig(mpgw) {
+        const config_file = require('./Configuraions/inputConfig');
+        let config = JSON.parse(JSON.stringify(config_file));
+
+
+    }
 }

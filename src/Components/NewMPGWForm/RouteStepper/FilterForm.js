@@ -8,29 +8,29 @@ import FormControl from "@material-ui/core/FormControl";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 200
-    }
+      width: 200,
+    },
   },
   center: {
-    width: "auto"
+    width: "auto",
   },
   centerMargin: {
-    margin: "auto"
+    margin: "auto",
   },
   input: {
-    display: "none"
+    display: "none",
   },
   fileName: {
     paddingLeft: "10px",
-    fontSize: "1.3em"
-  }
+    fontSize: "1.3em",
+  },
 });
 
-class FilterFormForm extends Component {
+class FilterForm extends Component {
   constructor(props) {
     super(props);
     // verify if form is complete somehow
@@ -42,10 +42,9 @@ class FilterFormForm extends Component {
       dpasService: undefined,
       showDpas: "none",
       showUpload: "none",
-      fileName: ""
+      fileName: "",
     };
 
-    this.greenBtnClick();
     this.props.validationHandler(true);
   }
 
@@ -56,7 +55,7 @@ class FilterFormForm extends Component {
       dpasBtnColor: "default",
       greenBtnBackground: "#e0e0e0",
       showDpas: "none",
-      showUpload: "inline-flex"
+      showUpload: "inline-flex",
     });
     this.props.setParams("schema", "filterType", "filter");
   };
@@ -68,7 +67,7 @@ class FilterFormForm extends Component {
       dpasBtnColor: "primary",
       greenBtnBackground: "#e0e0e0",
       showDpas: "inline-flex",
-      showUpload: "none"
+      showUpload: "none",
     });
     this.props.setParams("dpass", "filterType", "filter");
   };
@@ -80,16 +79,16 @@ class FilterFormForm extends Component {
       dpasBtnColor: "default",
       greenBtnBackground: "green",
       showDpas: "none",
-      showUpload: "none"
+      showUpload: "none",
     });
     this.props.setParams("green", "filterType", "filter");
   };
 
-  handleChangeDpas = event => {
+  handleChangeDpas = (event) => {
     this.props.setParams(event.target.value, "dpasFilter", "filter");
   };
 
-  uploadFile = async event => {
+  uploadFile = async (event) => {
     const file = event.target.files[0];
     const fileName = file["name"];
     this.setState({ fileName: fileName });
@@ -97,6 +96,10 @@ class FilterFormForm extends Component {
     let schemaFile = { name: fileName, content: fileContent };
     this.props.setParams(schemaFile, "schemaPath", "filter");
   };
+
+  componentDidMount() {
+    this.greenBtnClick();
+  }
 
   render() {
     const { classes } = this.props;
@@ -178,4 +181,4 @@ class FilterFormForm extends Component {
   }
 }
 
-export default withStyles(useStyles, { withTheme: true })(FilterFormForm);
+export default withStyles(useStyles, { withTheme: true })(FilterForm);

@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
+    <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="Pre merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/ArrayOfNodesFunc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendConfigInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/EditRulePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/EditRulesForm/EditRulePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/DetailsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/DetailsForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/DpCredsPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/DpCredsPopup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/FilterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/FilterForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/HorizontalStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/EditRulesForm/RouteStepper/RouteStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/DpCredsPopup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/FilterForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/LoadingComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/LoadingComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/MachineButtonComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MachineButtonComponent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -81,6 +95,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Node.js.BackendConfigInput.js" />
+        <item itemvalue="Node.js.BackendConfigInput.js" />
+        <item itemvalue="Node.js.BackendConfigInput.js" />
+        <item itemvalue="Node.js.BackendConfigInput.js" />
+        <item itemvalue="Node.js.BackendConfigInput.js" />
       </list>
     </recent_temporary>
   </component>
@@ -98,6 +116,7 @@
       <workItem from="1584616250224" duration="11024000" />
       <workItem from="1585226525190" duration="1698000" />
       <workItem from="1585229124014" duration="793000" />
+      <workItem from="1587279262799" duration="249000" />
     </task>
     <task id="LOCAL-00001" summary="Backend connection + Table">
       <created>1584974922221</created>
@@ -183,7 +202,21 @@
       <option name="project" value="LOCAL" />
       <updated>1585729588892</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fixed cluster buttons">
+      <created>1585732357987</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1585732357987</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Pre pull commit">
+      <created>1586183416823</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1586183416823</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,7 +271,10 @@
     <MESSAGE value="Added creation indication" />
     <MESSAGE value="Working version" />
     <MESSAGE value="Ultra merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ultra merge" />
+    <MESSAGE value="Fixed cluster buttons" />
+    <MESSAGE value="Pre pull commit" />
+    <MESSAGE value="Pre merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pre merge" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

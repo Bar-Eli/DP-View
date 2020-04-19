@@ -1,4 +1,4 @@
-import BackendConfigInput from './BackendConfigInput.js'
+import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
 
@@ -11,10 +11,9 @@ export default class BackendRequests {
      * @returns {Promise<void>} [] list of cluster names from backend.
      */
     static async getClustersNames() {
-
         const url = this.BACKEND_URL + "/api/status/cluster/prod";
         const response = await fetch(url);
-        return await response.json();  // return clusters names.
+        return await response.json(); // return clusters names.
     }
 
     /**
@@ -22,12 +21,18 @@ export default class BackendRequests {
      * @param input -- User input params for MPGW creation.
      * @returns {Promise<any>}
      */
-    static async getClusterDetails(input) {
-        const clusterName = input["details"]["clusterName"];
-        const testOrProd = input["details"]["testOrProd"];
+    static async getClusterDetails(input = undefined, clusterName = undefined, testOrProd = undefined) {
+        if (input !== undefined) {
+            clusterName = input["details"]["clusterName"];
+            testOrProd = input["details"]["testOrProd"];
+        }
         const url = this.BACKEND_URL + "/api/status/cluster/" + clusterName + "/" + testOrProd;
         const response = await fetch(url);
         return await response.json();  // return cluster details
+    }
+
+    static async getMpgwList(clusterName, testOrProd) {
+
     }
 
     /**
@@ -76,13 +81,12 @@ export default class BackendRequests {
         // url = "http://localhost:4000/"; // DEBUG
         const data = JSON.stringify(payload);
         const options = {
-            method: 'POST',
+            method: "POST",
             body: data,
         };
         const response = await fetch(url, options);
         const responseData = await response.json();
         console.log(responseData);
-
     }
 
     /**
@@ -92,8 +96,10 @@ export default class BackendRequests {
      * @returns {Promise<void>}
      */
     static async createNewFshs(rules, urlParamsList) {
-        for (let i = 0; i < rules.length; i++) {  // For each rule
-            for (let j = 0; j < urlParamsList.length; j++) {  // For each machine in cluster
+        for (let i = 0; i < rules.length; i++) {
+            // For each rule
+            for (let j = 0; j < urlParamsList.length; j++) {
+                // For each machine in cluster
                 this.createNewFsh(rules[i], urlParamsList[j]);
             }
         }

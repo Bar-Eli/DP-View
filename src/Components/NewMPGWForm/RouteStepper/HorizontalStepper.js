@@ -6,37 +6,37 @@ import StepButton from "@material-ui/core/StepButton";
 // import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import FilterFormForm from "../../NewMPGWForm/RouteStepper/FilterForm";
+import FilterForm from "../../NewMPGWForm/RouteStepper/FilterForm";
 import AddressForm from "../../NewMPGWForm/RouteStepper/AddressForm";
 import NameForm from "./NameForm";
 import { Paper } from "@material-ui/core";
 import SlmForm from "./SlmForm";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   backButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   completed: {
-    display: "inline-block"
+    display: "inline-block",
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   center: {
-    textAlign: "center"
+    textAlign: "center",
   },
   navBtns: {
     textAlign: "center",
     paddingTop: "30px",
-    paddingBottom: "10px"
-  }
+    paddingBottom: "10px",
+  },
 });
 
 function getSteps() {
@@ -48,7 +48,7 @@ const stepsMap = {
   1: "srcAddr",
   2: "filter",
   3: "destAddr",
-  4: "slm"
+  4: "slm",
 };
 
 class HorizontalStepper extends Component {
@@ -68,32 +68,32 @@ class HorizontalStepper extends Component {
           protocol: "",
           primaryAddress: null,
           secondaryAddress: null,
-          methods: []
+          methods: [],
         },
         destAddr: {
           network: null,
           protocol: "",
           primaryAddress: null,
           secondaryAddress: null,
-          methods: []
+          methods: [],
         },
         filter: {
           filterType: "",
           dpasFilter: "",
-          schemaPath: ""
+          schemaPath: "",
         },
         slm: {
           maxFileCount: null,
           fileCountTimeUnit: null,
           maxFileSize: null,
           fileSizeUnit: null,
-          fileSizeTimeUnit: null
-        }
-      }
+          fileSizeTimeUnit: null,
+        },
+      },
     };
   }
 
-  getStepContent = step => {
+  getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
@@ -114,7 +114,7 @@ class HorizontalStepper extends Component {
         );
       case 2:
         return (
-          <FilterFormForm
+          <FilterForm
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
             currFilter={this.state.rule.filter}
@@ -142,8 +142,8 @@ class HorizontalStepper extends Component {
     }
   };
 
-  initForm = form => {
-    this.setState(prevState => {
+  initForm = (form) => {
+    this.setState((prevState) => {
       const newState = prevState;
       if (form === "name") {
         newState.rule.name = "";
@@ -162,10 +162,10 @@ class HorizontalStepper extends Component {
     });
   };
 
-  setActiveStep = newStep => {
+  setActiveStep = (newStep) => {
     this.setState({
       step: newStep,
-      stepIsValid: false
+      stepIsValid: false,
       // stepIsValid: true // DEBUG
     });
   };
@@ -184,20 +184,6 @@ class HorizontalStepper extends Component {
 
   totalSteps = () => {
     return getSteps().length;
-  };
-
-  isStepOptional = step => {
-    return step === 2;
-  };
-
-  handleSkip = () => {
-    if (!this.isStepOptional(this.state.step)) {
-      // You probably want to guard against something like this
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    this.setActiveStep(this.state.step + 1);
   };
 
   skippedSteps = () => {
@@ -232,11 +218,11 @@ class HorizontalStepper extends Component {
     this.setActiveStep(this.state.step - 1);
   };
 
-  handleStep = step => () => {
+  handleStep = (step) => () => {
     this.setActiveStep(step);
   };
 
-  handleStepValidation = flag => {
+  handleStepValidation = (flag) => {
     // Set current step status, valid or not
     this.setState({ stepIsValid: flag });
   };
@@ -261,10 +247,14 @@ class HorizontalStepper extends Component {
     }
   };
 
-  handleFinish = () => {
-    const rule = JSON.parse(JSON.stringify(this.state.rule));
-    this.props.addRule(rule);
-    this.props.validationHandler(true);
+  handleFinish = (currForm) => {
+    if (this.state.stepIsValid) {
+      const rule = JSON.parse(JSON.stringify(this.state.rule));
+      this.props.addRule(rule);
+      this.props.validationHandler(true);
+    } else {
+      this.initForm(currForm);
+    }
   };
 
   ruleReset = () => {
@@ -277,28 +267,28 @@ class HorizontalStepper extends Component {
           protocol: "",
           primaryAddress: "",
           secondaryAddress: "",
-          methods: ["", ""]
+          methods: ["", ""],
         },
         destAddr: {
           network: "",
           protocol: "",
           primaryAddress: "",
           secondaryAddress: "",
-          methods: [""]
+          methods: [""],
         },
         filter: {
           filterType: "",
           dpasFilter: "",
-          schemaPath: ""
+          schemaPath: "",
         },
         slm: {
           maxFileCount: null,
           fileCountTimeUnit: null,
           maxFileSize: null,
           fileSizeUnit: null,
-          fileSizeTimeUnit: null
-        }
-      }
+          fileSizeTimeUnit: null,
+        },
+      },
     });
   };
 
@@ -309,11 +299,11 @@ class HorizontalStepper extends Component {
     this.ruleReset();
   };
 
-  isStepSkipped = step => {
+  isStepSkipped = (step) => {
     return this.state.skipped.includes(step);
   };
 
-  isStepComplete = step => {
+  isStepComplete = (step) => {
     return this.state.completed.includes(step);
   };
 
@@ -330,11 +320,7 @@ class HorizontalStepper extends Component {
             {this.steps.map((label, index) => {
               const stepProps = {};
               const buttonProps = {};
-              if (this.isStepOptional(index)) {
-                buttonProps.optional = (
-                  <Typography variant="caption">Optional</Typography>
-                );
-              }
+
               if (this.isStepSkipped(index)) {
                 stepProps.completed = false;
               }
@@ -384,17 +370,6 @@ class HorizontalStepper extends Component {
                     >
                       Next
                     </Button>
-                    {this.isStepOptional(this.state.step) &&
-                      !this.state.completed.includes(this.state.step) && (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={this.handleSkip}
-                          className={classes.button}
-                        >
-                          Skip
-                        </Button>
-                      )}
 
                     {this.state.step !== this.steps.length &&
                       (this.state.completed.includes(this.state.step) ? (
@@ -410,7 +385,7 @@ class HorizontalStepper extends Component {
                           color="primary"
                           onClick={this.handleComplete}
                         >
-                          {this.completedSteps() === this.totalSteps() - 1
+                          {this.completedSteps() === this.totalSteps()
                             ? "Finish"
                             : "Complete Step"}
                         </Button>

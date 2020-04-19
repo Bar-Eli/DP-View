@@ -59,11 +59,15 @@ class MachineButton extends Component {
     };
   }
 
-  checkStatus = async() => {
-    const { classes } = this.props;
+  createMPGW = async () => {
     this.setState({ loading: true });
     let response = await this.props.createMpgw(this.state.hostname);
     console.log(response);
+    this.checkStatus(response)
+  };
+
+  checkStatus = (response) => {
+    const { classes } = this.props;
     if (response["status"] === true)
       this.setState({
         status: true,
@@ -84,7 +88,10 @@ class MachineButton extends Component {
 
   render() {
     const { classes } = this.props;
-    if (this.props.create && !this.state.done) this.checkStatus();
+    if (this.props.create) {
+      this.createMPGW();
+      this.props.handleCreate();
+    }
     return (
       <div className={classes.root}>
         <p style={this.props.style}>{this.state.hostname}</p>

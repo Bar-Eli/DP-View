@@ -67,15 +67,18 @@ class CircularIntegration extends Component {
     });
   };
 
-  incCreationFinished = () => {
-    console.log(this.state.creationFinished)
-    this.setState({ creationFinished: this.state.creationFinished + 1 });
+  handleCreate = () => {
+    const { classes } = this.props;
+    this.setState({
+      create: false,
+      loading: false,
+      success: true,
+      buttonClass: classes.buttonSuccess,
+    });
   };
 
   render() {
     const { classes } = this.props;
-    if (this.state.creationFinished === this.state.clusterNodesHostName.length)
-      this.setState({ loading: false, success: true, buttonClass: classes.buttonSuccess, creationFinished: 0 }); 
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
@@ -101,7 +104,8 @@ class CircularIntegration extends Component {
                   style={this.props.style}
                   hostname={item}
                   createMpgw={this.props.createMPGW}
-                  create={this.state.create}         
+                  create={this.state.create}
+                  handleCreate={this.handleCreate}
                 />
               </li>
             ))}

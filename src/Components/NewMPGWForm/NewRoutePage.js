@@ -62,7 +62,6 @@ class NewRoutePage extends Component {
     setInput = (inputJson) => {
         this.setState({showCreate: 'block'});
         this.inputParams = inputJson;
-        this.setClusterNodesHostNameArr(this.state.clusterName);
     };
 
     
@@ -78,7 +77,6 @@ class NewRoutePage extends Component {
     };
 
     render() {
-        console.log(this.inputParams)
         const {classes} = this.props; // how to assign UseStyleS
         return (
             <div className={classes.root}>
@@ -97,7 +95,7 @@ class NewRoutePage extends Component {
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
 
                 <br/>
-                {this.state.clusterNodesHostName.length != 0 && this.state.showCreate != 'none' ? 
+                {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ? 
                 <LoadingComponent 
                 style={{display: this.state.showCreate}} 
                 createMPGW={this.createMPGW}

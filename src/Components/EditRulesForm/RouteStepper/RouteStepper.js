@@ -197,7 +197,7 @@ class RouteStepper extends Component {
   handleNext = () => {
     // Handle a press on the next button
     // const valid = this.state.stepIsValid;
-    if (this.state.params.details.clusterName != null) {
+    if (this.state.params.details.clusterName != null && this.state.step === 0) {
       this.props.setClusterName(
         this.state.params.details.clusterName,
         this.state.params.details.testOrProd
@@ -220,7 +220,6 @@ class RouteStepper extends Component {
     // Handle a press on the finish button
     this.setActiveStep(this.state.step + 1);
     const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
-    this.props.setInput(newMpgwParams);
     // This is the json with the params that should be sent to the backend
     console.log("PARAMS");
     console.log(newMpgwParams);

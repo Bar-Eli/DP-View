@@ -116,15 +116,15 @@ class RouteStepper extends Component {
   setActiveStep = (newStep) => {
     this.setState({
       step: newStep,
-      stepIsValid: false
-      // stepIsValid: true, // DEBUG
+      // stepIsValid: false
+      stepIsValid: true, // DEBUG
     });
   };
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    this.setState({ stepIsValid: flag }); 
-    // this.setState({ stepIsValid: true }); // DEBUG
+    // this.setState({ stepIsValid: flag }); 
+    this.setState({ stepIsValid: true }); // DEBUG
   };
 
   detailsFormWasTouched = () => {
@@ -161,8 +161,6 @@ class RouteStepper extends Component {
     this.setActiveStep(this.state.step + 1);
     const newMpgwParams = JSON.parse(JSON.stringify(this.state["params"]));
     // This is the json with the params that should be sent to the backend
-    console.log("PARAMS");
-    console.log(newMpgwParams);
     this.props.setInput(newMpgwParams);
   };
 

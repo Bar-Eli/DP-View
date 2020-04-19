@@ -141,18 +141,12 @@ export default class BackendRequests {
    * @returns {Promise<void>}
    */
   static async createNewMpgw(input) {
-    // this.getFileContent();
     const clusterDetails = await this.getClusterDetails(input);
     const urlParamsList = BackendConfigInput.generateClusterUrlParams(
       input,
       clusterDetails
     );
-    const rules = input["rules"];
-    // Create FSHs
-    this.createNewFshs(rules, urlParamsList);
-    const payload = BackendConfigInput.generateMpgwReq(input); // Create backend configuration form input.
-    console.log(payload)
-    const data = JSON.stringify(payload);
+    const data = JSON.stringify(input);
     const options = {
       method: "POST",
       body: data,

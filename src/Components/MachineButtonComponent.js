@@ -62,7 +62,6 @@ class MachineButton extends Component {
   createMPGW = async () => {
     this.setState({ loading: true });
     let response = await this.props.createMpgw(this.state.hostname);
-    console.log(response);
     this.checkStatus(response)
   };
 

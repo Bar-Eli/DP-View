@@ -54,8 +54,8 @@ class NewRoutePage extends Component {
         window.location.reload(false);
     };
 
-    createMPGW = async () => {
-        const response = await BackendRequests.createNewMpgw(this.inputParams);
+    createMPGW = async (hostname) => {
+        const response = await BackendRequests.createNewMpgw(this.inputParams, hostname);
         return response;
     };
 

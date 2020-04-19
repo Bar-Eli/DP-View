@@ -6,7 +6,6 @@ import { red } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
 import MachineButton from "./MachineButtonComponent";
 
-
 const useStyles = (theme) => ({
   root: {
     display: "flex",
@@ -57,30 +56,26 @@ class CircularIntegration extends Component {
       loading: false,
       success: false,
       buttonClass: "",
+      creationFinished: 0,
     };
   }
 
   handleButtonClick = () => {
-    const { classes } = this.props;
     this.setState({
       loading: true,
-      create: true
+      create: true,
     });
-  
-    //   // Set the current state of the cluster
-    //   this.setState({
-    //     loading: false,
-    //     success: true,
-    //     buttonClass: classes.buttonSuccess,
-    //   });
   };
 
-  createMpgw = (hostname) =>{
-    return {"status": false, "message": "error"}
-  }
+  incCreationFinished = () => {
+    console.log(this.state.creationFinished)
+    this.setState({ creationFinished: this.state.creationFinished + 1 });
+  };
 
   render() {
     const { classes } = this.props;
+    if (this.state.creationFinished === this.state.clusterNodesHostName.length)
+      this.setState({ loading: false, success: true, buttonClass: classes.buttonSuccess, creationFinished: 0 }); 
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
@@ -100,16 +95,16 @@ class CircularIntegration extends Component {
         </div>
         <div>
           <ul className={classes.ul}>
-            {this.props.clusterNodesHostName.map((item) =>
+            {this.props.clusterNodesHostName.map((item) => (
               <li key={item} value={item}>
-                  <MachineButton
-                    style={this.props.style}
-                    hostname={item}
-                    createMpgw = {this.createMpgw}
-                    create={this.state.create}
-                  />
+                <MachineButton
+                  style={this.props.style}
+                  hostname={item}
+                  createMpgw={this.props.createMPGW}
+                  create={this.state.create}         
+                />
               </li>
-            )}
+            ))}
           </ul>
         </div>
       </div>

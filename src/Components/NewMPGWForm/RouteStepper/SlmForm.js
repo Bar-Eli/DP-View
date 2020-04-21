@@ -135,9 +135,9 @@ class SlmForm extends Component {
                   this.checkIfAllValid();
                 }}
               >
-                <MenuItem value={"minute"}>per minute</MenuItem>
-                <MenuItem value={"hour"}>per hour</MenuItem>
-                <MenuItem value={"day"}>per day</MenuItem>
+                <MenuItem value={60}>per minute</MenuItem>
+                <MenuItem value={3600}>per hour</MenuItem>
+                <MenuItem value={86400}>per day</MenuItem>
               </Select>
               <FormHelperText
                 error={
@@ -222,9 +222,9 @@ class SlmForm extends Component {
                   this.checkIfAllValid();
                 }}
               >
-                <MenuItem value={"minute"}>per minute</MenuItem>
-                <MenuItem value={"hour"}>per hour</MenuItem>
-                <MenuItem value={"day"}>per day</MenuItem>
+                <MenuItem value={60}>per minute</MenuItem>
+                <MenuItem value={3600}>per hour</MenuItem>
+                <MenuItem value={86400}>per day</MenuItem>
               </Select>
               <FormHelperText
                 error={

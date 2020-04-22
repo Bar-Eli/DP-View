@@ -29,35 +29,7 @@ const useStyles = theme => ({
 class SlmForm extends Component {
   constructor(props) {
     super(props);
-
     this.validator = new SimpleReactValidator();
-
-    this.validator.message(
-      "File Count",
-      this.props.currSlm.maxFileCount,
-      "required"
-    );
-    this.validator.message(
-      "File Size",
-      this.props.currSlm.maxFileSize,
-      "required"
-    );
-    this.validator.message(
-      "Size Unit",
-      this.props.currSlm.fileSizeUnit,
-      "required"
-    );
-    this.validator.message(
-      "Size Time Unit",
-      this.props.currSlm.fileSizeTimeUnit,
-      "required"
-    );
-    this.validator.message(
-      "Count Time Unit",
-      this.props.currSlm.fileCountTimeUnit,
-      "required"
-    );
-
     this.checkIfAllValid();
   }
 
@@ -68,24 +40,8 @@ class SlmForm extends Component {
     } else this.props.validationHandler(false);
   };
 
-  handleChangeTimeUnit = e => {
-    this.props.setParams(e.target.value, "fileCountTimeUnit", "slm");
-  };
-
-  handleChangeSizeUnit = e => {
-    this.props.setParams(e.target.value, "fileSizeUnit", "slm");
-  };
-
-  handleCountInput = e => {
-    this.props.setParams(e.target.value, "maxFileCount", "slm");
-  };
-
-  handleSizeInput = e => {
-    this.props.setParams(e.target.value, "maxFileSize", "slm");
-  };
-
-  handleSizeTimeInput = e => {
-    this.props.setParams(e.target.value, "fileSizeTimeUnit", "slm");
+  handleChange = (e, id) => {
+    this.props.setParams(e.target.value, id, "slm");
   };
 
   render() {
@@ -94,16 +50,16 @@ class SlmForm extends Component {
         <form>
           <div>
             <TextField
-              label="Max files count..."
+              label="Max files count"
               value={this.props.currSlm.maxFileCount}
               style={{ marginRight: "100px", paddingTop: "20px" }}
               onChange={e => {
-                this.handleCountInput(e);
+                this.handleChange(e, "maxFileCount");
 
                 this.validator.message(
                   "File Count",
                   e.target.value,
-                  "required|integer"
+                  "integer"
                 );
                 this.checkIfAllValid();
               }}
@@ -113,9 +69,9 @@ class SlmForm extends Component {
               }
               helperText={this.validator.getErrorMessages()["File Count"]}
             ></TextField>
-            <FormControl>
+            <FormControl
+            style={{minWidth: "200px"}}>
               <InputLabel
-                // style={{ paddingLeft: "20px", paddingRight: "20px" }}
                 id="demo-simple-select-label"
               >
                 Time Unit
@@ -123,47 +79,26 @@ class SlmForm extends Component {
               <Select
                 style={{ paddingBottom: "20px" }}
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                onChange={e => {
-                  this.handleChangeTimeUnit(e);
-
-                  this.validator.message(
-                    "Count Time Unit",
-                    e.target.value,
-                    "required"
-                  );
-                  this.checkIfAllValid();
-                }}
-              >
-                <MenuItem value={"minute"}>per minute</MenuItem>
-                <MenuItem value={"hour"}>per hour</MenuItem>
-                <MenuItem value={"day"}>per day</MenuItem>
+                onChange={e => { this.handleChange(e, "fileCountTimeUnit"); }}>
+                <MenuItem value={1}>per second</MenuItem>
+                <MenuItem value={60}>per minute</MenuItem>
+                <MenuItem value={3600}>per hour</MenuItem>
+                <MenuItem value={86400}>per day</MenuItem>
               </Select>
-              <FormHelperText
-                error={
-                  !this.validator.fieldValid("Count Time Unit") &&
-                  this.props.currSlm.fileCountTimeUnit != null
-                }
-              >
-                the time unit field is required.
-              </FormHelperText>
             </FormControl>
           </div>
-
           <br />
-
           <div>
             <TextField
-              label="Max file size..."
+              label="Max file size"
               value={this.props.currSlm.maxFileSize}
               style={{ marginRight: "100px", paddingTop: "20px" }}
               onChange={e => {
-                this.handleSizeInput(e);
-
+                this.handleChange(e, "maxFileSize");
                 this.validator.message(
                   "File Size",
                   e.target.value,
-                  "required|integer"
+                  "integer"
                 );
                 this.checkIfAllValid();
               }}
@@ -173,67 +108,30 @@ class SlmForm extends Component {
               }
               helperText={this.validator.getErrorMessages()["File Size"]}
             ></TextField>
-            <FormControl style={{ paddingRight: "100px" }}>
+            <FormControl style={{ paddingRight: "100px", minWidth: "200px" }}>
               <InputLabel id="demo-simple-select-label2">Size Unit</InputLabel>
               <Select
                 style={{
                   paddingBottom: "20px"
                 }}
                 labelId="demo-simple-select-labe2"
-                id="demo-simple-select2"
-                onChange={e => {
-                  this.handleChangeSizeUnit(e);
-
-                  this.validator.message(
-                    "Size Unit",
-                    e.target.value,
-                    "required"
-                  );
-                  this.checkIfAllValid();
-                }}
-              >
+                onChange={e => { this.handleChange(e, "fileSizeUnit"); }}>
                 <MenuItem value={"kb"}>KB</MenuItem>
                 <MenuItem value={"mb"}>MB</MenuItem>
                 <MenuItem value={"gb"}>GB</MenuItem>
               </Select>
-              <FormHelperText
-                error={
-                  !this.validator.fieldValid("Size Unit") &&
-                  this.props.currSlm.fileSizeUnit != null
-                }
-              >
-                the size unit field is required.
-              </FormHelperText>
             </FormControl>
             <FormControl>
               <InputLabel id="demo-simple-select-label">Time Unit</InputLabel>
               <Select
-                style={{ paddingBottom: "20px" }}
+                style={{ paddingBottom: "20px", minWidth: "200px" }}
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                onChange={e => {
-                  this.handleSizeTimeInput(e);
-
-                  this.validator.message(
-                    "Size Time Unit",
-                    e.target.value,
-                    "required"
-                  );
-                  this.checkIfAllValid();
-                }}
-              >
-                <MenuItem value={"minute"}>per minute</MenuItem>
-                <MenuItem value={"hour"}>per hour</MenuItem>
-                <MenuItem value={"day"}>per day</MenuItem>
+                onChange={e => { this.handleChange(e, "fileSizeTimeUnit"); }} >
+                <MenuItem value={1}>per second</MenuItem>
+                <MenuItem value={60}>per minute</MenuItem>
+                <MenuItem value={3600}>per hour</MenuItem>
+                <MenuItem value={86400}>per day</MenuItem>
               </Select>
-              <FormHelperText
-                error={
-                  !this.validator.fieldValid("Size Time Unit") &&
-                  this.props.currSlm.fileSizeTimeUnit != null
-                }
-              >
-                the time unit field is required.
-              </FormHelperText>
             </FormControl>
           </div>
         </form>

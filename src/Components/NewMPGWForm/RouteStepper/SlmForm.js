@@ -54,13 +54,9 @@ class SlmForm extends Component {
               value={this.props.currSlm.maxFileCount}
               style={{ marginRight: "100px", paddingTop: "20px" }}
               onChange={e => {
-                this.handleChange(e, "maxFileCount");
-
-                this.validator.message(
-                  "File Count",
-                  e.target.value,
-                  "integer"
-                );
+                const val = parseInt(e.target.value);
+                this.props.setParams(val, "maxFileCount", "slm");
+                this.validator.message("File Count", e.target.value, "integer");
                 this.checkIfAllValid();
               }}
               error={
@@ -68,7 +64,7 @@ class SlmForm extends Component {
                 this.props.currSlm.maxFileCount != null
               }
               helperText={this.validator.getErrorMessages()["File Count"]}
-            ></TextField>
+            />
             <FormControl
             style={{minWidth: "200px"}}>
               <InputLabel
@@ -94,12 +90,10 @@ class SlmForm extends Component {
               value={this.props.currSlm.maxFileSize}
               style={{ marginRight: "100px", paddingTop: "20px" }}
               onChange={e => {
-                this.handleChange(e, "maxFileSize");
-                this.validator.message(
-                  "File Size",
-                  e.target.value,
-                  "integer"
-                );
+                const val = parseInt(e.target.value);
+                this.props.setParams(val, "maxFileSize", "slm");
+                // this.handleChange(e, "maxFileSize");
+                this.validator.message("File Size", e.target.value, "integer");
                 this.checkIfAllValid();
               }}
               error={
@@ -107,7 +101,7 @@ class SlmForm extends Component {
                 this.props.currSlm.maxFileSize != null
               }
               helperText={this.validator.getErrorMessages()["File Size"]}
-            ></TextField>
+            />
             <FormControl style={{ paddingRight: "100px", minWidth: "200px" }}>
               <InputLabel id="demo-simple-select-label2">Size Unit</InputLabel>
               <Select

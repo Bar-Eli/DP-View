@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -215,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587542586885</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Backend URL correction">
+      <created>1587563445090</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1587563445091</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,7 +280,8 @@
     <MESSAGE value="Pre pull commit" />
     <MESSAGE value="Pre merge" />
     <MESSAGE value="Not complete input improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Not complete input improvements" />
+    <MESSAGE value="Backend URL correction" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend URL correction" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

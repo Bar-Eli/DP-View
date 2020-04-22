@@ -164,7 +164,7 @@ export default class BackendRequests {
     };
     let clusterResponseStatus = {};
     for (let i = 0; i < urlParamsList.length; i++) {
-      let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
+      let url = this.BACKEND_URL + "/api/template/mpgw" + urlParamsList[i];
       let response = await fetch(url, options);
       let responseData = await response.json();
       let obj = {};

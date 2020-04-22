@@ -91,6 +91,7 @@ class HorizontalStepper extends Component {
         },
       },
     };
+    console.log("HS constructor")
   }
 
   getStepContent = (step) => {
@@ -110,6 +111,7 @@ class HorizontalStepper extends Component {
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
             currRule={this.state.rule.srcAddr}
+            details={this.props.details}
           />
         );
       case 2:
@@ -127,6 +129,7 @@ class HorizontalStepper extends Component {
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
             currRule={this.state.rule.destAddr}
+            details={this.props.details}
           />
         );
       case 4:

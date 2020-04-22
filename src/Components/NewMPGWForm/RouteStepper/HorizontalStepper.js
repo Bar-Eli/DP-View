@@ -91,6 +91,7 @@ class HorizontalStepper extends Component {
         },
       },
     };
+    console.log("HS constructor")
   }
 
   getStepContent = (step) => {

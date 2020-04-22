@@ -53,19 +53,17 @@ class AddressForm extends Component {
             mqEnvironments: []
         };
 
-        this.assignClusterDetails();
+        this.assignClusterDetails().then();
+        this.initValidator();
 
+        this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
+
+    }
+
+    initValidator = () => {
         this.validator = new SimpleReactValidator();
-        this.validator.message(
-            "Primary Address",
-            this.props.currRule.primaryAddress,
-            "required"
-        );
-        this.validator.message(
-            "Secondary Address",
-            this.props.currRule.secondaryAddress,
-            "required"
-        );
+        this.validator.message("Primary Address", this.props.currRule.primaryAddress, "required");
+        this.validator.message("Secondary Address", this.props.currRule.secondaryAddress, "required");
         this.validator.message("Network", this.props.currRule.network, "required");
         // this.validator.message("Method", this.props.currRule.network, "required");
 
@@ -74,10 +72,7 @@ class AddressForm extends Component {
         if (this.props.whichForm === "destAddr") {
             this.props.validationHandler(false);
         }
-
-        this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
-
-    }
+    };
 
     assignClusterDetails = async () => {
         const details = this.props.details;
@@ -85,7 +80,6 @@ class AddressForm extends Component {
         this.setState({networks: Object.keys(clusterDetalis["vips"])});
         this.setState({vips: Object.values(clusterDetalis["vips"])});
         const mqEnv = await BackendRequests.getMqEnvironments(details["clusterName"]);
-        console.log(mqEnv);
         this.setState({mqEnvironments: Object.keys(mqEnv)});
     };
 
@@ -122,10 +116,40 @@ class AddressForm extends Component {
 
     handleChangeNetwork = event => {
         this.props.setParams(event.target.value, "network", this.props.whichForm);
+        this.validator.message("Network", event.target.value, "required");
+        this.checkIfAllValid();
     };
 
     handleChangePrimary = event => {
         this.props.setParams(event.target.value, "primaryAddress", this.props.whichForm);
+        if (this.state.protocol === "http") {
+            this.validator.message("Primary Address", event.target.value, "required");
+        } else if (this.state.protocol === "mq") {
+            this.validator.message("Primary Address", event.target.value, "required");
+        }
+        this.checkIfAllValid();
+    };
+
+    handleChangeSecondary = e => {
+        this.props.setParams(
+            e.target.value,
+            "secondaryAddress",
+            this.props.whichForm
+        );
+        if (this.state.httpBtnColor === "primary") {
+            this.validator.message(
+                "Secondary Address",
+                e.target.value,
+                "required|integer"
+            );
+        } else if (this.state.mqBtnColor === "primary") {
+            this.validator.message(
+                "Secondary Address",
+                e.target.value,
+                "required"
+            );
+        }
+        this.checkIfAllValid();
     };
 
     handleCheckMethod(method) {
@@ -146,7 +170,114 @@ class AddressForm extends Component {
         return options.map((el) => {
             return <MenuItem value={el}>{el}</MenuItem>;
         })
+    };
 
+    renderNetworks = () => {
+        return (
+            <FormControl>
+                <InputLabel id="demo-simple-select-label">Network</InputLabel>
+                <Select onChange={e => {
+                    this.handleChangeNetwork(e);
+                }}>
+                    {this.state.networks.map((el) => {
+                        return <MenuItem value={el}>{el}</MenuItem>;
+                    })}
+                </Select>
+                <FormHelperText
+                    error={
+                        !this.validator.fieldValid("Network") &&
+                        this.props.currRule.network != null
+                    }
+                >
+                    the network field is required.
+                </FormHelperText>
+            </FormControl>
+        );
+    };
+
+    renderPrimarySelect = () => {
+        return (
+            <FormControl>
+                <InputLabel>{this.state.primaryAddress}</InputLabel>
+                <Select onChange={e => {
+                    this.handleChangePrimary(e);
+                }}>
+                    {this.renderPrimaryOptions()}
+                </Select>
+                <FormHelperText
+                    error={
+                        !this.validator.fieldValid("Primary Address") &&
+                        this.props.currRule.network != null
+                    }
+                >
+                    the {this.state.primaryAddress} field is required.
+                </FormHelperText>
+            </FormControl>
+        );
+    };
+
+    renderPrimaryText = () => {
+        return (
+            <TextField id="primary-address" label={this.state.primaryAddress}
+                       onChange={e => {
+                           this.handleChangePrimary(e)
+                       }}
+                       error={
+                           !this.validator.fieldValid("Primary Address") &&
+                           this.props.currRule.primaryAddress != null
+                       }
+                       helperText={this.validator.getErrorMessages()["Primary Address"]}
+            />
+        );
+    };
+
+    renderPrimary = () => {
+        if (this.state.protocol === "mq") {
+            return this.renderPrimarySelect();
+        }
+        if (this.state.protocol === "http" && this.props.whichForm === "srcAddr") {
+            return this.renderPrimarySelect();
+        }
+        return this.renderPrimaryText();
+    };
+
+    renderSecondary = () => {
+        return (
+            <TextField
+                id="secondary-address"
+                label={this.state.secondaryAddress}
+                onChange={e => {
+                    this.handleChangeSecondary(e);
+                }}
+                error={
+                    !this.validator.fieldValid("Secondary Address") &&
+                    this.props.currRule.primaryAddress != null
+                }
+                helperText={this.validator.getErrorMessages()["Secondary Address"]}
+            />
+        );
+    };
+
+    renderMethods = () => {
+        const {classes} = this.props;
+        return (
+            <div className={classes.centerMargin} style={{display: this.state.showMethods}}>
+                <h5 className={classes.methodLabel}>Method</h5>
+                {this.state.methodList.map(method => (
+                    <div>
+                        <FormControlLabel value={method} control={<Checkbox/>} label={method}
+                                          checked={this.state.checkedValues[method]}
+                                          onChange={() => {
+                                              this.handleCheckMethod(method);
+                                              this.setState({wasMethodListTouched: true});
+                                          }}
+                                          required={true}
+                        />
+                    </div>
+                ))}
+                <FormHelperText>the method field is required.</FormHelperText>
+            </div>
+        );
     };
 
     render() {
@@ -157,166 +288,18 @@ class AddressForm extends Component {
                     <br/>
                     <h5 className={classes.center}>Protocol</h5>
 
-                    <Button
-                        variant="contained"
-                        color={this.state.httpBtnColor}
-                        onClick={this.httpBtnClick}
-                    >
-                        http
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color={this.state.mqBtnColor}
-                        onClick={this.mqBtnClick}
-                    >
-                        mq
-                    </Button>
+                    <Button variant="contained" color={this.state.httpBtnColor}
+                            onClick={this.httpBtnClick}>http</Button>
+                    <Button variant="contained" color={this.state.mqBtnColor} onClick={this.mqBtnClick}>mq</Button>
                     <br/>
-                    <FormControl>
-                        <InputLabel
-                            id="demo-simple-select-label"
-                        >
-                            Network
-                        </InputLabel>
-                        <Select
-                            // value={this.state.age}
-                            onChange={e => {
-                                this.handleChangeNetwork(e);
-                                this.validator.message("Network", e.target.value, "required");
-                                this.checkIfAllValid();
-                            }}
-                        >
-                            {this.state.networks.map((el) => {
-                                return <MenuItem value={el}>{el}</MenuItem>;
-                            })}
 
-                        </Select>
-                        <FormHelperText
-                            error={
-                                !this.validator.fieldValid("Network") &&
-                                this.props.currRule.network != null
-                            }
-                        >
-                            the network field is required.
-                        </FormHelperText>
-                    </FormControl>
-                    <FormControl style={{display: this.props.whichForm === "srcAddr" ? 'inline-flex' : 'none'}}>
-                        <InputLabel
-                            id="demo-simple-select-label"
-                        >
-                            {this.state.primaryAddress}
-                        </InputLabel>
-                        <Select
-                            value={this.state.age}
-                            onChange={e => {
-                                this.handleChangePrimary(e);
-                            }}
-                        >
-                            {this.renderPrimaryOptions()}
-                        </Select>
-                        <FormHelperText
-                            error={
-                                !this.validator.fieldValid("Network") &&
-                                this.props.currRule.network != null
-                            }
-                        >
-                            the {this.state.primaryAddress} field is required.
-                        </FormHelperText>
-                    </FormControl>
+                    {this.renderNetworks()}
+                    {this.renderPrimary()}
+                    {this.renderSecondary()}
 
-                    <TextField
-                        style={{display: this.props.whichForm === "destAddr" ? 'inline-flex' : 'none'}}
-                        id="primary-address"
-                        label={this.state.primaryAddress}
-                        onChange={e => {
-                            this.props.setParams(
-                                e.target.value,
-                                "primaryAddress",
-                                this.props.whichForm
-                            );
-                            if (this.state.httpBtnColor === "primary") {
-                                this.validator.message(
-                                    "Primary Address",
-                                    e.target.value,
-                                    "required|url"
-                                );
-                            } else if (this.state.mqBtnColor === "primary") {
-                                this.validator.message(
-                                    "Primary Address",
-                                    e.target.value,
-                                    "required"
-                                );
-                            }
-                            this.checkIfAllValid();
-                        }}
-                        error={
-                            !this.validator.fieldValid("Primary Address") &&
-                            this.props.currRule.primaryAddress != null
-                        }
-                        helperText={this.validator.getErrorMessages()["Primary Address"]}
-                    />
-
-                    <TextField
-                        id="secondary-address"
-                        label={this.state.secondaryAddress}
-                        onChange={e => {
-                            this.props.setParams(
-                                e.target.value,
-                                "secondaryAddress",
-                                this.props.whichForm
-                            );
-                            if (this.state.httpBtnColor === "primary") {
-                                this.validator.message(
-                                    "Secondary Address",
-                                    e.target.value,
-                                    "required|integer"
-                                );
-                            } else if (this.state.mqBtnColor === "primary") {
-                                this.validator.message(
-                                    "Secondary Address",
-                                    e.target.value,
-                                    "required"
-                                );
-                            }
-                            this.checkIfAllValid();
-                        }}
-                        error={
-                            !this.validator.fieldValid("Secondary Address") &&
-                            this.props.currRule.primaryAddress != null
-                        }
-                        helperText={this.validator.getErrorMessages()["Secondary Address"]}
-                    />
                     <br/>
                     <br/>
-                    <div
-                        className={classes.centerMargin}
-                        style={{display: this.state.showMethods}}
-                    >
-                        <h5 className={classes.methodLabel}>Method</h5>
-                        {this.state.methodList.map(method => (
-                            <div>
-                                <FormControlLabel
-                                    value={method}
-                                    control={<Checkbox/>}
-                                    label={method}
-                                    checked={this.state.checkedValues[method]}
-                                    onChange={() => {
-                                        this.handleCheckMethod(method);
-                                        this.setState({wasMethodListTouched: true});
-                                    }}
-                                    required={true}
-                                />
-                            </div>
-                        ))}
-                        <FormHelperText
-                            // error={
-                            //   this.state.wasMethodListTouched &&
-                            //   this.checkIfCheckedValuesValid === false
-                            // }
-                        >
-                            the method field is required.
-                        </FormHelperText>
-                    </div>
+                    {this.renderMethods()}
                 </form>
                 <br/>
                 <br/>

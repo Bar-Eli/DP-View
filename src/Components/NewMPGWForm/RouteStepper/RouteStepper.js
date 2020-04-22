@@ -101,6 +101,7 @@ class RouteStepper extends Component {
           <HorizontalStepper
             validationHandler={this.handleStepValidation}
             addRule={this.addRule}
+            details={this.state.params.details}
           />
         );
       case 2:

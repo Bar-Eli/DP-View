@@ -85,6 +85,17 @@ export default class BackendRequests {
   }
 
   /**
+   *
+   * @param clusterName -- name of cluster to retrive environments from.
+   * @returns {Promise<any>} JSON representing mq environments (for cluster?)
+   */
+  static async getMqEnvironments(clusterName) {
+    const url = this.BACKEND_URL + "/api/status/environments";
+    const response = await fetch(url);
+    return await response.json();
+  }
+
+  /**
    * Create New FSH on DP, using http requests to backend
    * @param input -- User input params for rule creation.
    * @param DpUrlParams -- params for backend url for Dp machine to create FSH on.
@@ -233,4 +244,5 @@ export default class BackendRequests {
 
     alert(responseData);
   }
+
 }

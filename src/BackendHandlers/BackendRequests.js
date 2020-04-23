@@ -2,8 +2,8 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
   // CONSTANTS
-  static BACKEND_URL = "http://10.0.3.8:4000";
-  // static BACKEND_URL = "http://localhost:4000";
+  // static BACKEND_URL = "http://10.0.3.8:4000";
+  static BACKEND_URL = "http://localhost:4000";
 
   /**
    * Get list of clusters for input choosing
@@ -93,6 +93,23 @@ export default class BackendRequests {
     const url = this.BACKEND_URL + "/api/status/environments";
     const response = await fetch(url);
     return await response.json();
+  }
+
+  /**
+   * Check if a given mpgw (by name) already exists on specific cluster.
+   * @param mpgwName -- name of mpgw to check if exists.
+   * @param clusterName -- name of cluster to check mpgw name on.
+   * @param testOrProd -- environment in cluster to check.
+   * @returns {Promise<void>} -- true if mpgw exsists, false if not
+   */
+  static async isMpgwExsists(mpgwName, clusterName, testOrProd) {
+    const url = this.BACKEND_URL + "/api/mpgw/" + clusterName + "/" + testOrProd + "/check/" + mpgwName;
+    const response = await fetch(url);
+    const resp = await response.json();
+    // status is 409 if exists, 404 otherwise (not found).
+    const x = resp.status === 409;
+    return x;
+    // return resp.status === 409;
   }
 
   /**

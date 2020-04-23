@@ -36,7 +36,7 @@ const useStyles = (theme) => ({
     textAlign: "center",
     paddingTop: "30px",
     paddingBottom: "10px",
-  },
+  }
 });
 
 function getSteps() {
@@ -58,7 +58,8 @@ class HorizontalStepper extends Component {
     this.state = {
       stepIsValid: false,
       // stepIsValid: true, // DEBUG
-      step: 0,
+      // step: 0,
+      step: 1, // DEBUG
       completed: [],
       skipped: [],
       rule: {
@@ -91,7 +92,6 @@ class HorizontalStepper extends Component {
         },
       },
     };
-    console.log("HS constructor")
   }
 
   getStepContent = (step) => {

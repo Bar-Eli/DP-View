@@ -11,6 +11,7 @@ import DetailsForm from "./DetailsForm";
 import HorizontalStepper from "./HorizontalStepper";
 import DpCredsPopup from "../../DpCredsPopup";
 import RuleTable from "../../RuleTable";
+import BackendRequests from "../../../BackendHandlers/BackendRequests";
 
 const useStyles = (theme) => ({
   root: {
@@ -42,8 +43,8 @@ class RouteStepper extends Component {
       detailsFormTouched: false,
       popUpStatus: false,
       stepIsValid: false,
-      step: 0,
-      // step: 2, // DEBUG
+      // step: 0,
+      step: 1, // DEBUG
       params: {
         details: {
           projectNameValue: "",
@@ -124,23 +125,23 @@ class RouteStepper extends Component {
 
   handleStepValidation = (flag) => {
     // Set current step status, valid or not
-    // this.setState({ stepIsValid: flag }); 
-    this.setState({ stepIsValid: true }); // DEBUG
+    this.setState({ stepIsValid: flag });
+    // this.setState({ stepIsValid: true }); // DEBUG
   };
 
   detailsFormWasTouched = () => {
     this.setState({ detailsFormTouched: true });
   };
 
-  handleNext = () => {
+  handleNext = async () => {
     // Handle a press on the next button
-    if (this.state.params.details.clusterName != null && this.state.step === 1) {
-      this.props.setClusterName(
-        this.state.params.details.clusterName,
-        this.state.params.details.testOrProd
-      );
+    let valid = this.state.stepIsValid;
+    if (this.state.params.details.clusterName !== null && this.state.step === 0) {
+      this.props.setClusterName(this.state.params.details.clusterName, this.state.params.details.testOrProd);
+      const details = this.state["params"]["details"];
+      const mpgwTaken = await BackendRequests.isMpgwExsists(details["projectNameValue"], details["clusterName"], details["testOrProd"]);
+      valid = valid && !mpgwTaken;
     }
-    const valid = this.state.stepIsValid;
     if (valid) {
       this.setActiveStep(this.state.step + 1);
     } else {

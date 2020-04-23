@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import SimpleReactValidator from "simple-react-validator";
 import BackendRequests from "../../../BackendHandlers/BackendRequests";
 
@@ -31,6 +32,10 @@ const useStyles = theme => ({
     methodLabel: {
         marginBottom: "5px",
         marginTop: "0"
+    },
+    mqOptions: {
+        width: "auto",
+        padding: "10px",
     }
 });
 
@@ -50,14 +55,15 @@ class AddressForm extends Component {
             checkedValues: {POST: false, PUT: false, GET: false},
             networks: [],
             vips: [],
-            mqEnvironments: []
+            mqOptions: "env",
+            mqEnvironments: [],
+            mqManagers: []
         };
 
         this.assignClusterDetails().then();
         this.initValidator();
 
         this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
-
     }
 
     initValidator = () => {
@@ -195,6 +201,24 @@ class AddressForm extends Component {
         );
     };
 
+    renderMqOptions = () => {
+        const {classes} = this.props;
+        const variants = {
+          environment: this.state.mqOptions === "env" ? "contained" : "outlined",
+          manager: this.state.mqOptions === "mgr" ? "contained" : "outlined"
+        };
+        return (
+            <ButtonGroup className={classes.mqOptions} size="small" color="primary" orientation="vertical"
+                         aria-label="outlined primary button group">
+                <Button variant="outlined" >Environment</Button>
+                <Button variant="contained" onClick={this.setState({mqOptions:"mgr"})}>MQ manager</Button>
+                {/*<Button variant={variants["environment"]} onClick={this.setState({mqOptions:"env"})}>Environment</Button>*/}
+                {/*<Button variant={variants["manager"]} onClick={this.setState({mqOptions:"mgr"})}>MQ manager</Button>*/}
+            </ButtonGroup>
+        )
+
+    };
+
     renderPrimarySelect = () => {
         return (
             <FormControl>
@@ -233,7 +257,7 @@ class AddressForm extends Component {
 
     renderPrimary = () => {
         if (this.state.protocol === "mq") {
-            return this.renderPrimarySelect();
+            return [this.renderMqOptions(), this.renderPrimarySelect()]
         }
         if (this.state.protocol === "http" && this.props.whichForm === "srcAddr") {
             return this.renderPrimarySelect();

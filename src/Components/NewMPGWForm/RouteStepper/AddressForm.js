@@ -267,6 +267,16 @@ class AddressForm extends Component {
         return this.renderPrimaryText();
     };
 
+    getSecondaryHelperText = () => {
+        const x = !this.validator.fieldValid("Secondary Address");
+        const y = (this.props.currRule.primaryAddress != null);
+        const z = (!this.props.portFree);
+        if (!this.props.portFree) {
+            return "This port is already taken";
+        }
+        return this.validator.getErrorMessages()["Secondary Address"];
+    };
+
     renderSecondary = () => {
         return (
             <TextField
@@ -275,11 +285,8 @@ class AddressForm extends Component {
                 onChange={e => {
                     this.handleChangeSecondary(e);
                 }}
-                error={
-                    !this.validator.fieldValid("Secondary Address") &&
-                    this.props.currRule.primaryAddress != null
-                }
-                helperText={this.validator.getErrorMessages()["Secondary Address"]}
+                error={(!this.validator.fieldValid("Secondary Address") && this.props.currRule.primaryAddress != null) || (!this.props.portFree)}
+                helperText={this.getSecondaryHelperText()}
             />
         );
     };

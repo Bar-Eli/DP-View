@@ -40,6 +40,7 @@ class RouteStepper extends Component {
     constructor(props) {
         super(props);
         this.isDebug = false;
+        // this.isDebug = true;
         this.state = {
             detailsFormTouched: false,
             projectNameTaken: false,
@@ -110,7 +111,6 @@ class RouteStepper extends Component {
                 );
             case 2:
                 return (
-                    //<Overview/>
                     <RuleTable data={this.state.params} removeRule={this.removeRule} />
                 );
             default:

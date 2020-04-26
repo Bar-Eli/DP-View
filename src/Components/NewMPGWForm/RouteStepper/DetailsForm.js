@@ -25,9 +25,6 @@ class DetailsForm extends Component {
             testBtnColor: this.props.details.testOrProd === "test" ? "primary" : "default",
             prodBtnColor: this.props.details.testOrProd === "prod" ? "primary" : "default",
             clusters: ["TestCluster"],
-            projectNameTouched: false,
-            projectMadorTouched: false,
-            projectTeamTouched: false,
             projectClusterNameTouched: false,
         };
         this.getClusters(); // Assign clusters to select form.
@@ -68,24 +65,28 @@ class DetailsForm extends Component {
         this.setState({clusters: clustersList});
     };
 
+    getNameHelperText = () => {
+        if (this.props.nameTaken) {
+            return "This project name is taken";
+        } else {
+            return this.validator.getErrorMessages()["Project Name"];
+        }
+    };
+
     render() {
         const {classes} = this.props;
         return (
             <div>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="project-name" label="Project Name"
-                        value={this.props.details.projectNameValue}
+                    <TextField
+                        id="project-name" label="Project Name" value={this.props.details.projectNameValue}
                         onChange={(e) => {
                             this.props.updateParams(e.target.value, "projectNameValue", "details");
                             this.validator.message("Project Name", e.target.value, "required");
-                            this.setState({projectNameTouched: true});
                             this.checkIfAllValid();
                         }}
-                        error={
-                            !this.validator.fieldValid("Project Name") &&
-                            (this.state.projectNameTouched || this.props.detailsFormTouched)
-                        }
-                        helperText={this.validator.getErrorMessages()["Project Name"]}
+                        error={(!this.validator.fieldValid("Project Name") && (this.props.detailsFormTouched)) || (this.props.nameTaken)}
+                        helperText={this.getNameHelperText()}
                     />
                     <TextField
                         id="project-mador"
@@ -94,13 +95,9 @@ class DetailsForm extends Component {
                         onChange={(e) => {
                             this.props.updateParams(e.target.value, "projectMadorValue", "details");
                             this.validator.message("Mador", e.target.value, "required");
-                            this.setState({projectMadorTouched: true});
                             this.checkIfAllValid();
                         }}
-                        error={
-                            !this.validator.fieldValid("Mador") &&
-                            (this.state.projectMadorTouched || this.props.detailsFormTouched)
-                        }
+                        error={!this.validator.fieldValid("Mador") && this.props.detailsFormTouched}
                         helperText={this.validator.getErrorMessages()["Mador"]}
                     />
                     <TextField
@@ -110,13 +107,9 @@ class DetailsForm extends Component {
                         onChange={(e) => {
                             this.props.updateParams(e.target.value, "projectTeamValue", "details");
                             this.validator.message("Team", e.target.value, "required");
-                            this.setState({projectTeamTouched: true});
                             this.checkIfAllValid();
                         }}
-                        error={
-                            !this.validator.fieldValid("Team") &&
-                            (this.state.projectTeamTouched || this.props.detailsFormTouched)
-                        }
+                        error={!this.validator.fieldValid("Team") && this.props.detailsFormTouched}
                         helperText={this.validator.getErrorMessages()["Team"]}
                         InputProps={{
                             startAdornment: (
@@ -153,20 +146,12 @@ class DetailsForm extends Component {
                                 {...params}
                                 label="Cluster"
                                 variant="outlined"
-                                error={
-                                    !this.validator.fieldValid("Cluster") &&
-                                    (this.state.projectClusterNameTouched ||
-                                        this.props.detailsFormTouched)
-                                }
+                                error={!this.validator.fieldValid("Cluster") && this.props.detailsFormTouched}
                                 helperText={this.validator.getErrorMessages()["Cluster"]}
                             />
                         )}
                         onChange={(e, value) => {
-                            this.setState({
-                                projectClusterNameTouched: true,
-                                displayMpgwSelection: "inline-flex",
-                                displayButtons: "inline-block",
-                            });
+                            this.setState({displayMpgwSelection: "inline-flex", displayButtons: "inline-block",});
                             this.props.updateParams(value, "clusterName", "details");
                             this.validator.message("Cluster", e.target.value, "required");
                             this.checkIfAllValid();

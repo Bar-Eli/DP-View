@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./NFL 2_files/layout.css"
 import "./NFL 2_files/normalize.css"
-import {changeLogo} from "./NFL 2_files/core.js"
+// import {changeLogo} from "./NFL 2_files/core.js"
 import BlockRevealAnimation from 'react-block-reveal-animation';
 import {blue} from "@material-ui/core/colors";
 

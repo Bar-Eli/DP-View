@@ -41,6 +41,7 @@ class RouteStepper extends Component {
         super(props);
         this.state = {
             detailsFormTouched: false,
+            projectNameTaken: false,
             popUpStatus: false,
             stepIsValid: false,
             step: 0,
@@ -95,6 +96,7 @@ class RouteStepper extends Component {
                         updateParams={this.updateParamState}
                         validationHandler={this.handleStepValidation}
                         detailsFormTouched={this.state.detailsFormTouched}
+                        nameTaken={this.state.projectNameTaken}
                     />
                 );
             case 1:
@@ -136,10 +138,11 @@ class RouteStepper extends Component {
     handleNext = async () => {
         // Handle a press on the next button
         let valid = this.state.stepIsValid;
-        if (this.state.params.details.clusterName !== null && this.state.step === 0) {
+        if (valid && this.state.step === 0) {
             this.props.setClusterName(this.state.params.details.clusterName, this.state.params.details.testOrProd);
             const details = this.state["params"]["details"];
             const mpgwTaken = await BackendRequests.isMpgwExsists(details["projectNameValue"], details["clusterName"], details["testOrProd"]);
+            this.setState({projectNameTaken: mpgwTaken});
             valid = valid && !mpgwTaken;
         }
         if (valid) {

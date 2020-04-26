@@ -85,8 +85,9 @@ class AddressForm extends Component {
         const clusterDetalis = await BackendRequests.getClusterDetailsByClusterName(details["clusterName"], details["testOrProd"]);
         this.setState({networks: Object.keys(clusterDetalis["vips"])});
         this.setState({vips: Object.values(clusterDetalis["vips"])});
-        const mqEnv = await BackendRequests.getMqEnvironments(details["clusterName"]);
-        this.setState({mqEnvironments: Object.keys(mqEnv)});
+        const mqEnv = await BackendRequests.getMqEnvironments(details["clusterName"], details["testOrProd"]);
+        const mqMgr = await BackendRequests.getMqManagers(details["clusterName"], details["testOrProd"]);
+        this.setState({mqEnvironments: Object.keys(mqEnv), mqManagers: mqMgr});
     };
 
     checkIfAllValid = () => {
@@ -172,7 +173,8 @@ class AddressForm extends Component {
     }
 
     renderPrimaryOptions = () => {
-        const options = this.state.protocol === "http" ? this.state.vips : this.state.mqEnvironments;
+        const mqOptions = this.state.mqOptions === "env" ? this.state.mqEnvironments : this.state.mqManagers;
+        const options = this.state.protocol === "http" ? this.state.vips : mqOptions;
         return options.map((el) => {
             return <MenuItem value={el}>{el}</MenuItem>;
         })
@@ -204,16 +206,16 @@ class AddressForm extends Component {
     renderMqOptions = () => {
         const {classes} = this.props;
         const variants = {
-          environment: this.state.mqOptions === "env" ? "contained" : "outlined",
-          manager: this.state.mqOptions === "mgr" ? "contained" : "outlined"
+            environment: this.state.mqOptions === "env" ? "primary" : "default",
+            manager: this.state.mqOptions === "mgr" ? "primary" : "default"
         };
         return (
             <ButtonGroup className={classes.mqOptions} size="small" color="primary" orientation="vertical"
-                         aria-label="outlined primary button group">
-                <Button variant="outlined" >Environment</Button>
-                <Button variant="contained" onClick={this.setState({mqOptions:"mgr"})}>MQ manager</Button>
-                {/*<Button variant={variants["environment"]} onClick={this.setState({mqOptions:"env"})}>Environment</Button>*/}
-                {/*<Button variant={variants["manager"]} onClick={this.setState({mqOptions:"mgr"})}>MQ manager</Button>*/}
+                         aria-label="primary button group">
+                <Button variant="contained" color={variants["environment"]}
+                        onClick={() => this.setState({mqOptions: "env"})}>Environment</Button>
+                <Button variant="contained" color={variants["manager"]}
+                        onClick={() => this.setState({mqOptions: "mgr"})}>MQ manager</Button>
             </ButtonGroup>
         )
 

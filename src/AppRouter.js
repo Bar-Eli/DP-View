@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 // import EditRuleStepper from "./Components/EditRuleForm/EditRules";
+import LogoNFL from "./Components/Logo/LogoNFL";
 import EditRulesForm from "./Components/EditRulesForm/EditRulePage";
 import RuleTable from "./Components/RuleTable";
 import SlmForm from "./Components/NewMPGWForm/RouteStepper/SlmForm";
@@ -14,6 +15,7 @@ function AppRouter() {
         {/* <Route path="/addRule" component={NewRulePage} /> */}
         <Route path="/editRule" component={EditRulesForm} />
         <Route path="/slm" component={SlmForm} />
+        {/*<Route path="/logo" component={LogoNFL} />*/}
         <Route
           path="/rule"
           component={() => (

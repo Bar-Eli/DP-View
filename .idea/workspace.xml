@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
+    <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="Input improvement + logo testing">
+      <change afterPath="$PROJECT_DIR$/src/Components/Logo/LogoNFL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Logo/NFL 2_files/core.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Logo/NFL 2_files/layout.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Logo/NFL 2_files/normalize.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/AddressForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/AddressForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/DetailsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/DetailsForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
     </list>
@@ -36,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/BackendHandlers/Configuraions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components/Logo/NFL 2_files" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -48,6 +55,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Alon\WebstormProjects\untitled\src\Components\Logo\NFL 2_files" />
+      <recent name="C:\Users\Alon\WebstormProjects\untitled\src\Components\Logo" />
       <recent name="C:\Users\Alon\WebstormProjects\untitled\src\BackendHandlers\Configuraions" />
       <recent name="C:\Users\Alon\WebstormProjects\untitled\src\BackendHandlers" />
     </key>
@@ -106,7 +115,7 @@
       <workItem from="1585226525190" duration="1698000" />
       <workItem from="1585229124014" duration="793000" />
       <workItem from="1587279262799" duration="249000" />
-      <workItem from="1587629181042" duration="11985000" />
+      <workItem from="1587629181042" duration="50822000" />
     </task>
     <task id="LOCAL-00001" summary="Backend connection + Table">
       <created>1584974922221</created>
@@ -241,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587564906312</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="MPGW verification + mq options button">
+      <created>1587648277281</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1587648277281</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,6 +319,8 @@
     <MESSAGE value="Backend URL correction" />
     <MESSAGE value="Backend URI correction" />
     <MESSAGE value="End of Day?" />
-    <option name="LAST_COMMIT_MESSAGE" value="End of Day?" />
+    <MESSAGE value="MPGW verification + mq options button" />
+    <MESSAGE value="Input improvement + logo testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Input improvement + logo testing" />
   </component>
 </project>

@@ -39,13 +39,14 @@ function getSteps() {
 class RouteStepper extends Component {
     constructor(props) {
         super(props);
+        this.isDebug = false;
         this.state = {
             detailsFormTouched: false,
             projectNameTaken: false,
             popUpStatus: false,
             stepIsValid: false,
-            step: 0,
-            // step: 1, // DEBUG
+            // step: 0,
+            step: 1, // DEBUG
             params: {
                 details: {
                     projectNameValue: "",
@@ -145,7 +146,7 @@ class RouteStepper extends Component {
             this.setState({projectNameTaken: mpgwTaken});
             valid = valid && !mpgwTaken;
         }
-        if (valid) {
+        if (valid || this.isDebug) {
             this.setActiveStep(this.state.step + 1);
         } else {
             this.detailsFormWasTouched();

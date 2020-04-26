@@ -183,7 +183,7 @@ class AddressForm extends Component {
     renderNetworks = () => {
         return (
             <FormControl>
-                <InputLabel id="demo-simple-select-label">Network</InputLabel>
+                <InputLabel>Network</InputLabel>
                 <Select onChange={e => {
                     this.handleChangeNetwork(e);
                 }}>
@@ -291,13 +291,14 @@ class AddressForm extends Component {
                 <h5 className={classes.methodLabel}>Method</h5>
                 {this.state.methodList.map(method => (
                     <div>
-                        <FormControlLabel value={method} control={<Checkbox/>} label={method}
-                                          checked={this.state.checkedValues[method]}
-                                          onChange={() => {
-                                              this.handleCheckMethod(method);
-                                              this.setState({wasMethodListTouched: true});
-                                          }}
-                                          required={true}
+                        <FormControlLabel
+                            value={method} control={<Checkbox/>} label={method}
+                            checked={this.state.checkedValues[method]}
+                            onChange={() => {
+                                this.handleCheckMethod(method);
+                                this.setState({wasMethodListTouched: true});
+                            }}
+                            required={true}
                         />
                     </div>
                 ))}

@@ -82,6 +82,7 @@ class HorizontalStepper extends Component {
           filterType: "",
           dpasFilter: "",
           schemaPath: "",
+          schemaContent: ""
         },
         slm: {
           maxFileCount: null,
@@ -283,6 +284,7 @@ class HorizontalStepper extends Component {
           filterType: "",
           dpasFilter: "",
           schemaPath: "",
+          schemaContent: ""
         },
         slm: {
           maxFileCount: null,

@@ -93,8 +93,8 @@ class FilterForm extends Component {
     const fileName = file["name"];
     this.setState({ fileName: fileName });
     const fileContent = await file.text();
-    let schemaFile = { name: fileName, content: fileContent };
-    this.props.setParams(schemaFile, "schemaPath", "filter");
+    this.props.setParams(fileName, "schemaPath", "filter");
+    this.props.setParams(fileContent, "schemaContent", "filter");
   };
 
   componentDidMount() {

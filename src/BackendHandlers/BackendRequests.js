@@ -2,7 +2,7 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
     // CONSTANTS
-    static BACKEND_URL = "http://10.0.3.8:4000";
+    static BACKEND_URL = "http://localhost:4000";
     // static BACKEND_URL = "http://localhost:4000";
 
     /**
@@ -187,6 +187,7 @@ export default class BackendRequests {
             input,
             clusterDetails
         );
+        this.uploadFiles(input.rules);
         const data = JSON.stringify(input);
         const options = {
             method: "POST",
@@ -250,7 +251,7 @@ export default class BackendRequests {
     static uploadFiles(rules) {
         for (let i = 0; i < rules.length; i++) {
             if (rules[i]["filter"]["filterType"] === "schema") {
-                this.uploadFile(rules[i]["filter"]["schemaPath"]);
+                this.uploadFile(rules[i]["filter"]["schemaPath"], rules[i]["filter"]["schemaContent"]);
             }
         }
     }
@@ -260,19 +261,17 @@ export default class BackendRequests {
      * @param file -- JSON representing schema file from user input
      * @returns {Promise<void>}
      */
-    static async uploadFile(file) {
+    static async uploadFile(name, content) {
         const url = this.BACKEND_URL + "/api/misc/uploadfile";
         const options = {
             method: "POST",
-            body: file["content"],
+            body: content,
             headers: {
-                filename: file["name"],
+                filename: name,
             },
         };
         let response = await fetch(url, options);
         let responseData = await response.json();
-
-        alert(responseData);
     }
 
 }

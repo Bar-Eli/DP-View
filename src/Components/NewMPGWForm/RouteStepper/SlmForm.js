@@ -79,7 +79,6 @@ class SlmForm extends Component {
                 <MenuItem value={1}>per second</MenuItem>
                 <MenuItem value={60}>per minute</MenuItem>
                 <MenuItem value={3600}>per hour</MenuItem>
-                <MenuItem value={86400}>per day</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -124,7 +123,6 @@ class SlmForm extends Component {
                 <MenuItem value={1}>per second</MenuItem>
                 <MenuItem value={60}>per minute</MenuItem>
                 <MenuItem value={3600}>per hour</MenuItem>
-                <MenuItem value={86400}>per day</MenuItem>
               </Select>
             </FormControl>
           </div>

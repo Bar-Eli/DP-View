@@ -42,18 +42,19 @@ class FilterForm extends Component {
     super(props);
     // verify if form is complete somehow
     this.state = {
-      greenBtnBackground: "default",
-      greenBtnColor: "default",
+      greenBtnBackground: "green",
+      greenBtnColor: "primary",
       schemaBtnColor: "default",
       dpasBtnColor: "default",
       dpasService: undefined,
       filterType: "green",
-      fileName: "",
+      schemaName: "",
       useExistingSchema: false,
       schemas: []
     };
     
     this.props.validationHandler(true);
+    this.props.setParams("green", "filterType", "filter");
   }
 
   schemaBtnClick = () => {
@@ -73,7 +74,7 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "primary",
       greenBtnBackground: "#e0e0e0",
-      filterType: "dpas"
+      filterType: "dpass"
     });
     this.props.setParams("dpass", "filterType", "filter");
   };
@@ -96,11 +97,17 @@ class FilterForm extends Component {
   uploadFile = async (event) => {
     const file = event.target.files[0];
     const fileName = file["name"];
-    this.setState({ fileName: fileName });
+    this.setState({ schemaName: fileName });
     const fileContent = await file.text();
     this.props.setParams(fileName, "schemaPath", "filter");
     this.props.setParams(fileContent, "schemaContent", "filter");
   };
+
+  onSchemaChange = (event) => {
+    this.setState({ schemaName: event.target.value });
+    this.props.setParams(event.target.value , "schemaPath", "filter");
+    this.props.setParams("", "schemaContent", "filter");
+  }
 
 
   renderSchemasSelect = () => {
@@ -112,11 +119,6 @@ class FilterForm extends Component {
     return options
   }
 
-
-  componentDidMount() {
-    this.greenBtnClick();
-  }
-
   async componentWillMount() {
     let respSchemas = await BackendRequests.getSchemas(this.props.details.clusterName, this.props.details.testOrProd, "local")
     this.setState({
@@ -125,7 +127,7 @@ class FilterForm extends Component {
   }
 
   renderFilterForm = (classes) => {
-    if (this.state.filterType == "dpas") {
+    if (this.state.filterType == "dpass") {
       return (
         <FormControl>
           <InputLabel id="demo-simple-select-label">DPAS service</InputLabel>
@@ -156,8 +158,8 @@ class FilterForm extends Component {
               <Grid item xs={4}  spacing={2} >
                 { this.state.useExistingSchema == true ?
                   <Select
-                      value=""
-                      onChange={e => { return null}}
+                      value={this.state.schemaName}
+                      onChange={this.onSchemaChange}
                       displayEmpty
                       style={{minWidth: "200px"}}
                       inputProps={{ 'aria-label': 'Without label' }}>
@@ -176,7 +178,7 @@ class FilterForm extends Component {
                       <Button variant="contained" color="default" component="span"  startIcon={<CloudUploadIcon />}>Upload</Button>
                     </label>
                     <Typography className={classes.fileName}>
-                      {this.state.fileName}
+                      {this.state.schemaName}
                     </Typography>
                   </React.Fragment>
                 }

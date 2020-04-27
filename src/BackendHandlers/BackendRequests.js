@@ -2,8 +2,8 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
     // CONSTANTS
-    //static BACKEND_URL = "http://10.0.3.8:4000";
-     static BACKEND_URL = "http://localhost:4000";
+    static BACKEND_URL = "http://10.0.3.8:4000";
+    // static BACKEND_URL = "http://localhost:4000";
 
     /**
      * Get list of clusters for input choosing
@@ -251,7 +251,8 @@ export default class BackendRequests {
     static uploadFiles(rules) {
         for (let i = 0; i < rules.length; i++) {
             if (rules[i]["filter"]["filterType"] === "schema") {
-                this.uploadFile(rules[i]["filter"]["schemaPath"], rules[i]["filter"]["schemaContent"]);
+                if (rules[i]["filter"]["schemaContent"] !== "")
+                    this.uploadFile(rules[i]["filter"]["schemaPath"], rules[i]["filter"]["schemaContent"]);
             }
         }
     }

@@ -123,6 +123,7 @@ class HorizontalStepper extends Component {
                     <FilterForm
                         setParams={this.handleRuleChange}
                         validationHandler={this.handleStepValidation}
+                        details={this.props.details}
                         currFilter={this.state.rule.filter}
                     />
                 );
@@ -179,9 +180,14 @@ class HorizontalStepper extends Component {
     };
 
     handleRuleChange = (value, field, form) => {
-        let newRule = JSON.parse(JSON.stringify(this.state.rule));
-        newRule[form][field] = value;
-        this.setState({rule: newRule});
+        this.setState((prevState, props) => {
+            let currentRule = prevState.rule
+            let newRule = JSON.parse(JSON.stringify(currentRule));
+            newRule[form][field] = value; 
+            return({
+            rule: newRule
+            });
+        });
     };
 
     handleRuleNameChange = (newName, form) => {

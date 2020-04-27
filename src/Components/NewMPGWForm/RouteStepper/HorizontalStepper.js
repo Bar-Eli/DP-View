@@ -121,6 +121,7 @@ class HorizontalStepper extends Component {
             setParams={this.handleRuleChange}
             validationHandler={this.handleStepValidation}
             currFilter={this.state.rule.filter}
+            details={this.props.details}
           />
         );
       case 3:

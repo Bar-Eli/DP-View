@@ -7,6 +7,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Grid from "@material-ui/core/Grid";
+import BackendRequests from "../../../BackendHandlers/BackendRequests";
+
 
 const useStyles = (theme) => ({
   root: {
@@ -14,6 +18,9 @@ const useStyles = (theme) => ({
       margin: theme.spacing(1),
       width: 200,
     },
+  },
+  container: {
+    justifyContent: "center"
   },
   center: {
     width: "auto",
@@ -40,11 +47,12 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "default",
       dpasService: undefined,
-      showDpas: "none",
-      showUpload: "none",
+      filterType: "green",
       fileName: "",
+      useExistingSchema: false,
+      schemas: []
     };
-
+    
     this.props.validationHandler(true);
   }
 
@@ -54,8 +62,7 @@ class FilterForm extends Component {
       schemaBtnColor: "primary",
       dpasBtnColor: "default",
       greenBtnBackground: "#e0e0e0",
-      showDpas: "none",
-      showUpload: "inline-flex",
+      filterType: "schema"
     });
     this.props.setParams("schema", "filterType", "filter");
   };
@@ -66,8 +73,7 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "primary",
       greenBtnBackground: "#e0e0e0",
-      showDpas: "inline-flex",
-      showUpload: "none",
+      filterType: "dpas"
     });
     this.props.setParams("dpass", "filterType", "filter");
   };
@@ -78,8 +84,7 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "default",
       greenBtnBackground: "green",
-      showDpas: "none",
-      showUpload: "none",
+      filterType: "green"
     });
     this.props.setParams("green", "filterType", "filter");
   };
@@ -97,86 +102,107 @@ class FilterForm extends Component {
     this.props.setParams(fileContent, "schemaContent", "filter");
   };
 
+
+  renderSchemasSelect = () => {
+    let schemas = this.state.schemas
+    let options = []
+    options = schemas.map((schema, index) => {
+        return (<MenuItem id={index} value={schema}>{schema}</MenuItem>);
+    });
+    return options
+  }
+
+
   componentDidMount() {
     this.greenBtnClick();
+  }
+
+  async componentWillMount() {
+    let respSchemas = await BackendRequests.getSchemas(this.props.details.clusterName, this.props.details.testOrProd, "local")
+    this.setState({
+        schemas: respSchemas
+    })
+  }
+
+  renderFilterForm = (classes) => {
+    if (this.state.filterType == "dpas") {
+      return (
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">DPAS service</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={this.state.dpasService}
+            onChange={this.handleChangeDpas}>
+            <MenuItem value={"Salim"}>Salim</MenuItem>
+            <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
+            <MenuItem value={"Nimbus"}>Nimbus</MenuItem>
+          </Select>
+        </FormControl>
+      )
+    } else if (this.state.filterType == "schema") {
+      return (
+        <FormControl style={{"width": "100%"}}>
+          <Grid container spacing={1}>
+            <Grid container item xs={12} justify="center" spacing={3}>
+              <Grid item xs={4} spacing={2}>
+                <ButtonGroup variant="contained" color="primary">
+                  <Button onClick={() => this.setState({useExistingSchema: true})}>Use Existing Schema</Button>
+                  <Button onClick={() => this.setState({useExistingSchema: false})}>Upload New Schema</Button>
+                </ButtonGroup>
+              </Grid>
+            </Grid>
+            <Grid container item xs={12}  justify="center" spacing={3}>
+              <Grid item xs={4}  spacing={2} >
+                { this.state.useExistingSchema == true ?
+                  <Select
+                      value=""
+                      onChange={e => { return null}}
+                      displayEmpty
+                      style={{minWidth: "200px"}}
+                      inputProps={{ 'aria-label': 'Without label' }}>
+                      {this.renderSchemasSelect()}
+                  </Select>
+                :
+                  <React.Fragment>
+                    <input
+                      accept="text/xml,application/json,text/xsl,text/xsd"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={this.uploadFile}/>
+                    <label htmlFor="contained-button-file" style={{marginLeft: "1rem"}}>
+                      <Button variant="contained" color="default" component="span"  startIcon={<CloudUploadIcon />}>Upload</Button>
+                    </label>
+                    <Typography className={classes.fileName}>
+                      {this.state.fileName}
+                    </Typography>
+                  </React.Fragment>
+                }
+              </Grid>
+            </Grid>
+          </Grid>
+        </FormControl>
+      )
+    } else {
+      return 
+    }
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <React.Fragment>
+        <div className={classes.root} noValidate>
+          <Button variant="contained" color={this.state.greenBtnColor} style={{ background: this.state.greenBtnBackground }} onClick={this.greenBtnClick}>Green Route</Button>
+          <Button variant="contained" color={this.state.schemaBtnColor} onClick={this.schemaBtnClick}>Schema</Button>
+          <Button variant="contained" color={this.state.dpasBtnColor} onClick={this.dpasBtnClick}>DPAS</Button>
+        </div>
         <form className={classes.root} noValidate autoComplete="off">
-          <br />
-
-          <Button
-            variant="contained"
-            color={this.state.greenBtnColor}
-            style={{ background: this.state.greenBtnBackground }}
-            onClick={this.greenBtnClick}
-          >
-            Green Route
-          </Button>
-          <Button
-            variant="contained"
-            color={this.state.schemaBtnColor}
-            onClick={this.schemaBtnClick}
-          >
-            Schema
-          </Button>
-          <Button
-            variant="contained"
-            color={this.state.dpasBtnColor}
-            onClick={this.dpasBtnClick}
-          >
-            DPAS
-          </Button>
-          <br />
-          <FormControl style={{ display: this.state.showDpas }}>
-            <InputLabel id="demo-simple-select-label">DPAS service</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={this.state.dpasService}
-              onChange={this.handleChangeDpas}
-            >
-              <MenuItem value={"Salim"}>Salim</MenuItem>
-              <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
-              <MenuItem value={"Nimbus"}>Nimbus</MenuItem>
-            </Select>
-          </FormControl>
-
-          <br />
-          <div
-            //className={classes.centerMargin}
-            style={{ display: this.state.showUpload, width: "auto" }}
-          >
-            <input
-              accept="text/xml,application/json,text/xsl,text/xsd"
-              className={classes.input}
-              id="contained-button-file"
-              multiple
-              type="file"
-              onChange={this.uploadFile}
-            />
-            <label htmlFor="contained-button-file">
-              <Button
-                variant="contained"
-                color="default"
-                component="span"
-                className={classes.button}
-                startIcon={<CloudUploadIcon />}
-              >
-                Upload
-              </Button>
-            </label>
-            <Typography className={classes.fileName}>
-              {this.state.fileName}
-            </Typography>
-          </div>
+          {this.renderFilterForm(classes)}
         </form>
-        <br />
-        <br />
-      </div>
+      </React.Fragment>
     );
   }
 }

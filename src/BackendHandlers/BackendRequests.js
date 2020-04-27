@@ -2,8 +2,8 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
     // CONSTANTS
-    static BACKEND_URL = "http://localhost:4000";
-    // static BACKEND_URL = "http://localhost:4000";
+    //static BACKEND_URL = "http://10.0.3.8:4000";
+     static BACKEND_URL = "http://localhost:4000";
 
     /**
      * Get list of clusters for input choosing
@@ -272,6 +272,21 @@ export default class BackendRequests {
         };
         let response = await fetch(url, options);
         let responseData = await response.json();
+    }
+
+    /**
+     * Upload file to DP using backend request to git.
+     * @param file -- JSON representing schema file from user input
+     * @returns {Promise<void>}
+     */
+    static async getSchemas(clusterName, clusterType, parent_directory) {
+        const url = this.BACKEND_URL + `/api/filestore/${clusterName}/${clusterType}/${parent_directory}`;
+        const options = {
+            method: "GET",
+        };
+        let response = await fetch(url, options);
+        let responseData = await response.json();
+        return responseData
     }
 
 }

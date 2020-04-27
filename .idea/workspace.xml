@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackendHandlers/BackendRequests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/NewRoutePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/AddressForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/AddressForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/NameForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/NameForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/RouteStepper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ImproveUI" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -269,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587903174982</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Working version with port check">
+      <created>1587976699383</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1587976699384</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,6 +343,7 @@
     <MESSAGE value="Input improvement + logo testing" />
     <MESSAGE value="Finished details validation" />
     <MESSAGE value="Disabled debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disabled debugging" />
+    <MESSAGE value="Working version with port check" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working version with port check" />
   </component>
 </project>

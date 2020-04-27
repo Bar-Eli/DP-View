@@ -39,21 +39,22 @@ function getSteps() {
 class RouteStepper extends Component {
     constructor(props) {
         super(props);
-        this.isDebug = false;
-        // this.isDebug = true;
+        // this.isDebug = false;
+        this.isDebug = true;
         this.state = {
             detailsFormTouched: false,
             projectNameTaken: false,
             popUpStatus: false,
             stepIsValid: false,
-            step: 0,
-            // step: 1, // DEBUG
+            // step: 0,
+            step: 1, // DEBUG
             params: {
                 details: {
                     projectNameValue: "",
                     projectMadorValue: "",
                     projectTeamValue: "",
-                    clusterName: "",
+                    // clusterName: "",
+                    clusterName: "ZadokCluster", // DEBUG
                     testOrProd: "test",
                 },
                 rules: [],

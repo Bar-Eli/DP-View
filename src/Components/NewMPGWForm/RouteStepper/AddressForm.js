@@ -138,23 +138,11 @@ class AddressForm extends Component {
     };
 
     handleChangeSecondary = e => {
-        this.props.setParams(
-            e.target.value,
-            "secondaryAddress",
-            this.props.whichForm
-        );
-        if (this.state.httpBtnColor === "primary") {
-            this.validator.message(
-                "Secondary Address",
-                e.target.value,
-                "required|integer"
-            );
-        } else if (this.state.mqBtnColor === "primary") {
-            this.validator.message(
-                "Secondary Address",
-                e.target.value,
-                "required"
-            );
+        this.props.setParams(e.target.value, "secondaryAddress", this.props.whichForm);
+        if (this.state.protocol === "http") {
+            this.validator.message("Secondary Address", e.target.value, "required|integer");
+        } else if (this.state.protocol === "mq") {
+            this.validator.message("Secondary Address", e.target.value, "required");
         }
         this.checkIfAllValid();
     };
@@ -184,9 +172,11 @@ class AddressForm extends Component {
         return (
             <FormControl>
                 <InputLabel>Network</InputLabel>
-                <Select onChange={e => {
-                    this.handleChangeNetwork(e);
-                }}>
+                <Select
+                    onChange={e => {
+                        this.handleChangeNetwork(e);
+                    }}
+                    defaultValue={this.props.currRule.network}>
                     {this.state.networks.map((el) => {
                         return <MenuItem value={el}>{el}</MenuItem>;
                     })}
@@ -268,9 +258,6 @@ class AddressForm extends Component {
     };
 
     getSecondaryHelperText = () => {
-        const x = !this.validator.fieldValid("Secondary Address");
-        const y = (this.props.currRule.primaryAddress != null);
-        const z = (!this.props.portFree);
         if (!this.props.portFree) {
             return "This port is already taken";
         }
@@ -287,6 +274,7 @@ class AddressForm extends Component {
                 }}
                 error={(!this.validator.fieldValid("Secondary Address") && this.props.currRule.primaryAddress != null) || (!this.props.portFree)}
                 helperText={this.getSecondaryHelperText()}
+                defaultValue={this.state.secondaryAddress}
             />
         );
     };

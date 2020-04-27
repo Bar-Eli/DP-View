@@ -59,8 +59,8 @@ class HorizontalStepper extends Component {
         this.state = {
             stepIsValid: false,
             // stepIsValid: true, // DEBUG
-            step: 0,
-            // step: 1, // DEBUG
+            // step: 0,
+            step: 1, // DEBUG
             srcPortFree: true,
             completed: [],
             skipped: [],

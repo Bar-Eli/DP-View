@@ -158,7 +158,7 @@ class FilterForm extends Component {
               <Grid item xs={4}  spacing={2} >
                 { this.state.useExistingSchema == true ?
                   <Select
-                      value={this.state.schemaName}
+                      value={this.props.currFilter.schemaPath}
                       onChange={this.onSchemaChange}
                       displayEmpty
                       style={{minWidth: "200px"}}
@@ -178,7 +178,7 @@ class FilterForm extends Component {
                       <Button variant="contained" color="default" component="span"  startIcon={<CloudUploadIcon />}>Upload</Button>
                     </label>
                     <Typography className={classes.fileName}>
-                      {this.state.schemaName}
+                      {this.props.currFilter.schemaPath}
                     </Typography>
                   </React.Fragment>
                 }

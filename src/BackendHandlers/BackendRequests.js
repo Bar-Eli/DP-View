@@ -120,9 +120,21 @@ export default class BackendRequests {
         const response = await fetch(url);
         const resp = await response.json();
         // status is 409 if exists, 404 otherwise (not found).
-        const x = resp.status === 409;
-        return x;
-        // return resp.status === 409;
+        return resp.status === 409;
+    }
+
+    /**
+     * Check if given source port in cluster is available
+     * @param port
+     * @param clusterName
+     * @param testOrProd
+     * @returns {Promise<*>} -- true if port is free, false otherwise.
+     */
+    static async isPortFree(port, clusterName, testOrProd) {
+        const url = this.BACKEND_URL + "/api/status/" + clusterName + "/" + testOrProd + "/port/" + port;
+        const response = await fetch(url);
+        const resp = await response.json();
+        return resp.message;
     }
 
     /**
@@ -201,8 +213,7 @@ export default class BackendRequests {
             let obj = {};
             let hostname = clusterDetails["nodes"][i].host;
             obj["message"] = responseData.message;
-            if (response.status === 200) obj["status"] = true;
-            else obj["status"] = false;
+            obj["status"] = response.status === 200;
             clusterResponseStatus[hostname] = obj;
         }
         return clusterResponseStatus;

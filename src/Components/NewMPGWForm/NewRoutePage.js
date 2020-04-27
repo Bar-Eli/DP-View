@@ -7,8 +7,17 @@ import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import LoadingComponent from '../LoadingComponent';
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import {ThemeProvider} from "@material-ui/styles";
 
-const useStyles = theme => ({
+
+const darkTheme = createMuiTheme({
+    palette: {
+        type: 'dark',
+    },
+});
+
+const useStyles = (theme) => ({
     root: {
         "& > *": {
             margin: theme.spacing(1)
@@ -64,12 +73,12 @@ class NewRoutePage extends Component {
         this.inputParams = inputJson;
     };
 
-    
+
     setClusterNodesHostNameArr = async (clusterName, testOrProd) => {
         // Get array of nodes from the API
         let clusterNodesHostname = await BackendRequests.getClusterNodesHostname(clusterName, testOrProd);
         // Set the array as the state of clusterNodesHostName
-        this.setState({ clusterNodesHostName: clusterNodesHostname})
+        this.setState({clusterNodesHostName: clusterNodesHostname})
     };
 
     hideCreate = () => {
@@ -95,20 +104,19 @@ class NewRoutePage extends Component {
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
 
                 <br/>
-                {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ? 
-                <LoadingComponent 
-                style={{display: this.state.showCreate}} 
-                createMPGW={this.createMPGW}
-                clusterNodesHostName={this.state.clusterNodesHostName}
-                /> 
-                : 
-                <Alert
-                 variant="filled" 
-                 severity="error" 
-                 style={{display: this.state.showCreate}}>
-                This is an error alert — Something happend!
-                </Alert>}
-                
+                {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ?
+                    <LoadingComponent
+                        style={{display: this.state.showCreate}}
+                        createMPGW={this.createMPGW}
+                        clusterNodesHostName={this.state.clusterNodesHostName}
+                    />
+                    :
+                    <Alert
+                        variant="filled"
+                        severity="error"
+                        style={{display: this.state.showCreate}}>
+                        This is an error alert — Something happend!
+                    </Alert>}
             </div>
         );
     }

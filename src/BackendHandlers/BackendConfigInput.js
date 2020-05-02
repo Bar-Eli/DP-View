@@ -155,4 +155,14 @@ export default class BackendConfigInput {
     }
     return urlParamsList;
   }
+  static generateCreationUrlParams(input, clusterDetails, hostname) {
+    let urlParams;
+    const dpCredentials = input["dpCredentials"];
+    const nodes = clusterDetails["nodes"];
+    for (let i = 0; i < nodes.length; i++) {
+      if(nodes[i]["host"] === hostname)
+        urlParams = `?host=${nodes[i]["host"]}&port=${nodes[i]["port"]}&username=${dpCredentials["username"]}&password=${dpCredentials["password"]}&domain=${clusterDetails["domain"]}`;
+    }
+    return urlParams;
+  }
 }

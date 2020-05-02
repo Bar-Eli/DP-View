@@ -42,16 +42,16 @@ const useStyles = theme => ({
 class AddressForm extends Component {
     constructor(props) {
         super(props);
-        // verify if form is complete somehow
         this.state = {
             httpBtnColor: "primary",
             mqBtnColor: "default",
-            network: undefined,
             protocol: "http",
             primaryAddress: "IP / URL",
             secondaryAddress: "Port",
             showMethods: "block",
+
             methodList: ["POST", "PUT", "GET"],
+            network: undefined,
             checkedValues: {POST: false, PUT: false, GET: false},
             networks: [],
             vips: [],
@@ -60,10 +60,27 @@ class AddressForm extends Component {
             mqManagers: []
         };
 
+        if (this.props.currRule.protocol === "mq") {
+            Object.assign(this.state, {
+                mqBtnColor: "primary",
+                httpBtnColor: "default",
+                showMethods: "none",
+                primaryAddress: "Queue manager",
+                secondaryAddress: "Queue name",
+                protocol: "mq",
+            })
+        } else if (this.props.currRule.protocol === "http") {
+            let checkedValues = JSON.parse(JSON.stringify(this.state.checkedValues));
+            for(const method of this.props.currRule.methods) {
+                checkedValues[method] = true;
+            }
+            this.state.checkedValues = checkedValues;
+        }
         this.assignClusterDetails().then();
+
         this.initValidator();
 
-        this.props.setParams("http", "protocol", this.props.whichForm); // Default protocol
+
     }
 
     initValidator = () => {
@@ -75,9 +92,9 @@ class AddressForm extends Component {
 
         this.checkIfAllValid();
 
-        if (this.props.whichForm === "destAddr") {
-            this.props.validationHandler(false);
-        }
+        // if (this.props.whichForm === "destAddr") {
+        //     this.props.validationHandler(false);
+        // }
     };
 
     assignClusterDetails = async () => {
@@ -88,6 +105,12 @@ class AddressForm extends Component {
         const mqEnv = await BackendRequests.getMqEnvironments(details["clusterName"], details["testOrProd"]);
         const mqMgr = await BackendRequests.getMqManagers(details["clusterName"], details["testOrProd"]);
         this.setState({mqEnvironments: Object.keys(mqEnv), mqManagers: mqMgr});
+
+        if (mqMgr.includes(this.props.currRule.primaryAddress)) {
+            this.setState({mqOptions: "mgr"});
+        }
+
+
     };
 
     checkIfAllValid = () => {
@@ -176,17 +199,12 @@ class AddressForm extends Component {
                     onChange={e => {
                         this.handleChangeNetwork(e);
                     }}
-                    defaultValue={this.props.currRule.network}>
+                    value={this.props.currRule.network}>
                     {this.state.networks.map((el) => {
                         return <MenuItem value={el}>{el}</MenuItem>;
                     })}
                 </Select>
-                <FormHelperText
-                    error={
-                        !this.validator.fieldValid("Network") &&
-                        this.props.currRule.network != null
-                    }
-                >
+                <FormHelperText error={!this.validator.fieldValid("Network") && this.props.currRule.network != null}>
                     the network field is required.
                 </FormHelperText>
             </FormControl>
@@ -215,9 +233,11 @@ class AddressForm extends Component {
         return (
             <FormControl>
                 <InputLabel>{this.state.primaryAddress}</InputLabel>
-                <Select onChange={e => {
-                    this.handleChangePrimary(e);
-                }}>
+                <Select
+                    value={this.props.currRule.primaryAddress}
+                    onChange={e => {
+                        this.handleChangePrimary(e);
+                    }}>
                     {this.renderPrimaryOptions()}
                 </Select>
                 <FormHelperText
@@ -243,6 +263,7 @@ class AddressForm extends Component {
                            this.props.currRule.primaryAddress != null
                        }
                        helperText={this.validator.getErrorMessages()["Primary Address"]}
+                       value={this.props.currRule.primaryAddress}
             />
         );
     };
@@ -274,7 +295,7 @@ class AddressForm extends Component {
                 }}
                 error={(!this.validator.fieldValid("Secondary Address") && this.props.currRule.primaryAddress != null) || (!this.props.portFree)}
                 helperText={this.getSecondaryHelperText()}
-                defaultValue={this.state.secondaryAddress}
+                value={this.props.currRule.secondaryAddress}
             />
         );
     };
@@ -304,6 +325,7 @@ class AddressForm extends Component {
 
     render() {
         const {classes} = this.props;
+
         return (
             <div>
                 <form className={classes.root} noValidate autoComplete="off">

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, {Component} from "react";
+import {withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -39,22 +39,22 @@ function getSteps() {
 class RouteStepper extends Component {
     constructor(props) {
         super(props);
-        // this.isDebug = false;
-        this.isDebug = true;
+        this.isDebug = false;
+        // this.isDebug = true;
         this.state = {
             detailsFormTouched: false,
             projectNameTaken: false,
             popUpStatus: false,
             stepIsValid: false,
-            // step: 0,
-            step: 1, // DEBUG
+            step: 0,
+            // step: 1, // DEBUG
             params: {
                 details: {
                     projectNameValue: "",
                     projectMadorValue: "",
                     projectTeamValue: "",
-                    // clusterName: "",
-                    clusterName: "ZadokCluster", // DEBUG
+                    clusterName: "",
+                    // clusterName: "ZadokCluster", // DEBUG
                     testOrProd: "test",
                 },
                 rules: [],
@@ -63,6 +63,7 @@ class RouteStepper extends Component {
                     password: "",
                 },
             },
+            ruleToEdit: null
         };
     }
 
@@ -70,9 +71,9 @@ class RouteStepper extends Component {
         let object = this.state.params[form];
         object[paramName] = value;
         if (form === "details") {
-            this.setState({ details: object });
+            this.setState({details: object});
         } else if (form === "dpCredentials") {
-            this.setState({ dpCredentials: object });
+            this.setState({dpCredentials: object});
         } else {
             alert("Something went wrong, no such form");
         }
@@ -81,13 +82,20 @@ class RouteStepper extends Component {
     addRule = (rule) => {
         let newParams = JSON.parse(JSON.stringify(this.state.params));
         newParams["rules"].push(rule);
-        this.setState({ params: newParams });
+        this.setState({params: newParams});
     };
 
     removeRule = (index) => {
         let newParams = JSON.parse(JSON.stringify(this.state.params));
         newParams["rules"].splice(index, 1);
-        this.setState({ params: newParams });
+        this.setState({params: newParams});
+    };
+
+    editRule = (index) => {
+        const ruleToEdit = JSON.parse(JSON.stringify(this.state.params.rules[index]));
+        this.setState({ruleToEdit: ruleToEdit});
+        this.removeRule(index);
+        this.setActiveStep(this.state.step - 1);
     };
 
     getStepContent = (step) => {
@@ -108,11 +116,12 @@ class RouteStepper extends Component {
                         validationHandler={this.handleStepValidation}
                         addRule={this.addRule}
                         details={this.state.params.details}
+                        ruleToEdit={this.state.ruleToEdit}
                     />
                 );
             case 2:
                 return (
-                    <RuleTable data={this.state.params} removeRule={this.removeRule} />
+                    <RuleTable data={this.state.params} removeRule={this.removeRule} editRule={this.editRule}/>
                 );
             default:
                 return "Unknown step";
@@ -129,12 +138,12 @@ class RouteStepper extends Component {
 
     handleStepValidation = (flag) => {
         // Set current step status, valid or not
-        this.setState({ stepIsValid: flag });
+        this.setState({stepIsValid: flag});
         // this.setState({ stepIsValid: true }); // DEBUG
     };
 
     detailsFormWasTouched = () => {
-        this.setState({ detailsFormTouched: true });
+        this.setState({detailsFormTouched: true});
     };
 
     handleNext = async () => {
@@ -161,7 +170,7 @@ class RouteStepper extends Component {
 
     handleFinish = () => {
         // Handle a press on the finish button
-        this.setState({ popUpStatus: true });
+        this.setState({popUpStatus: true});
     };
 
     handleNextStepForFinish = () => {
@@ -172,7 +181,7 @@ class RouteStepper extends Component {
     };
 
     handlePopUpClose = () => {
-        this.setState({ popUpStatus: false });
+        this.setState({popUpStatus: false});
     };
 
     handleReset = () => {
@@ -181,7 +190,7 @@ class RouteStepper extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         const activeStep = this.state.step;
         const allValid = this.state.stepIsValid;
         const steps = getSteps();
@@ -247,4 +256,4 @@ class RouteStepper extends Component {
     }
 }
 
-export default withStyles(useStyles, { withTheme: true })(RouteStepper);
+export default withStyles(useStyles, {withTheme: true})(RouteStepper);

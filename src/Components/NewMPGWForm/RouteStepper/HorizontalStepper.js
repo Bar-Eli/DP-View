@@ -59,25 +59,25 @@ class HorizontalStepper extends Component {
         this.state = {
             stepIsValid: false,
             // stepIsValid: true, // DEBUG
-            // step: 0,
-            step: 1, // DEBUG
+            step: 0,
+            // step: 4, // DEBUG
             srcPortFree: true,
             completed: [],
             skipped: [],
             rule: {
                 name: null,
                 srcAddr: {
-                    network: null,
+                    network: "",
                     protocol: "",
-                    primaryAddress: null,
-                    secondaryAddress: null,
+                    primaryAddress: "",
+                    secondaryAddress: "",
                     methods: [],
                 },
                 destAddr: {
-                    network: null,
+                    network: "",
                     protocol: "",
-                    primaryAddress: null,
-                    secondaryAddress: null,
+                    primaryAddress: "",
+                    secondaryAddress: "",
                     methods: [],
                 },
                 filter: {
@@ -95,6 +95,11 @@ class HorizontalStepper extends Component {
                 },
             },
         };
+
+        if (this.props.ruleToEdit !== null) {
+            Object.assign(this.state, {rule: this.props.ruleToEdit,});
+        }
+
     }
 
     getStepContent = (step) => {
@@ -181,7 +186,7 @@ class HorizontalStepper extends Component {
 
     handleRuleChange = (value, field, form) => {
         this.setState((prevState, props) => {
-            let currentRule = prevState.rule
+            let currentRule = prevState.rule;
             let newRule = JSON.parse(JSON.stringify(currentRule));
             newRule[form][field] = value; 
             return({

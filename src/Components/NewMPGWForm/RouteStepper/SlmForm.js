@@ -31,7 +31,16 @@ class SlmForm extends Component {
     constructor(props) {
         super(props);
         this.validator = new SimpleReactValidator();
+
+        this.state = {
+            maxFileCount: this.props.currSlm.maxFileCount,
+            maxFileSize: this.props.currSlm.maxFileSize
+        };
         this.checkIfAllValid();
+        this.validator.message("File Count", this.props.currSlm.maxFileCount, "integer");
+        this.validator.message("File Size", this.props.currSlm.maxFileSize, "integer");
+
+
     }
 
     checkIfAllValid = () => {
@@ -55,24 +64,23 @@ class SlmForm extends Component {
                         <div className={classes.root}>
                             <TextField
                                 label="Max files count"
-                                value={this.props.currSlm.maxFileCount}
+                                value={this.state.maxFileCount}
                                 onChange={e => {
                                     const val = parseInt(e.target.value);
                                     this.props.setParams(val, "maxFileCount", "slm");
                                     this.validator.message("File Count", e.target.value, "integer");
+                                    this.setState({maxFileCount: e.target.value});
                                     this.checkIfAllValid();
                                 }}
-                                error={
-                                    !this.validator.fieldValid("File Count") &&
-                                    this.props.currSlm.maxFileCount != null
-                                }
+                                error={!this.validator.fieldValid("File Count") && this.props.currSlm.maxFileCount != null}
                                 helperText={this.validator.getErrorMessages()["File Count"]}
                             />
                             <FormControl>
                                 <InputLabel>Time Unit</InputLabel>
-                                <Select onChange={e => {
-                                    this.handleChange(e, "fileCountTimeUnit");
-                                }}>
+                                <Select
+                                    onChange={e => {this.handleChange(e, "fileCountTimeUnit");}}
+                                    value={this.props.currSlm.fileCountTimeUnit}
+                                >
                                     <MenuItem value={1}>per second</MenuItem>
                                     <MenuItem value={60}>per minute</MenuItem>
                                     <MenuItem value={3600}>per hour</MenuItem>
@@ -86,25 +94,23 @@ class SlmForm extends Component {
                         <div className={classes.root}>
                             <TextField
                                 label="Max file size"
-                                value={this.props.currSlm.maxFileSize}
+                                value={this.state.maxFileSize}
                                 onChange={e => {
                                     const val = parseInt(e.target.value);
                                     this.props.setParams(val, "maxFileSize", "slm");
-                                    // this.handleChange(e, "maxFileSize");
                                     this.validator.message("File Size", e.target.value, "integer");
+                                    this.setState({maxFileSize: e.target.value});
                                     this.checkIfAllValid();
                                 }}
-                                error={
-                                    !this.validator.fieldValid("File Size") &&
-                                    this.props.currSlm.maxFileSize != null
-                                }
+                                error={!this.validator.fieldValid("File Size") && this.props.currSlm.maxFileSize != null}
                                 helperText={this.validator.getErrorMessages()["File Size"]}
                             />
                             <FormControl>
                                 <InputLabel>Size Unit</InputLabel>
-                                <Select onChange={e => {
-                                    this.handleChange(e, "fileSizeUnit");
-                                }}>
+                                <Select
+                                    onChange={e => {this.handleChange(e, "fileSizeUnit");}}
+                                    value={this.props.currSlm.fileSizeUnit}
+                                >
                                     <MenuItem value={"kb"}>KB</MenuItem>
                                     <MenuItem value={"mb"}>MB</MenuItem>
                                     <MenuItem value={"gb"}>GB</MenuItem>
@@ -112,9 +118,10 @@ class SlmForm extends Component {
                             </FormControl>
                             <FormControl>
                                 <InputLabel>Time Unit</InputLabel>
-                                <Select onChange={e => {
-                                    this.handleChange(e, "fileSizeTimeUnit");
-                                }}>
+                                <Select
+                                    onChange={e => {this.handleChange(e, "fileSizeTimeUnit");}}
+                                    value={this.props.currSlm.fileSizeTimeUnit}
+                                >
                                     <MenuItem value={1}>per second</MenuItem>
                                     <MenuItem value={60}>per minute</MenuItem>
                                     <MenuItem value={3600}>per hour</MenuItem>

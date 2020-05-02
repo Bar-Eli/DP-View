@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1544b7dc-9f82-449e-bf73-a48e8ce2ee3e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -349,30 +349,7 @@
     <MESSAGE value="Disabled debugging" />
     <MESSAGE value="Working version with port check" />
     <MESSAGE value="temp pre merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="temp pre merge" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js</url>
-          <line>249</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js</url>
-          <line>262</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Components/NewMPGWForm/RouteStepper/HorizontalStepper.js</url>
-          <line>261</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Merge branch 'changingCreateMpgw' of https://github.com/Bar-Eli/DP-View&#10;&#10; Conflicts:&#10;&#9;src/BackendHandlers/BackendRequests.js&#10;&#9;src/Components/LoadingComponent.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'changingCreateMpgw' of https://github.com/Bar-Eli/DP-View&#10;&#10; Conflicts:&#10;&#9;src/BackendHandlers/BackendRequests.js&#10;&#9;src/Components/LoadingComponent.js" />
   </component>
 </project>

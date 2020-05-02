@@ -68,7 +68,7 @@ class HorizontalStepper extends Component {
                 name: null,
                 srcAddr: {
                     network: "",
-                    protocol: "",
+                    protocol: "http",
                     primaryAddress: "",
                     secondaryAddress: "",
                     methods: [],

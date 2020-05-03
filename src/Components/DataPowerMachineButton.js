@@ -47,7 +47,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class MachineButton extends Component {
+class DataPowerMachineButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,6 +90,7 @@ class MachineButton extends Component {
     if (this.props.create) {
       this.createMPGW();
       this.props.handleCreate();
+
     }
     return (
       <div className={classes.root}>
@@ -123,4 +124,4 @@ class MachineButton extends Component {
   }
 }
 
-export default withStyles(useStyles, { withTheme: true })(MachineButton);
+export default withStyles(useStyles, { withTheme: true })(DataPowerMachineButton);

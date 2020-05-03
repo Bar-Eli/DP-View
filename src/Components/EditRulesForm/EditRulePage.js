@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import LoadingComponent from "../LoadingComponent";
+import MpgwCreation from "../MpgwCreation";
 
 const useStyles = theme => ({
   root: {
@@ -53,9 +53,10 @@ class EditRulesForm extends Component {
     window.location.reload(false);
   };
 
-  createMPGW = () => {
-    return BackendRequests.createNewMpgw(this.inputParams);
-  };
+  createMPGW = async (hostname) => {
+    const response = await BackendRequests.createNewMpgw(this.inputParams, hostname);
+    return response;
+};
 
   setInput = (inputJson) => {
     this.setState({showCreate: 'block'});
@@ -92,11 +93,11 @@ class EditRulesForm extends Component {
         <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
         
         {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ? 
-                <LoadingComponent 
-                style={{display: this.state.showCreate}} 
+                <MpgwCreation
+                style={{display: this.state.showCreate}}
                 createMPGW={this.createMPGW}
                 clusterNodesHostName={this.state.clusterNodesHostName}
-                /> 
+            />
                 : 
                 <Alert
                  variant="filled" 

@@ -6,7 +6,7 @@ import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import LoadingComponent from '../LoadingComponent';
+import MpgwCreation from '../MpgwCreation';
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {ThemeProvider} from "@material-ui/styles";
 
@@ -105,7 +105,7 @@ class NewRoutePage extends Component {
 
                 <br/>
                 {this.state.clusterNodesHostName.length !== 0 && this.state.showCreate !== 'none' ?
-                    <LoadingComponent
+                    <MpgwCreation
                         style={{display: this.state.showCreate}}
                         createMPGW={this.createMPGW}
                         clusterNodesHostName={this.state.clusterNodesHostName}

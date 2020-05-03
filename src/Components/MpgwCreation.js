@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import MachineButton from "./MachineButtonComponent";
+import DataPowerMachineButton from "./DataPowerMachineButton";
 
 const useStyles = (theme) => ({
   root: {
@@ -54,7 +54,7 @@ class MpgwCreation extends Component {
           <ul className={classes.ul}>
             {this.props.clusterNodesHostName.map((item) => (
               <li key={item} value={item}>
-                <MachineButton
+                <DataPowerMachineButton
                   style={this.props.style}
                   hostname={item}
                   createMpgw={this.props.createMPGW}

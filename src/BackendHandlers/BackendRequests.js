@@ -2,8 +2,8 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
     // CONSTANTS
-    static BACKEND_URL = "http://10.0.3.8:4000";
-    // static BACKEND_URL = "http://localhost:4000";
+    // static BACKEND_URL = "http://10.0.3.8:4000";
+    static BACKEND_URL = "http://localhost:4000";
 
     /**
      * Get list of clusters for input choosing
@@ -193,31 +193,23 @@ export default class BackendRequests {
      * @param input -- User input params for MPGW creation.
      * @returns {Promise<void>}
      */
-    static async createNewMpgw(input) {
+    static async createNewMpgw(input, hostname) {
         const clusterDetails = await this.getClusterDetails(input);
-        const urlParamsList = BackendConfigInput.generateClusterUrlParams(
-            input,
-            clusterDetails
-        );
-        this.uploadFiles(input.rules);
+        const urlParams = BackendConfigInput.generateCreationUrlParams(input, clusterDetails, hostname);
         const data = JSON.stringify(input);
         const options = {
-            method: "POST",
-            body: data,
+          method: "POST",
+          body: data,
         };
-        let clusterResponseStatus = {};
-        for (let i = 0; i < urlParamsList.length; i++) {
-            let url = this.BACKEND_URL + "/api/template/mpgw" + urlParamsList[i];
-            let response = await fetch(url, options);
-            let responseData = await response.json();
-            let obj = {};
-            let hostname = clusterDetails["nodes"][i].host;
-            obj["message"] = responseData.message;
-            obj["status"] = response.status === 200;
-            clusterResponseStatus[hostname] = obj;
-        }
-        return clusterResponseStatus;
-    }
+        let url = this.BACKEND_URL + "/api/mpgw" + urlParams;
+        let response = await fetch(url, options);
+        let responseData = await response.json();
+        let obj = {};
+        obj["message"] = responseData.message;  
+        if (response.status === 200) obj["status"] = true;
+        else obj["status"] = false;
+        return obj;
+      }
 
     /**
      * Create New MPGW on DP, using http requests to backend

@@ -33,9 +33,6 @@ const NameForm = props => {
           <Button type="submit" color="primary" disabled={isSubmitting}>
             SUBMIT
           </Button>
-          <Button color="secondary" onClick={handleReset}>
-            CLEAR
-          </Button>
         </form>
       </div>
     );

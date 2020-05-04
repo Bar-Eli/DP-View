@@ -65,7 +65,7 @@ class HorizontalStepper extends Component {
             completed: [],
             skipped: [],
             rule: {
-                name: "sa",
+                name: "",
                 srcAddr: {
                     network: "",
                     protocol: "http",

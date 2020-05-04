@@ -6,16 +6,7 @@ import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import MpgwCreation from '../MpgwCreation';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {ThemeProvider} from "@material-ui/styles";
-
-
-const darkTheme = createMuiTheme({
-    palette: {
-        type: 'dark',
-    },
-});
+import MpgwCreation from '../MpgwCreation/MpgwCreation.js';
 
 const useStyles = (theme) => ({
     root: {

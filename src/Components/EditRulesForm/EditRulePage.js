@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
 import Navbar from "../Navbar";
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
-import MpgwCreation from "../MpgwCreation";
+import MpgwCreation from "../MpgwCreation/MpgwCreation.js";
 
 const useStyles = theme => ({
   root: {

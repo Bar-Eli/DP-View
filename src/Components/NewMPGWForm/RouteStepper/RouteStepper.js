@@ -46,8 +46,8 @@ class RouteStepper extends Component {
             projectNameTaken: false,
             popUpStatus: false,
             stepIsValid: false,
-            step: 0,
-            // step: 1, // DEBUG
+            // step: 0,
+            step: 1, // DEBUG
             params: {
                 details: {
                     projectNameValue: "",

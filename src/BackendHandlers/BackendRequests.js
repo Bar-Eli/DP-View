@@ -150,7 +150,7 @@ export default class BackendRequests {
           method: "POST",
           body: data,
         };
-        let url = this.BACKEND_URL + "/api/mpgw" + urlParams;
+        let url = this.BACKEND_URL + "/api/template/mpgw" + urlParams;
         let response = await fetch(url, options);
         let responseData = await response.json();
         let obj = {};
@@ -188,7 +188,7 @@ export default class BackendRequests {
         };
 
         for (let i = 0; i < urlParamsList.length; i++) {
-            let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
+            let url = this.BACKEND_URL + "/api/template/mpgw" + urlParamsList[i];
             let response = await fetch(url, options);
             let responseData = await response.json();
             console.log(responseData);

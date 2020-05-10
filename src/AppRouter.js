@@ -5,6 +5,7 @@ import NewRoutePage from "./Components/NewMPGWForm/NewRoutePage";
 // import LogoNFL from "./Components/Logo/LogoNFL";
 import EditRulesForm from "./Components/EditRulesForm/EditRulePage";
 import { Navbar } from "./Components/Navbar";
+import Home from "./Components/Home";
 
 
 function AppRouter() {
@@ -12,6 +13,7 @@ function AppRouter() {
         <Router>
             <Navbar />
             <Switch>
+                <Route path="/" exact component={Home} />
                 <Route path="/new" exact component={NewRoutePage} />
                 <Route path="/editRule" component={EditRulesForm} />
             </Switch>

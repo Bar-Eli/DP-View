@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
 import BackendRequests from "../../../BackendHandlers/BackendRequests";
+import { RadioGroup, FormControlLabel, Radio, FormLabel } from "@material-ui/core";
 
 
 const useStyles = (theme) => ({
@@ -40,21 +41,31 @@ const useStyles = (theme) => ({
 class FilterForm extends Component {
   constructor(props) {
     super(props);
-    // verify if form is complete somehow
+    let currentFilterType = this.props.currFilter.filterType;
     this.state = {
-      greenBtnBackground: "green",
-      greenBtnColor: "primary",
+      greenBtnBackground: "#e0e0e0",
+      greenBtnColor: "default",
       schemaBtnColor: "default",
       dpasBtnColor: "default",
       dpasService: undefined,
-      filterType: "green",
       schemaName: "",
       useExistingSchema: false,
       schemas: []
     };
-    
     this.props.validationHandler(true);
-    this.props.setParams("green", "filterType", "filter");
+    if (currentFilterType == "")
+      this.props.setParams("green", "filterType", "filter");
+  }
+
+  setInitFilter = () => {
+    this.setState((prevState, props) => {
+      if (props.currFilter.filterType == "schema")
+        return { schemaBtnColor: "primary" }
+      if (props.currFilter.filterType == "dpass")
+        return { dpasBtnColor: "primary" }
+      else
+        return { greenBtnColor: "primary" }
+    })
   }
 
   schemaBtnClick = () => {
@@ -63,7 +74,6 @@ class FilterForm extends Component {
       schemaBtnColor: "primary",
       dpasBtnColor: "default",
       greenBtnBackground: "#e0e0e0",
-      filterType: "schema"
     });
     this.props.setParams("schema", "filterType", "filter");
   };
@@ -74,7 +84,6 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "primary",
       greenBtnBackground: "#e0e0e0",
-      filterType: "dpass"
     });
     this.props.setParams("dpass", "filterType", "filter");
   };
@@ -85,7 +94,6 @@ class FilterForm extends Component {
       schemaBtnColor: "default",
       dpasBtnColor: "default",
       greenBtnBackground: "green",
-      filterType: "green"
     });
     this.props.setParams("green", "filterType", "filter");
   };
@@ -109,6 +117,9 @@ class FilterForm extends Component {
     this.props.setParams("", "schemaContent", "filter");
   }
 
+  onSchemaTypeChange = (event) => {
+    this.props.setParams(event.target.value , "schemaType", "filter");
+  }
 
   renderSchemasSelect = () => {
     let schemas = this.state.schemas
@@ -119,7 +130,20 @@ class FilterForm extends Component {
     return options
   }
 
-  async componentWillMount() {
+  renderSchemaTypeRadioGroup = () => {
+    return (
+      <FormControl component="fieldset">
+      <FormLabel component="legend">Schema Type</FormLabel>
+      <RadioGroup aria-label="schemaType" name="schemaType" value={this.props.currFilter.schemaType} onChange={this.onSchemaTypeChange}>
+        <FormControlLabel value="XML" control={<Radio />} label="XML" />
+        <FormControlLabel value="JSON" control={<Radio />} label="JSON" />
+      </RadioGroup>
+    </FormControl>
+    )
+}
+
+  async componentDidMount() {
+    this.setInitFilter()
     let respSchemas = await BackendRequests.getSchemas(this.props.details.clusterName, this.props.details.testOrProd, "local")
     this.setState({
         schemas: respSchemas
@@ -127,14 +151,14 @@ class FilterForm extends Component {
   }
 
   renderFilterForm = (classes) => {
-    if (this.state.filterType == "dpass") {
+    if (this.props.currFilter.filterType == "dpass") {
       return (
         <FormControl>
           <InputLabel id="demo-simple-select-label">DPAS service</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={this.state.dpasService}
+            value={this.props.currFilter.dpasFilter}
             onChange={this.handleChangeDpas}>
             <MenuItem value={"Salim"}>Salim</MenuItem>
             <MenuItem value={"Tzadok"}>Tzadok</MenuItem>
@@ -142,7 +166,7 @@ class FilterForm extends Component {
           </Select>
         </FormControl>
       )
-    } else if (this.state.filterType == "schema") {
+    } else if (this.props.currFilter.filterType == "schema") {
       return (
         <FormControl style={{"width": "100%"}}>
           <Grid container spacing={1}>
@@ -155,7 +179,7 @@ class FilterForm extends Component {
               </Grid>
             </Grid>
             <Grid container item xs={12}  justify="center" spacing={3}>
-              <Grid item xs={4}  spacing={2} >
+              <Grid item xs={0} spacing={4} >
                 { this.state.useExistingSchema == true ?
                   <Select
                       value={this.props.currFilter.schemaPath}
@@ -183,6 +207,9 @@ class FilterForm extends Component {
                   </React.Fragment>
                 }
               </Grid>
+              <Grid item xs={0} spacing={4} >
+                  {this.renderSchemaTypeRadioGroup()}
+              </Grid>
             </Grid>
           </Grid>
         </FormControl>
@@ -197,9 +224,9 @@ class FilterForm extends Component {
     return (
       <React.Fragment>
         <div className={classes.root} noValidate>
-          <Button variant="contained" color={this.state.greenBtnColor} style={{ background: this.state.greenBtnBackground }} onClick={this.greenBtnClick}>Green Route</Button>
-          <Button variant="contained" color={this.state.schemaBtnColor} onClick={this.schemaBtnClick}>Schema</Button>
-          <Button variant="contained" color={this.state.dpasBtnColor} onClick={this.dpasBtnClick}>DPAS</Button>
+            <Button variant="contained" color={this.state.greenBtnColor} style={{ background: this.state.greenBtnBackground }} onClick={this.greenBtnClick}>Green Route</Button>
+            <Button variant="contained" color={this.state.schemaBtnColor} onClick={this.schemaBtnClick}>Schema</Button>
+            <Button variant="contained" color={this.state.dpasBtnColor} onClick={this.dpasBtnClick}>DPAS</Button>
         </div>
         <form className={classes.root} noValidate autoComplete="off">
           {this.renderFilterForm(classes)}

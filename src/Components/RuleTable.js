@@ -69,8 +69,7 @@ export class RuleTable extends Component {
           <Chip
             color="secondary"
             label={
-              rowData.filter.dpasFilter.charAt(0).toUpperCase() +
-              rowData.filter.dpasFilter.slice(1)
+                rowData.filter.filterType
             }
           />
         </Tooltip>

@@ -2,8 +2,7 @@ import BackendConfigInput from "./BackendConfigInput.js";
 
 export default class BackendRequests {
     // CONSTANTS
-    // static BACKEND_URL = "http://10.0.3.8:4000";
-    static BACKEND_URL = "http://localhost:4000";
+    static BACKEND_URL = process.env.REACT_APP_API_URL;
 
     /**
      * Get list of clusters for input choosing
@@ -143,6 +142,7 @@ export default class BackendRequests {
      * @returns {Promise<void>}
      */
     static async createNewMpgw(input, hostname) {
+        this.uploadFiles(input.rules)
         const clusterDetails = await this.getClusterDetails(input);
         const urlParams = BackendConfigInput.generateCreationUrlParams(input, clusterDetails, hostname);
         const data = JSON.stringify(input);
@@ -150,7 +150,7 @@ export default class BackendRequests {
           method: "POST",
           body: data,
         };
-        let url = this.BACKEND_URL + "/api/mpgw" + urlParams;
+        let url = this.BACKEND_URL + "/api/template/mpgw" + urlParams;
         let response = await fetch(url, options);
         let responseData = await response.json();
         let obj = {};
@@ -188,7 +188,7 @@ export default class BackendRequests {
         };
 
         for (let i = 0; i < urlParamsList.length; i++) {
-            let url = this.BACKEND_URL + "/api/mpgw" + urlParamsList[i];
+            let url = this.BACKEND_URL + "/api/template/mpgw" + urlParamsList[i];
             let response = await fetch(url, options);
             let responseData = await response.json();
             console.log(responseData);

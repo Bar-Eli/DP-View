@@ -75,7 +75,7 @@ class HorizontalStepper extends Component {
                 },
                 destAddr: {
                     network: "",
-                    protocol: "",
+                    protocol: "http",
                     primaryAddress: "",
                     secondaryAddress: "",
                     methods: [],
@@ -84,7 +84,8 @@ class HorizontalStepper extends Component {
                     filterType: "",
                     dpasFilter: "",
                     schemaPath: "",
-                    schemaContent: ""
+                    schemaContent: "",
+                    schemaType: ""
                 },
                 slm: {
                     maxFileCount: null,

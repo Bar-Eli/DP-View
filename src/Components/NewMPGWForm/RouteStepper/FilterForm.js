@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
 import BackendRequests from "../../../BackendHandlers/BackendRequests";
+import { RadioGroup, FormControlLabel, Radio, FormLabel } from "@material-ui/core";
 
 
 const useStyles = (theme) => ({
@@ -116,6 +117,9 @@ class FilterForm extends Component {
     this.props.setParams("", "schemaContent", "filter");
   }
 
+  onSchemaTypeChange = (event) => {
+    this.props.setParams(event.target.value , "schemaType", "filter");
+  }
 
   renderSchemasSelect = () => {
     let schemas = this.state.schemas
@@ -125,6 +129,18 @@ class FilterForm extends Component {
     });
     return options
   }
+
+  renderSchemaTypeRadioGroup = () => {
+    return (
+      <FormControl component="fieldset">
+      <FormLabel component="legend">Schema Type</FormLabel>
+      <RadioGroup aria-label="schemaType" name="schemaType" value={this.props.currFilter.schemaType} onChange={this.onSchemaTypeChange}>
+        <FormControlLabel value="XML" control={<Radio />} label="XML" />
+        <FormControlLabel value="JSON" control={<Radio />} label="JSON" />
+      </RadioGroup>
+    </FormControl>
+    )
+}
 
   async componentDidMount() {
     this.setInitFilter()
@@ -163,7 +179,7 @@ class FilterForm extends Component {
               </Grid>
             </Grid>
             <Grid container item xs={12}  justify="center" spacing={3}>
-              <Grid item xs={4}  spacing={2} >
+              <Grid item xs={0} spacing={4} >
                 { this.state.useExistingSchema == true ?
                   <Select
                       value={this.props.currFilter.schemaPath}
@@ -190,6 +206,9 @@ class FilterForm extends Component {
                     </Typography>
                   </React.Fragment>
                 }
+              </Grid>
+              <Grid item xs={0} spacing={4} >
+                  {this.renderSchemaTypeRadioGroup()}
               </Grid>
             </Grid>
           </Grid>

@@ -3,7 +3,6 @@ import {withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import RouteStepper from "./RouteStepper/RouteStepper";
-import Navbar from "../Navbar";
 import Alert from '@material-ui/lab/Alert';
 import BackendRequests from "../../BackendHandlers/BackendRequests.js";
 import MpgwCreation from '../MpgwCreation/MpgwCreation.js';
@@ -79,19 +78,7 @@ class NewRoutePage extends Component {
     render() {
         const {classes} = this.props; // how to assign UseStyleS
         return (
-            <div className={classes.root}>
-                <Navbar/>
-                <br/>
-                <Button
-                    variant="contained"
-                    className={classes.stylish}
-                    onClick={this.refreshPage}
-                >
-                    <Typography variant="h4" component="h2">
-                        New MPGW
-                    </Typography>
-                </Button>
-
+            <div className={classes.root}>              
                 <RouteStepper setInput={this.setInput} hideCreate={this.hideCreate} setClusterName={this.setClusterNodesHostNameArr}/>
 
                 <br/>

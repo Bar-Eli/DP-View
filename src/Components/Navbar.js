@@ -4,10 +4,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
-import Link from "@material-ui/core/Link";
 import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFootballBall } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom'
 
 export class Navbar extends Component {
   constructor(props) {
@@ -23,6 +23,10 @@ export class Navbar extends Component {
       font-size: 300%;
       margin-right: 75px;
     }
+    #option{
+        text-decoration: none;
+        margin-right: 2rem;
+    }
     .btn {
       color: white;
       margin-right: 100px;
@@ -34,18 +38,6 @@ export class Navbar extends Component {
     }
   `;
 
-  handleRedirect = num => {
-    if (num === 1) {
-      this.props.history.push("/");
-    }
-    if (num === 2) {
-      this.props.history.push("/addRule");
-    }
-    if (num === 3) {
-      this.props.history.push("/editRule");
-    }
-  };
-
   render() {
     return (
       <this.NavbarStyle>
@@ -53,32 +45,10 @@ export class Navbar extends Component {
           <Toolbar variant="dense">
             <Typography color="inherit" id="text">
               <FontAwesomeIcon icon={faFootballBall} id="logo" />
-              DP View
+              NFL
             </Typography>
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => this.handleRedirect(1)}
-              className="btn"
-            >
-              Add New MPGW
-            </Link>
-            {/* <Link
-              component="button"
-              variant="body2"
-              onClick={() => this.handleRedirect(2)}
-              className="btn"
-            >
-              Add New Rule
-            </Link> */}
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => this.handleRedirect(3)}
-              className="btn"
-            >
-              Edit Rules
-            </Link>
+            <Typography color="inherit" id="option" variant="h6" component={Link} to="/new">New MPGW</Typography>
+            <Typography color="inherit" id="option" variant="h6" component={Link} to="/test">Edit MPGW</Typography>
           </Toolbar>
         </AppBar>
       </this.NavbarStyle>
